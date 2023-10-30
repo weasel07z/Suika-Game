@@ -62,7 +62,7 @@ const wallOptions = {
     render: { fillStyle: '#333' }
 }
 let ground = makeContainer(w/2, h*0.8, 330, 20, wallOptions);
-let curFruit = makeCherry(0, 0);
+let curFruit = makeCherry((w/2)-135, (h*0.8)-420)
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
 let leftWall = Bodies.rectangle((w/2)-155, (h*0.8)-185, 20, 389, wallOptions);
 let rightWall = Bodies.rectangle((w/2)+155, (h*0.8)-185, 20, 389, wallOptions);
