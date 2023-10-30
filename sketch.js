@@ -15,7 +15,7 @@ var h = window.innerHeight;
 
 // idk if this is needed but wtv
 var objExists = false;
-var curFruit;
+//var curFruit = createCherry(0,0);
 
 const fruitList = new Map([["cherry", 0],
                         ["strawberry", 1],
@@ -44,7 +44,8 @@ var render = Render.create({
         height: h,
         wireframes: false,
         background:'#fffec3',
-        pixelRatio: window.devicePixelRatio
+        pixelRatio: window.devicePixelRatio,
+        showCollisions: true
     }
 });
 
@@ -61,6 +62,7 @@ const wallOptions = {
     render: { fillStyle: '#333' }
 }
 let ground = makeContainer(w/2, h*0.8, 330, 20, wallOptions);
+let curFruit = makeCherry(0, 0);
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
 let leftWall = Bodies.rectangle((w/2)-155, (h*0.8)-185, 20, 389, wallOptions);
 let rightWall = Bodies.rectangle((w/2)+155, (h*0.8)-185, 20, 389, wallOptions);
@@ -68,13 +70,26 @@ let rightWall = Bodies.rectangle((w/2)+155, (h*0.8)-185, 20, 389, wallOptions);
 Composite.add(world, [
     ground,
     leftWall,
-    rightWall
+    rightWall,
+    curFruit,
     //shapes
 ]);
 
 //const shapes = [];
 //shapes.push(createCircle(0,0));
 Events.on(engine, 'collisionStart', function(event) {
+    event.pairs.forEach(pair => {
+        if(pair.bodyA.label == "cherry" && pair.bodyB.label == "cherry"){
+            //continue;
+            //pair.bodyA.render.fillStyle ="blue";
+            //pair.bodyB.render.fillStyle = "blue";
+            console.log(pair.bodyA.x)
+            Composite.remove(world, pair.bodyA)
+            Composite.remove(world, pair.bodyB)
+            Composite.add(world, makeGrape((pair.bodyA.position.x + pair.bodyB.position.x)/2, (pair.bodyA.position.y + pair.bodyB.position.y)/2))
+        }
+    });
+
     var pairs = event.pairs;
 
     // change object colours to show those starting a collision
@@ -82,12 +97,14 @@ Events.on(engine, 'collisionStart', function(event) {
         var pair = pairs[i];
         if(pair.bodyA.label == "cherry" && pair.bodyB.label == "cherry"){
             //continue;
-            pair.bodyA.render.fillStyle ="blue";
-            pair.bodyB.render.fillStyle = "blue";
+            //pair.bodyA.render.fillStyle ="blue";
+            //pair.bodyB.render.fillStyle = "blue";
+            
         }
         
     }
 });
+/*
 Events.on(engine, 'collisionActive', function(event) {
     var pairs = event.pairs;
 
@@ -115,7 +132,7 @@ Events.on(engine, 'collisionEnd', function(event) {
         
     }
 });
-
+*/
 //function combine(){
 
 //}
@@ -126,22 +143,20 @@ document.addEventListener("click", function(event){
     //Body.setPosition(curFruit, {x:curFruit.position.x, y:curFruit.position.y+20})
     //objExists = false;
     if(event.pageX < (w/2)-135){
-        curFruit = createCherry((w/2)-135, (h*0.8)-420)
+        //curFruit = createCherry((w/2)-135, (h*0.8)-420)
+        curFruit = makeCherry((w/2)-135, (h*0.8)-420)
     } else if(event.pageX > (w/2)+135) {
-        curFruit = createCherry((w/2)+135, (h*0.8)-420)
+        //curFruit = createCherry((w/2)+135, (h*0.8)-420)
+        curFruit = makeCherry((w/2)+135, (h*0.8)-420)
     } else {
-        curFruit = createCherry(event.pageX, (h*0.8)-420)
+        //curFruit = createCherry(event.pageX, (h*0.8)-420)
+        curFruit = makeCherry(event.pageX, (h*0.8)-420)
     }
     Composite.add(world, curFruit)
 });
 
 
 document.addEventListener("mousemove", function(event){
-    if(!objExists){
-        curFruit = createCherry(0, (h*0.8)-420);
-        Composite.add(world, curFruit);
-        objExists = true;
-    }
     if(event.pageX < (w/2)-135){
         Body.setPosition(curFruit, {x:(w/2)-135, y:(h*0.8)-420})
     } else if(event.pageX > (w/2)+135) {
@@ -151,7 +166,7 @@ document.addEventListener("mousemove", function(event){
     }
     
 });
-
+/*
 const createCherry = function(x, y) {
     return Bodies.circle(x, y, 10, {
         friction: 0.3,
@@ -161,7 +176,28 @@ const createCherry = function(x, y) {
             fillStyle: '333' 
         }
     });
+}*/
+function makeCherry(x, y) {
+    return Bodies.circle(x, y, 10, {
+        friction: 0.3,
+        isStatic: true,
+        label: "cherry",
+        render: {
+            fillStyle: '333' 
+        }
+    });
 }
+function makeGrape(x,y){
+    return Bodies.circle(x, y, 15, {
+        friction: 0.3,
+        isStatic: false,
+        label: "grape",
+        render: {
+            fillStyle: '555' 
+        }
+    });
+}
+
  /* 
 var mouse = Mouse.create(render.canvas),
         mouseConstraint = MouseConstraint.create(engine, {
@@ -175,6 +211,7 @@ var mouse = Mouse.create(render.canvas),
 });
 render.mouse = mouse;
 */
+
 function makeContainer(x,y,h,w, opt){
     return Bodies.rectangle(x, y, h, w, opt);
 }
