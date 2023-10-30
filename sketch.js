@@ -19,7 +19,7 @@ var objExists = false;
 
 const fruitList = new Map([["cherry", 0],
                         ["strawberry", 1],
-                        ["grapes", 2],
+                        ["grape", 2],
                         ["dekopon", 3],
                         ["persimmon", 4],
                         ["pear", 5],
@@ -45,7 +45,7 @@ var render = Render.create({
         wireframes: false,
         background:'#fffec3',
         pixelRatio: window.devicePixelRatio,
-        showCollisions: true
+        showCollisions: false
     }
 });
 
@@ -79,14 +79,18 @@ Composite.add(world, [
 //shapes.push(createCircle(0,0));
 Events.on(engine, 'collisionStart', function(event) {
     event.pairs.forEach(pair => {
-        if(pair.bodyA.label == "cherry" && pair.bodyB.label == "cherry"){
-            //continue;
-            //pair.bodyA.render.fillStyle ="blue";
-            //pair.bodyB.render.fillStyle = "blue";
-            console.log(pair.bodyA.x)
-            Composite.remove(world, pair.bodyA)
-            Composite.remove(world, pair.bodyB)
-            Composite.add(world, makeGrape((pair.bodyA.position.x + pair.bodyB.position.x)/2, (pair.bodyA.position.y + pair.bodyB.position.y)/2))
+        if(pair.bodyA.label != "wall" && pair.bodyB.label != "wall"){
+            if(pair.bodyA.label == pair.bodyB.label){
+                //continue;
+                //pair.bodyA.render.fillStyle ="blue";
+                //pair.bodyB.render.fillStyle = "blue";
+                console.log(fruitList.get(pair.bodyA.label))
+                Composite.remove(world, pair.bodyA)
+                Composite.remove(world, pair.bodyB)
+                Composite.add(world, makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,
+                                               (pair.bodyA.position.y + pair.bodyB.position.y)/2,
+                                                fruitList.get(pair.bodyA.label)+1))
+            }
         }
     });
 
@@ -136,6 +140,11 @@ Events.on(engine, 'collisionEnd', function(event) {
 //function combine(){
 
 //}
+document.addEventListener("keydown", function(e){
+    if(e.key == "s"){
+        render.options.showCollisions = !render.options.showCollisions;
+    }
+});
 
 document.addEventListener("click", function(event){
     Body.setPosition(curFruit, {x:curFruit.position.x, y:curFruit.position.y+20})
@@ -177,23 +186,108 @@ const createCherry = function(x, y) {
         }
     });
 }*/
+function makeFruit(x,y, fruitType){
+    switch(fruitType){
+        case 0:
+            return Bodies.circle(x, y, 10.5, {
+                friction: 0.3,
+                isStatic: false,
+                label: "cherry",
+                render: {
+                    fillStyle: '#d60007' 
+                }
+            });
+        case 1:
+            return Bodies.circle(x, y, 14, {
+                friction: 0.3,
+                isStatic: false,
+                label: "strawberry",
+                render: {
+                    fillStyle: '#f04354' 
+                }
+            });
+        case 2:
+            return Bodies.circle(x, y, 19.5, {
+                friction: 0.3,
+                isStatic: false,
+                label: "grape",
+                render: {
+                    fillStyle: '#8152a3' 
+                }
+            });
+        case 3:
+            return Bodies.circle(x, y, 22, {
+                friction: 0.3,
+                isStatic: false,
+                label: "dekopon",
+                render: {
+                    fillStyle: '#f5ad5f' 
+                }
+            });
+        case 4:
+                return Bodies.circle(x, y, 27.5, {
+                    friction: 0.3,
+                    isStatic: false,
+                    label: "persimmon",
+                    render: {
+                        fillStyle: '#f58916' 
+                    }
+            });
+        case 5:
+            return Bodies.circle(x, y, 40.5, {
+                friction: 0.3,
+                isStatic: false,
+                label: "pear",
+                render: {
+                    fillStyle: '#ffed8a' 
+                }
+            });
+        case 6:
+            return Bodies.circle(x, y, 50, {
+                friction: 0.3,
+                isStatic: false,
+                label: "peach",
+                render: {
+                    fillStyle: '#edcad5' 
+                }
+            });
+        case 7:
+            return Bodies.circle(x, y, 56, {
+                friction: 0.3,
+                isStatic: false,
+                label: "pineapple",
+                render: {
+                    fillStyle: '#f7cd43' 
+                }
+            });
+        case 8:
+            return Bodies.circle(x, y, 70, {
+                friction: 0.3,
+                isStatic: false,
+                label: "melon",
+                render: {
+                    fillStyle: '#b2f582' 
+                }
+            });
+        case 9:
+            return Bodies.circle(x, y, 81.5, {
+                friction: 0.3,
+                isStatic: false,
+                label: "watermelon",
+                render: {
+                    fillStyle: '#369121' 
+                }
+            });
+    }
+}
+
 function makeCherry(x, y) {
     return Bodies.circle(x, y, 10, {
         friction: 0.3,
         isStatic: true,
         label: "cherry",
         render: {
-            fillStyle: '333' 
-        }
-    });
-}
-function makeGrape(x,y){
-    return Bodies.circle(x, y, 15, {
-        friction: 0.3,
-        isStatic: false,
-        label: "grape",
-        render: {
-            fillStyle: '555' 
+            fillStyle: '#d60007' 
         }
     });
 }
