@@ -12,7 +12,7 @@ var Engine = Matter.Engine,
 
 var w = window.innerWidth;
 var h = window.innerHeight;
-var _y = (h*0.8)-385;
+var _y = (h*0.8)-365;
 // idk if this is needed but wtv
 var hasLost = false;
 
@@ -32,7 +32,7 @@ const fruitList = new Map([["cherry", 0],
 var engine = Engine.create(),
     world = engine.world;
 
-engine.gravity.y = 0.35;
+engine.gravity.y = 0.5;
 
 // create renderer
 var render = Render.create({
@@ -70,16 +70,16 @@ const heightLimitOptions = {
     render: { fillStyle: '#333', visible: false, }
 }
 
-let ground = makeContainer(w/2, h*0.8+60, 330, 20, wallOptions);
+let ground = makeContainer(w/2, h*0.8+80, 330, 20, wallOptions);
 var curFruit = makeCherry((w/2)-135, _y);
 var curId = curFruit.id;
 
 var hasFallenEnough = true;
 
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
-let leftWall = Bodies.rectangle((w/2)-155, (h*0.8)-125, 20, 389, wallOptions);
-let rightWall = Bodies.rectangle((w/2)+155, (h*0.8)-125, 20, 389, wallOptions);
-let fruitWait = makeContainer(w/2, (h*0.8)-330, 330, 1, heightLimitOptions);
+let leftWall = Bodies.rectangle((w/2)-155, (h*0.8)-105, 20, 389, wallOptions);
+let rightWall = Bodies.rectangle((w/2)+155, (h*0.8)-105, 20, 389, wallOptions);
+let fruitWait = makeContainer(w/2, (h*0.8)-310, 330, 1, heightLimitOptions);
 // scene code
 Composite.add(world, [
     ground,
