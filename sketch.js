@@ -45,7 +45,7 @@ var render = Render.create({
         background:'#f3edb0',
         pixelRatio: window.devicePixelRatio,
         showCollisions: false,
-        showIds: true
+        showIds: false
     }
 });
 
