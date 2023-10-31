@@ -27,7 +27,7 @@ const fruitList = new Map([["cherry", 0],
                         ["melon", 8],
                         ["watermelon", 9]]);
 
-const mainContainer = document.querySelector(".container");
+const mainContainer = document.getElementById("container");
 
 // create engine
 var engine = Engine.create(),
