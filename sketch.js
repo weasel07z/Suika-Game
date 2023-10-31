@@ -11,7 +11,7 @@ var Engine = Matter.Engine,
         Bodies = Matter.Bodies;
 
 var w = window.innerWidth;
-var h = window.innerHeight*1.2;
+var h = window.innerHeight;
 var _y = (h*0.8)-455;
 // idk if this is needed but wtv
 var hasLost = false;
@@ -27,16 +27,17 @@ const fruitList = new Map([["cherry", 0],
                         ["melon", 8],
                         ["watermelon", 9]]);
 
+const mainContainer = document.querySelector(".container");
 
 // create engine
 var engine = Engine.create(),
     world = engine.world;
 
-engine.gravity.y = 0.75;
+engine.gravity.y = 0.9;
 
 // create renderer
 var render = Render.create({
-    element: document.body,
+    element: mainContainer,
     engine: engine,
     options: {
         width: w,
