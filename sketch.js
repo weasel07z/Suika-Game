@@ -11,7 +11,7 @@ var Engine = Matter.Engine,
         Bodies = Matter.Bodies;
 
 var w = window.innerWidth;
-var h = window.innerHeight;
+var h = window.innerHeight*1.5;
 var _y = (h*0.9)-365;
 // idk if this is needed but wtv
 var hasLost = false;
