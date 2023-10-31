@@ -1,12 +1,56 @@
 body{
   margin:0%;
-  display: flex;
   justify-content: center;
   align-items: center;
   width:100vw;
   height:100vh;
-  background-color:rgb(233, 221, 183);
+  background-color:#f3edb0;
+  user-select: none;
 }
 .container{
-  background-color: rgba(230, 197, 91, 0.678);
+  background-color: #f3edb0;
+}
+p{
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  top:-20px;
+  font-size: 40px;
+  font-weight:bold;
+}
+.lossC{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  visibility: hidden;
+}
+.loss {
+  max-width: 750px;
+  max-height: 500px;
+  width: 75%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.87);
+}
+.playAgain {
+  width: 200px;
+  border-width: 2px;
+  border-color: #605858;
+  border-radius: 10px;
+  height: 50px;
+  font-size: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #000000;
+  cursor: pointer;
+}
+
+p.lossText {
+  position: relative;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 50px;
 }

@@ -12,10 +12,9 @@ var Engine = Matter.Engine,
 
 var w = window.innerWidth;
 var h = window.innerHeight;
-
+var _y = (h*0.8)-445;
 // idk if this is needed but wtv
-var objExists = false;
-//var curFruit = createCherry(0,0);
+var hasLost = false;
 
 const fruitList = new Map([["cherry", 0],
                         ["strawberry", 1],
@@ -33,7 +32,7 @@ const fruitList = new Map([["cherry", 0],
 var engine = Engine.create(),
     world = engine.world;
 
-engine.gravity.y = 0.25;
+engine.gravity.y = 0.35;
 
 // create renderer
 var render = Render.create({
@@ -43,9 +42,10 @@ var render = Render.create({
         width: w,
         height: h,
         wireframes: false,
-        background:'#fffec3',
+        background:'#f3edb0',
         pixelRatio: window.devicePixelRatio,
-        showCollisions: false
+        showCollisions: false,
+        showIds: true
     }
 });
 
@@ -61,30 +61,48 @@ const wallOptions = {
     label: "wall",
     render: { fillStyle: '#333' }
 }
+const heightLimitOptions = {
+    friction: 0.0,
+    isStatic: true, 
+    label: "limit",
+    isSensor: true,
+    
+    render: { fillStyle: '#333',visible: false, }
+}
+
 let ground = makeContainer(w/2, h*0.8, 330, 20, wallOptions);
-let curFruit = makeCherry((w/2)-135, (h*0.8)-420)
+var curFruit = makeCherry((w/2)-135, _y);
+var curId = curFruit.id;
+
+var hasFallenEnough = true;
+
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
 let leftWall = Bodies.rectangle((w/2)-155, (h*0.8)-185, 20, 389, wallOptions);
 let rightWall = Bodies.rectangle((w/2)+155, (h*0.8)-185, 20, 389, wallOptions);
+let fruitWait = makeContainer(w/2, h*0.25, 330, 1, heightLimitOptions);
 // scene code
 Composite.add(world, [
     ground,
     leftWall,
     rightWall,
     curFruit,
-    //shapes
+    fruitWait,
 ]);
 
-//const shapes = [];
-//shapes.push(createCircle(0,0));
 Events.on(engine, 'collisionStart', function(event) {
     event.pairs.forEach(pair => {
         if(pair.bodyA.label != "wall" && pair.bodyB.label != "wall"){
+            if((pair.bodyA.label == "limit" || pair.bodyB.label == "limit")){
+                if(pair.bodyA.id != curId && pair.bodyB.id != curId){
+                    gameOver()
+                    console.log("loss")
+                }
+                hasFallenEnough = true;
+                Composite.add(world, curFruit)
+            }
+            
             if(pair.bodyA.label == pair.bodyB.label){
-                //continue;
-                //pair.bodyA.render.fillStyle ="blue";
-                //pair.bodyB.render.fillStyle = "blue";
-                console.log(fruitList.get(pair.bodyA.label))
+               // console.log(fruitList.get(pair.bodyA.label))
                 Composite.remove(world, pair.bodyA)
                 Composite.remove(world, pair.bodyB)
                 Composite.add(world, makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,
@@ -93,53 +111,7 @@ Events.on(engine, 'collisionStart', function(event) {
             }
         }
     });
-
-    var pairs = event.pairs;
-
-    // change object colours to show those starting a collision
-    for (var i = 0; i < pairs.length; i++) {
-        var pair = pairs[i];
-        if(pair.bodyA.label == "cherry" && pair.bodyB.label == "cherry"){
-            //continue;
-            //pair.bodyA.render.fillStyle ="blue";
-            //pair.bodyB.render.fillStyle = "blue";
-            
-        }
-        
-    }
 });
-/*
-Events.on(engine, 'collisionActive', function(event) {
-    var pairs = event.pairs;
-
-    for (var i = 0; i < pairs.length; i++) {
-        var pair = pairs[i];
-        if(pair.bodyA.label == "cherry" && pair.bodyB.label == "cherry"){
-            //continue;
-            pair.bodyA.render.fillStyle ="blue";
-            pair.bodyB.render.fillStyle = "blue";
-        }
-        
-    }
-});
-Events.on(engine, 'collisionEnd', function(event) {
-    var pairs = event.pairs;
-
-    // change object colours to show those ending a collision
-    for (var i = 0; i < pairs.length; i++) {
-        var pair = pairs[i];
-        if(pair.bodyA.label == "cherry" && pair.bodyB.label == "cherry"){
-            //continue;
-            pair.bodyA.render.fillStyle = "333";
-            pair.bodyB.render.fillStyle = "333";
-        }
-        
-    }
-});
-*/
-//function combine(){
-
-//}
 document.addEventListener("keydown", function(e){
     if(e.key == "s"){
         render.options.showCollisions = !render.options.showCollisions;
@@ -147,51 +119,44 @@ document.addEventListener("keydown", function(e){
 });
 
 document.addEventListener("click", function(event){
-    Body.setPosition(curFruit, {x:curFruit.position.x, y:curFruit.position.y+20})
-    Body.setStatic(curFruit, false)
-    //Body.setPosition(curFruit, {x:curFruit.position.x, y:curFruit.position.y+20})
-    //objExists = false;
-    if(event.pageX < (w/2)-135){
-        //curFruit = createCherry((w/2)-135, (h*0.8)-420)
-        curFruit = makeCherry((w/2)-135, (h*0.8)-420)
-    } else if(event.pageX > (w/2)+135) {
-        //curFruit = createCherry((w/2)+135, (h*0.8)-420)
-        curFruit = makeCherry((w/2)+135, (h*0.8)-420)
-    } else {
-        //curFruit = createCherry(event.pageX, (h*0.8)-420)
-        curFruit = makeCherry(event.pageX, (h*0.8)-420)
+    if(hasFallenEnough && !hasLost){
+        Body.setPosition(curFruit, {x:curFruit.position.x, y:curFruit.position.y})
+        Body.setStatic(curFruit, false) 
+        hasFallenEnough = false;
+        curId = curFruit.id
+        var rand = Math.round(4/(Math.random()*4+1))-1
+        if(event.pageX < (w/2)-135){
+            curFruit = makeFruit((w/2)-134.5, _y, rand)
+            //curFruit = makeCherry((w/2)-135, (h*0.8)-420)
+        } else if(event.pageX > (w/2)+134.5) {
+            curFruit = makeFruit((w/2)+134.5, _y, rand)
+            //curFruit = makeCherry((w/2)+135, (h*0.8)-420)
+        } else {
+            curFruit = makeFruit(event.pageX, _y, rand)
+            //curFruit = makeCherry(event.pageX, (h*0.8)-420)
+        }
+        Body.setStatic(curFruit, true)
     }
-    Composite.add(world, curFruit)
 });
 
 
 document.addEventListener("mousemove", function(event){
-    if(event.pageX < (w/2)-135){
-        Body.setPosition(curFruit, {x:(w/2)-135, y:(h*0.8)-420})
-    } else if(event.pageX > (w/2)+135) {
-        Body.setPosition(curFruit, {x:(w/2)+135, y:(h*0.8)-420})
+    if(event.pageX < (w/2)-134.5){
+        Body.setPosition(curFruit, {x:(w/2)-134.5, y:_y})
+    } else if(event.pageX > (w/2)+134.5) {
+        Body.setPosition(curFruit, {x:(w/2)+134.5, y:_y})
     } else {
-        Body.setPosition(curFruit, {x:event.pageX, y:(h*0.8)-420})
+        Body.setPosition(curFruit, {x:event.pageX, y:_y})
     }
     
 });
-/*
-const createCherry = function(x, y) {
-    return Bodies.circle(x, y, 10, {
-        friction: 0.3,
-        isStatic: true,
-        label: "cherry",
-        render: {
-            fillStyle: '333' 
-        }
-    });
-}*/
 function makeFruit(x,y, fruitType){
     switch(fruitType){
         case 0:
             return Bodies.circle(x, y, 10.5, {
                 friction: 0.3,
                 isStatic: false,
+                mass: 1.1,
                 label: "cherry",
                 render: {
                     fillStyle: '#d60007' 
@@ -283,7 +248,7 @@ function makeFruit(x,y, fruitType){
 
 function makeCherry(x, y) {
     return Bodies.circle(x, y, 10, {
-        friction: 0.3,
+        friction: 0.9,
         isStatic: true,
         label: "cherry",
         render: {
@@ -305,47 +270,27 @@ var mouse = Mouse.create(render.canvas),
 });
 render.mouse = mouse;
 */
-
+function gameOver(){
+    var ele = document.getElementById("Lcontainer");
+    if(ele.style.visibility == "visible"){
+        ele.style.visibility = "hidden";
+        hasLost = false;
+    } else {
+        ele.style.visibility = "visible";
+        hasLost = true;
+    }
+    
+}
+function reset(){
+    Composite.clear(world);
+    Composite.add(world, [
+        ground,
+        leftWall,
+        rightWall,
+        curFruit,
+        fruitWait,
+    ]);
+}
 function makeContainer(x,y,h,w, opt){
     return Bodies.rectangle(x, y, h, w, opt);
 }
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-
-/*
-function setup() {
-    createCanvas(windowWidth, windowHeight);
-    // create an engine
-    engine = Engine.create();
-    world = engine.world;
-    // Container creations
-    ground = new Wall(windowWidth/2, height*0.75, 296, 20, 0);
-    Lwall = new Wall((windowWidth/2)-144, (height*0.75)-161, 330, 8, PI/2);
-    Rwall = new Wall((windowWidth/2)+144, (height*0.75)-161, 330, 8, PI/2);
-    // add rigid body
-    Composite.add(world, [ground,Lwall,Rwall]);
-}
-
-function mousePressed() {
-    if(mouseX > (windowWidth/2)-136 && mouseX < (windowWidth/2)+144 && mouseY < height*0.75){
-        fruits.push(new Box(mouseX, (height*0.75)-358, 10, 10));
-    }
-}
-
-function draw() {
-    background(1000);
-    Engine.update(engine);
-    for (let i = 0; i < fruits.length; i++) {
-        fruits[i].show();
-    }
-    Lwall.show();
-    Rwall.show();
-    ground.show();
-}
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-}
-*/
-
