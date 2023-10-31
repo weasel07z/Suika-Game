@@ -10,6 +10,11 @@ body{
 .container{
   background-color: #f3edb0;
 }
+.extra {
+  position: relative;
+  margin-top:100px;
+}
+
 p{
   position: absolute;
   text-align: center;
