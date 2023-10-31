@@ -67,7 +67,7 @@ const heightLimitOptions = {
     label: "limit",
     isSensor: true,
     
-    render: { fillStyle: '#333',visible: false, }
+    render: { fillStyle: '#333',visible: true, }
 }
 
 let ground = makeContainer(w/2, h*0.8, 330, 20, wallOptions);
@@ -79,7 +79,7 @@ var hasFallenEnough = true;
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
 let leftWall = Bodies.rectangle((w/2)-155, (h*0.8)-185, 20, 389, wallOptions);
 let rightWall = Bodies.rectangle((w/2)+155, (h*0.8)-185, 20, 389, wallOptions);
-let fruitWait = makeContainer(w/2, h*0.25, 330, 1, heightLimitOptions);
+let fruitWait = makeContainer(w/2, (h*0.8)-390, 330, 1, heightLimitOptions);
 // scene code
 Composite.add(world, [
     ground,
