@@ -12,7 +12,7 @@ var Engine = Matter.Engine,
 
 var w = window.innerWidth;
 var h = window.innerHeight;
-var _y = 25;
+var _y = 23;
 // idk if this is needed but wtv
 var hasLost = false;
 
