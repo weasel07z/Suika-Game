@@ -52,7 +52,7 @@ var render = Render.create({
     engine: engine,
     options: {
         width: w,
-        height: h*1.2,
+        height: 600,
         wireframes: false,
         background:'#fdf2ce',
         pixelRatio: window.devicePixelRatio,
