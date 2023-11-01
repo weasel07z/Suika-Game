@@ -12,7 +12,7 @@ var Engine = Matter.Engine,
 
 var w = window.innerWidth;
 var h = window.innerHeight;
-var _y = (h*0.8)-305;
+var _y = 25;
 // idk if this is needed but wtv
 var hasLost = false;
 
@@ -27,8 +27,19 @@ const fruitList = new Map([["cherry", 0],
                         ["melon", 8],
                         ["watermelon", 9]]);
 
-const mainContainer = document.getElementById("container");
+const fruitRadius = new Map([["cherry", 10.5],
+                        ["strawberry", 14],
+                        ["grape", 19.5],
+                        ["dekopon",22],
+                        ["persimmon", 27.5],
+                        ["pear", 40.5],
+                        ["peach", 50],
+                        ["pineapple", 56],
+                        ["melon", 70],
+                        ["watermelon", 81.5]]);
 
+const mainContainer = document.getElementById("container");
+const gameOverButton = document.getElementById("lossButton");
 // create engine
 var engine = Engine.create(),
     world = engine.world;
@@ -41,9 +52,9 @@ var render = Render.create({
     engine: engine,
     options: {
         width: w,
-        height: h,
+        height: h*0.75,
         wireframes: false,
-        background:'#f3edb0',
+        background:'#fdf2ce',
         pixelRatio: window.devicePixelRatio,
         showCollisions: false,
         showIds: false
@@ -68,19 +79,19 @@ const heightLimitOptions = {
     label: "limit",
     isSensor: true,
     
-    render: { fillStyle: '#333', visible: false, }
+    render: { fillStyle: '#333', visible: true, }
 }
 
-let ground = makeContainer(w/2, (h*0.8)+140, 330, 20, wallOptions);
+let ground = makeContainer(w/2, 465, 328, 20, wallOptions);
 var curFruit = makeCherry((w/2)-135, _y);
 var curId = curFruit.id;
 
 var hasFallenEnough = true;
 
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
-let leftWall = Bodies.rectangle((w/2)-155, (h*0.8)-45, 20, 389, wallOptions);
-let rightWall = Bodies.rectangle((w/2)+155, (h*0.8)-45, 20, 389, wallOptions);
-let fruitWait = makeContainer(w/2, (h*0.8)-240, 330, 1, heightLimitOptions);
+let leftWall = Bodies.rectangle((w/2)-155, 280, 20, 389, wallOptions);
+let rightWall = Bodies.rectangle((w/2)+155, 280, 20, 389, wallOptions);
+let fruitWait = makeContainer(w/2, 80, 330, 1, heightLimitOptions);
 // scene code
 Composite.add(world, [
     ground,
@@ -120,17 +131,21 @@ document.addEventListener("keydown", function(e){
 });
 
 document.addEventListener("click", function(event){
-    if(hasFallenEnough && !hasLost){
-        Body.setPosition(curFruit, {x:curFruit.position.x, y:curFruit.position.y})
+    var max = 145-fruitRadius.get(curFruit.label);
+    if(hasFallenEnough && !hasLost && event.target != gameOverButton){
         Body.setStatic(curFruit, false) 
         hasFallenEnough = false;
         curId = curFruit.id
         var rand = Math.round(4/(Math.random()*4+1))-1
-        if(event.pageX < (w/2)-135){
-            curFruit = makeFruit((w/2)-134.5, _y, rand)
+        if(event.pageX < (w/2)-max){
+            curFruit = makeFruit((w/2)-max, _y, rand)
+            max = 145-fruitRadius.get(curFruit.label);
+            Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y})
             //curFruit = makeCherry((w/2)-135, (h*0.8)-420)
-        } else if(event.pageX > (w/2)+134.5) {
-            curFruit = makeFruit((w/2)+134.5, _y, rand)
+        } else if(event.pageX > (w/2)+max) {
+            curFruit = makeFruit((w/2)+max, _y, rand)
+            max = 145-fruitRadius.get(curFruit.label);
+            Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y})
             //curFruit = makeCherry((w/2)+135, (h*0.8)-420)
         } else {
             curFruit = makeFruit(event.pageX, _y, rand)
@@ -142,10 +157,11 @@ document.addEventListener("click", function(event){
 
 
 document.addEventListener("mousemove", function(event){
-    if(event.pageX < (w/2)-134.5){
-        Body.setPosition(curFruit, {x:(w/2)-134.5, y:_y})
-    } else if(event.pageX > (w/2)+134.5) {
-        Body.setPosition(curFruit, {x:(w/2)+134.5, y:_y})
+    var max = 145-fruitRadius.get(curFruit.label);
+    if(event.pageX < (w/2)-max){
+        Body.setPosition(curFruit, {x:(w/2)-max, y:_y})
+    } else if(event.pageX > (w/2)+max) {
+        Body.setPosition(curFruit, {x:(w/2)+max, y:_y})
     } else {
         Body.setPosition(curFruit, {x:event.pageX, y:_y})
     }
@@ -280,7 +296,7 @@ function gameOver(){
         ele.style.visibility = "visible";
         hasLost = true;
     }
-    
+    reset();
 }
 function reset(){
     Composite.clear(world);

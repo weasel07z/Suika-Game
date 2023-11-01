@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8"/>
   </head>
   <body>
     <main>
-      <p>(real) Suika Game</p>
+      <div class="center">
+        <p>(real) Suika Game</p>
+      </div>   
       <div class="container" id="container"></div>
       <div class="lossC" id="Lcontainer">
         <div class="loss">
           <p class="lossText">YOU LOST</header>
             <br>
-          <button class="playAgain" onclick="reset();gameOver()">Play Again</button>
+          <button class="playAgain" id="lossButton" onmouseup="gameOver()">Play Again</button>
         </div>
       </div>
     </main>
