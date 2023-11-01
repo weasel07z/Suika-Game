@@ -9,6 +9,7 @@ body{
 }
 .container{
   background-color: #ffffff00;
+  height: 600px;
 }
 .center {
   text-align: center;
