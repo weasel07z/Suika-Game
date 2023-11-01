@@ -79,7 +79,7 @@ const heightLimitOptions = {
     label: "limit",
     isSensor: true,
     
-    render: { fillStyle: '#333', visible: true, }
+    render: { fillStyle: '#333', visible: false, }
 }
 
 let ground = makeContainer(w/2, 465, 328, 20, wallOptions);
