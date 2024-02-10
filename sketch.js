@@ -12,7 +12,7 @@ var Engine = Matter.Engine,
 
 var w = window.innerWidth;
 var h = window.innerHeight;
-var _y = 25;
+var _y = 23;
 // idk if this is needed but wtv
 var hasLost = false;
 
@@ -52,7 +52,7 @@ var render = Render.create({
     engine: engine,
     options: {
         width: w,
-        height: h*0.75,
+        height: 600,
         wireframes: false,
         background:'#fdf2ce',
         pixelRatio: window.devicePixelRatio,
@@ -79,19 +79,19 @@ const heightLimitOptions = {
     label: "limit",
     isSensor: true,
     
-    render: { fillStyle: '#333', visible: true, }
+    render: { fillStyle: '#333', visible: false, }
 }
 
-let ground = makeContainer(w/2, 465, 328, 20, wallOptions);
+let ground = makeContainer(w/2, 470, 328, 20, wallOptions);
 var curFruit = makeCherry((w/2)-135, _y);
 var curId = curFruit.id;
 
 var hasFallenEnough = true;
 
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
-let leftWall = Bodies.rectangle((w/2)-155, 280, 20, 389, wallOptions);
-let rightWall = Bodies.rectangle((w/2)+155, 280, 20, 389, wallOptions);
-let fruitWait = makeContainer(w/2, 80, 330, 1, heightLimitOptions);
+let leftWall = Bodies.rectangle((w/2)-155, 285, 20, 389, wallOptions);
+let rightWall = Bodies.rectangle((w/2)+155, 285, 20, 389, wallOptions);
+let fruitWait = makeContainer(w/2, 85, 330, 1, heightLimitOptions);
 // scene code
 Composite.add(world, [
     ground,
