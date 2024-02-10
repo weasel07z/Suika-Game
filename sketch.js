@@ -104,8 +104,8 @@ let leftWall = Bodies.rectangle((w/2)-155*scalar, 305*scalar, 20*scalar, 389*sca
 let rightWall = Bodies.rectangle((w/2)+155*scalar, 305*scalar, 20*scalar, 389*scalar, wallOptions);
 let fruitWait = makeContainer(w/2, 105*scalar, 300*scalar, 1, heightLimitOptions);
 
-/*
-let b1 = Bodies.circle((w/2)+10, _y+120, 82, {
+
+/*let b1 = Bodies.circle((w/2)+10, _y+120, 59*scalar, {
     friction: 0.3,
     isStatic: true,
     label: "pineapple",
@@ -113,8 +113,8 @@ let b1 = Bodies.circle((w/2)+10, _y+120, 82, {
         fillStyle: '#000000' 
         
     }
-});
-*/
+});*/
+
 // scene code
 Composite.add(world, [
     ground,
@@ -326,7 +326,7 @@ function makeFruit(x,y, fruitType){
         case 7:
             return Bodies.circle(x, y, 59*scalar, {
                 friction: 0.3,
-                isStatic: true,
+                isStatic: false,
                 label: "pineapple",
                 render: {
                     //fillStyle: '#f7cd43'
