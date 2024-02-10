@@ -326,7 +326,7 @@ function makeFruit(x,y, fruitType){
         case 7:
             return Bodies.circle(x, y, 59*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "pineapple",
                 render: {
                     //fillStyle: '#f7cd43'
@@ -336,7 +336,7 @@ function makeFruit(x,y, fruitType){
                         xScale: .68*scalar,
                         yScale: .68*scalar,
                         xOffset: 0*scalar,
-                        yOffset: 0*scalar
+                        yOffset: 0.08*scalar
                     },
                 }
             });
