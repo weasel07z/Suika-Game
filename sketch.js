@@ -17,7 +17,7 @@ var h = window.innerHeight;
 var _y = 43;
 // idk if this is needed but wtv
 var hasLost = false;
-var scalar = 1.25;
+var scalar = 1.4;
 
 
 const fruitList = new Map([["cherry", 0],
@@ -25,11 +25,12 @@ const fruitList = new Map([["cherry", 0],
                         ["grape", 2],
                         ["dekopon", 3],
                         ["persimmon", 4],
-                        ["pear", 5],
-                        ["peach", 6],
-                        ["pineapple", 7],
-                        ["melon", 8],
-                        ["watermelon", 9]]);
+                        ["apple", 5],
+                        ["pear", 6],
+                        ["peach", 7],
+                        ["pineapple", 8],
+                        ["melon", 9],
+                        ["watermelon", 10]]);
 
 const fruitRadius = new Map([["cherry", 11*scalar],
                         ["strawberry", 15*scalar],
@@ -119,7 +120,7 @@ let rightWall = Bodies.rectangle((w/2)+155*scalar, 325*scalar, 20*scalar, 389*sc
 let fruitWait = makeContainer(w/2, 125*scalar, 300*scalar, 1, heightLimitOptions);
 
 
-/*let b1 = Bodies.circle((w/2)+10, _y+120, 59*scalar, {
+let b1 = Bodies.circle((w/2)+10, _y+120, 20*scalar, {
     friction: 0.3,
     isStatic: true,
     label: "pineapple",
@@ -127,7 +128,7 @@ let fruitWait = makeContainer(w/2, 125*scalar, 300*scalar, 1, heightLimitOptions
         fillStyle: '#000000' 
         
     }
-});*/
+});
 
 // scene code
 Composite.add(world, [
@@ -142,7 +143,7 @@ Composite.add(world, [
     //b1,
     // DONE makeFruit((w/2)+100, _y+120, 0),
     // DONE makeFruit((w/2)+10, _y+120, 1),
-    // DONE makeFruit((w/2)+100, _y+120, 2),
+    //makeFruit((w/2)+10, _y+120, 2),
     // DONE makeFruit((w/2)+100, _y+120, 3),
     // DONE makeFruit((w/2)+100, _y+120, 4),
     // DONE makeFruit((w/2)+10, _y+120, 5),
@@ -279,12 +280,13 @@ function makeFruit(x,y, fruitType){
                 
                 render: {
                     //fillStyle: '#8152a3'
+                    //opacity: 0.5,
                     sprite: {
                         texture: 'img/grape.png',
-                        xScale: 0.4*scalar,
-                        yScale: 0.4*scalar,
-                        xOffset: 0.07*scalar,
-                        yOffset: 0.07*scalar
+                        xScale: 0.45*scalar,
+                        yScale: 0.45*scalar,
+                        xOffset: 0.05*scalar,
+                        yOffset: 0.05*scalar
                     }
                 }
             });
@@ -320,6 +322,24 @@ function makeFruit(x,y, fruitType){
                     }
             });
         case 5:
+            return Bodies.circle(x, y, 35*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                label: "apple",
+                
+                render: {
+                    //fillStyle: '#ffed8a' 
+                    //opacity: 0.5,
+                    sprite: {
+                        texture: 'img/apple.png',
+                        xScale: 0.42*scalar,
+                        yScale: 0.42*scalar,
+                        xOffset: -0.005*scalar,
+                        yOffset: 0.02*scalar
+                    }
+                }
+            });
+        case 6:
             return Bodies.circle(x, y, 41*scalar, {
                 friction: 0.3,
                 isStatic: false,
@@ -337,7 +357,7 @@ function makeFruit(x,y, fruitType){
                     }
                 }
             });
-        case 6:
+        case 7:
             return Bodies.circle(x, y, 50*scalar, {
                 friction: 0.3,
                 isStatic: false,
@@ -352,7 +372,7 @@ function makeFruit(x,y, fruitType){
                     },
                 }
             });
-        case 7:
+        case 8:
             return Bodies.circle(x, y, 59*scalar, {
                 friction: 0.3,
                 isStatic: false,
@@ -369,7 +389,7 @@ function makeFruit(x,y, fruitType){
                     },
                 }
             });
-        case 8:
+        case 9:
             return Bodies.circle(x, y, 70*scalar, {
                 friction: 0.3,
                 isStatic: false,
@@ -385,7 +405,7 @@ function makeFruit(x,y, fruitType){
                     }, 
                 }
             });
-        case 9:
+        case 10:
             return Bodies.circle(x, y, 82*scalar, {
                 friction: 0.3,
                 isStatic: false,
