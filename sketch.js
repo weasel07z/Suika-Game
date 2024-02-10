@@ -100,6 +100,7 @@ let leftWall = Bodies.rectangle((w/2)-155, 285, 20, 389, wallOptions);
 let rightWall = Bodies.rectangle((w/2)+155, 285, 20, 389, wallOptions);
 let fruitWait = makeContainer(w/2, 85, 320, 1, heightLimitOptions);
 
+/*
 let b1 = Bodies.circle((w/2)+10, _y+120, 82, {
     friction: 0.3,
     isStatic: true,
@@ -109,7 +110,7 @@ let b1 = Bodies.circle((w/2)+10, _y+120, 82, {
         
     }
 });
-
+*/
 // scene code
 Composite.add(world, [
     ground,
@@ -210,7 +211,7 @@ function makeFruit(x,y, fruitType){
                 render: {
                     //fillStyle: '#d60007' 
                     sprite: {
-                        texture: '/img/cherry.png',
+                        texture: 'img/cherry.png',
                         xScale: 0.46,
                         yScale: 0.46,
                         xOffset: -0.015,
@@ -229,7 +230,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#f04354'
                     //opacity: 0.5,
                     sprite: {
-                        texture: '/img/strawberry.png',
+                        texture: 'img/strawberry.png',
                         xScale: 0.72,
                         yScale: 0.72,
                         xOffset: -0.04,
@@ -246,7 +247,7 @@ function makeFruit(x,y, fruitType){
                 render: {
                     //fillStyle: '#8152a3'
                     sprite: {
-                        texture: '/img/grape.png',
+                        texture: 'img/grape.png',
                         xScale: 0.4,
                         yScale: 0.4,
                         xOffset: 0.07,
@@ -263,7 +264,7 @@ function makeFruit(x,y, fruitType){
                 render: {
                     //fillStyle: '#f5ad5f' 
                     sprite: {
-                        texture: '/img/persimmon.png',
+                        texture: 'img/persimmon.png',
                         xScale: 0.44,
                         yScale: 0.43,
                         xOffset: 0.03,
@@ -279,7 +280,7 @@ function makeFruit(x,y, fruitType){
                     render: {
                         //fillStyle: '#f58916'
                         sprite: {
-                            texture: '/img/orange.png',
+                            texture: 'img/orange.png',
                             xScale: 0.47,
                             yScale: 0.47
                         }
@@ -295,7 +296,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#ffed8a' 
                     //opacity: 0.5,
                     sprite: {
-                        texture: '/img/yellow.png',
+                        texture: 'img/yellow.png',
                         xScale: 0.65,
                         yScale: 0.65,
                         xOffset: 0.024,
@@ -312,7 +313,7 @@ function makeFruit(x,y, fruitType){
                 render: {
                     //fillStyle: '#edcad5' 
                     sprite: {
-                        texture: '/img/Peach.png',
+                        texture: 'img/Peach.png',
                         xScale: 1.02,
                         yScale: 1.02,
                     },
@@ -327,7 +328,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#f7cd43'
                     //opacity: 0.5, 
                     sprite: {
-                        texture: '/img/pinapple.png',
+                        texture: 'img/pinapple.png',
                         xScale: .68,
                         yScale: .68,
                         xOffset: 0,
@@ -343,7 +344,7 @@ function makeFruit(x,y, fruitType){
                 render: {
                     //fillStyle: '#b2f582'
                     sprite: {
-                        texture: '/img/melon.png',
+                        texture: 'img/melon.png',
                         xScale: .65,
                         yScale: .65,
                         xOffset: 0,
@@ -360,7 +361,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#369121' 
                     //opacity: 0.5,
                     sprite: {
-                        texture: '/img/watermelon.png',
+                        texture: 'img/watermelon.png',
                         xScale: .65,
                         yScale: .65,
                         xOffset: 0,
@@ -379,7 +380,7 @@ function makeCherry(x, y) {
         render: {
             //fillStyle: '#d60007'     
             sprite: {
-                texture: '/img/cherry.png',
+                texture: 'img/cherry.png',
                 xScale: 0.46,
                 yScale: 0.46,
                 xOffset: -0.015,
