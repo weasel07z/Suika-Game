@@ -12,9 +12,13 @@ var Engine = Matter.Engine,
 
 var w = window.innerWidth;
 var h = window.innerHeight;
-var _y = 23;
+
+// WAS 23 WHEN WORKING
+var _y = 43;
 // idk if this is needed but wtv
 var hasLost = false;
+var scalar = 1.25;
+
 
 const fruitList = new Map([["cherry", 0],
                         ["strawberry", 1],
@@ -27,16 +31,16 @@ const fruitList = new Map([["cherry", 0],
                         ["melon", 8],
                         ["watermelon", 9]]);
 
-const fruitRadius = new Map([["cherry", 10.5],
-                        ["strawberry", 14],
-                        ["grape", 19.5],
-                        ["dekopon",22],
-                        ["persimmon", 27.5],
-                        ["pear", 40.5],
-                        ["peach", 50],
-                        ["pineapple", 56],
-                        ["melon", 70],
-                        ["watermelon", 81.5]]);
+const fruitRadius = new Map([["cherry", 11*scalar],
+                        ["strawberry", 15*scalar],
+                        ["grape", 20*scalar],
+                        ["dekopon",22*scalar],
+                        ["persimmon", 28*scalar],
+                        ["pear", 41*scalar],
+                        ["peach", 50*scalar],
+                        ["pineapple", 59*scalar],
+                        ["melon", 70*scalar],
+                        ["watermelon", 82*scalar]]);
 
 const mainContainer = document.getElementById("container");
 const gameOverButton = document.getElementById("lossButton");
@@ -56,7 +60,7 @@ var render = Render.create({
     engine: engine,
     options: {
         width: w,
-        height: 600,
+        height: 600*scalar,
         wireframes: false,
         background:'#60585800',
         pixelRatio: window.devicePixelRatio,
@@ -75,10 +79,10 @@ var runner = Runner.create();
 Runner.run(engine);
 
 const wallOptions = {
-    friction: 0.0,
+    friction: 0.2,
     isStatic: true, 
     label: "wall",
-    render: { fillStyle: '#333', visible: false }
+    render: { fillStyle: '#333', visible: false, opacity: 0.5 }
 }
 const heightLimitOptions = {
     friction: 0.0,
@@ -89,16 +93,16 @@ const heightLimitOptions = {
     render: { fillStyle: '#333', visible: false, }
 }
 
-let ground = makeContainer(w/2, 470, 328, 20, wallOptions);
+let ground = makeContainer(w/2, 490*scalar, 328*scalar, 20*scalar, wallOptions);
 var curFruit = makeCherry((w/2)-135, _y);
 var curId = curFruit.id;
 
 var hasFallenEnough = true;
 
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
-let leftWall = Bodies.rectangle((w/2)-155, 285, 20, 389, wallOptions);
-let rightWall = Bodies.rectangle((w/2)+155, 285, 20, 389, wallOptions);
-let fruitWait = makeContainer(w/2, 85, 320, 1, heightLimitOptions);
+let leftWall = Bodies.rectangle((w/2)-155*scalar, 305*scalar, 20*scalar, 389*scalar, wallOptions);
+let rightWall = Bodies.rectangle((w/2)+155*scalar, 305*scalar, 20*scalar, 389*scalar, wallOptions);
+let fruitWait = makeContainer(w/2, 105*scalar, 300*scalar, 1, heightLimitOptions);
 
 /*
 let b1 = Bodies.circle((w/2)+10, _y+120, 82, {
@@ -163,7 +167,7 @@ document.addEventListener("keydown", function(e){
 });
 
 document.addEventListener("click", function(event){
-    var max = 145-fruitRadius.get(curFruit.label);
+    var max = 145*scalar-fruitRadius.get(curFruit.label);
     if(hasFallenEnough && !hasLost && event.target != gameOverButton){
         Body.setStatic(curFruit, false) 
         hasFallenEnough = false;
@@ -171,12 +175,12 @@ document.addEventListener("click", function(event){
         var rand = Math.round(4/(Math.random()*4+1))-1
         if(event.pageX < (w/2)-max){
             curFruit = makeFruit((w/2)-max, _y, rand)
-            max = 145-fruitRadius.get(curFruit.label);
+            max = 145*scalar-fruitRadius.get(curFruit.label);
             Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y})
             //curFruit = makeCherry((w/2)-135, (h*0.8)-420)
         } else if(event.pageX > (w/2)+max) {
             curFruit = makeFruit((w/2)+max, _y, rand)
-            max = 145-fruitRadius.get(curFruit.label);
+            max = 145*scalar-fruitRadius.get(curFruit.label);
             Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y})
             //curFruit = makeCherry((w/2)+135, (h*0.8)-420)
         } else {
@@ -189,7 +193,7 @@ document.addEventListener("click", function(event){
 
 
 document.addEventListener("mousemove", function(event){
-    var max = 145-fruitRadius.get(curFruit.label);
+    var max = 145*scalar-fruitRadius.get(curFruit.label);
     if(event.pageX < (w/2)-max){
         Body.setPosition(curFruit, {x:(w/2)-max, y:_y})
     } else if(event.pageX > (w/2)+max) {
@@ -202,7 +206,7 @@ document.addEventListener("mousemove", function(event){
 function makeFruit(x,y, fruitType){
     switch(fruitType){
         case 0:
-            return Bodies.circle(x, y, 11, {
+            return Bodies.circle(x, y, 11*scalar, {
                 friction: 0.3,
                 isStatic: false,
                 mass: 1.1,
@@ -212,16 +216,16 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#d60007' 
                     sprite: {
                         texture: 'img/cherry.png',
-                        xScale: 0.46,
-                        yScale: 0.46,
-                        xOffset: -0.015,
-                        yOffset: 0.07
+                        xScale: 0.46*scalar,
+                        yScale: 0.46*scalar,
+                        xOffset: -0.015*scalar,
+                        yOffset: 0.07*scalar
                     }
                 }
                 
             });
         case 1:
-            return Bodies.circle(x, y, 15, {
+            return Bodies.circle(x, y, 15*scalar, {
                 friction: 0.3,
                 isStatic: false,
                 label: "strawberry",
@@ -231,15 +235,15 @@ function makeFruit(x,y, fruitType){
                     //opacity: 0.5,
                     sprite: {
                         texture: 'img/strawberry.png',
-                        xScale: 0.72,
-                        yScale: 0.72,
-                        xOffset: -0.04,
-                        yOffset: 0.01
+                        xScale: 0.72*scalar,
+                        yScale: 0.72*scalar,
+                        xOffset: -0.04*scalar,
+                        yOffset: 0.01*scalar
                     }
                 }
             });
         case 2:
-            return Bodies.circle(x, y, 20, {
+            return Bodies.circle(x, y, 20*scalar, {
                 friction: 0.3,
                 isStatic: false,
                 label: "grape",
@@ -248,15 +252,15 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#8152a3'
                     sprite: {
                         texture: 'img/grape.png',
-                        xScale: 0.4,
-                        yScale: 0.4,
-                        xOffset: 0.07,
-                        yOffset: 0.07
+                        xScale: 0.4*scalar,
+                        yScale: 0.4*scalar,
+                        xOffset: 0.07*scalar,
+                        yOffset: 0.07*scalar
                     }
                 }
             });
         case 3:
-            return Bodies.circle(x, y, 22, {
+            return Bodies.circle(x, y, 22*scalar, {
                 friction: 0.3,
                 isStatic: false,
                 label: "dekopon",
@@ -265,15 +269,15 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#f5ad5f' 
                     sprite: {
                         texture: 'img/persimmon.png',
-                        xScale: 0.44,
-                        yScale: 0.43,
-                        xOffset: 0.03,
-                        yOffset: -0.01
+                        xScale: 0.44*scalar,
+                        yScale: 0.43*scalar,
+                        xOffset: 0.03*scalar,
+                        yOffset: -0.01*scalar
                     }
                 }
             });
         case 4:
-                return Bodies.circle(x, y, 30, {
+                return Bodies.circle(x, y, 30*scalar, {
                     friction: 0.3,
                     isStatic: false,
                     label: "persimmon",
@@ -281,13 +285,13 @@ function makeFruit(x,y, fruitType){
                         //fillStyle: '#f58916'
                         sprite: {
                             texture: 'img/orange.png',
-                            xScale: 0.47,
-                            yScale: 0.47
+                            xScale: 0.47*scalar,
+                            yScale: 0.47*scalar
                         }
                     }
             });
         case 5:
-            return Bodies.circle(x, y, 41, {
+            return Bodies.circle(x, y, 41*scalar, {
                 friction: 0.3,
                 isStatic: false,
                 label: "pear",
@@ -297,15 +301,15 @@ function makeFruit(x,y, fruitType){
                     //opacity: 0.5,
                     sprite: {
                         texture: 'img/yellow.png',
-                        xScale: 0.65,
-                        yScale: 0.65,
-                        xOffset: 0.024,
-                        yOffset: 0.0
+                        xScale: 0.65*scalar,
+                        yScale: 0.65*scalar,
+                        xOffset: 0.024*scalar,
+                        yOffset: 0.0*scalar
                     }
                 }
             });
         case 6:
-            return Bodies.circle(x, y, 50, {
+            return Bodies.circle(x, y, 50*scalar, {
                 friction: 0.3,
                 isStatic: false,
                 label: "peach",
@@ -314,13 +318,13 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#edcad5' 
                     sprite: {
                         texture: 'img/Peach.png',
-                        xScale: 1.02,
-                        yScale: 1.02,
+                        xScale: 1.02*scalar,
+                        yScale: 1.02*scalar,
                     },
                 }
             });
         case 7:
-            return Bodies.circle(x, y, 59, {
+            return Bodies.circle(x, y, 59*scalar, {
                 friction: 0.3,
                 isStatic: false,
                 label: "pineapple",
@@ -329,15 +333,15 @@ function makeFruit(x,y, fruitType){
                     //opacity: 0.5, 
                     sprite: {
                         texture: 'img/pinapple.png',
-                        xScale: .68,
-                        yScale: .68,
-                        xOffset: 0,
-                        yOffset: 0.1
+                        xScale: .68*scalar,
+                        yScale: .68*scalar,
+                        xOffset: 0*scalar,
+                        yOffset: 0*scalar
                     },
                 }
             });
         case 8:
-            return Bodies.circle(x, y, 70, {
+            return Bodies.circle(x, y, 70*scalar, {
                 friction: 0.3,
                 isStatic: false,
                 label: "melon",
@@ -345,15 +349,15 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#b2f582'
                     sprite: {
                         texture: 'img/melon.png',
-                        xScale: .65,
-                        yScale: .65,
-                        xOffset: 0,
-                        yOffset: 0.115
+                        xScale: .65*scalar,
+                        yScale: .65*scalar,
+                        xOffset: 0*scalar,
+                        yOffset: 0.115*scalar
                     }, 
                 }
             });
         case 9:
-            return Bodies.circle(x, y, 82, {
+            return Bodies.circle(x, y, 82*scalar, {
                 friction: 0.3,
                 isStatic: false,
                 label: "watermelon",
@@ -362,10 +366,10 @@ function makeFruit(x,y, fruitType){
                     //opacity: 0.5,
                     sprite: {
                         texture: 'img/watermelon.png',
-                        xScale: .65,
-                        yScale: .65,
-                        xOffset: 0,
-                        yOffset: 0
+                        xScale: .65*scalar,
+                        yScale: .65*scalar,
+                        xOffset: 0*scalar,
+                        yOffset: 0*scalar
                     },
                 }
             });
@@ -373,7 +377,7 @@ function makeFruit(x,y, fruitType){
 }
 
 function makeCherry(x, y) {
-    return Bodies.circle(x, y, 10, {
+    return Bodies.circle(x, y, 10*scalar, {
         friction: 0.9,
         isStatic: true,
         label: "cherry",
@@ -381,10 +385,10 @@ function makeCherry(x, y) {
             //fillStyle: '#d60007'     
             sprite: {
                 texture: 'img/cherry.png',
-                xScale: 0.46,
-                yScale: 0.46,
-                xOffset: -0.015,
-                yOffset: 0.07
+                xScale: 0.46*scalar,
+                yScale: 0.46*scalar,
+                xOffset: -0.015*scalar,
+                yOffset: 0.07*scalar
             }
         }
     });

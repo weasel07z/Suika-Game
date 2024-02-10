@@ -11,9 +11,8 @@ body{
 }
 .container{
   background-color: #ffffff00;
-  
-  height: 600px;
-  
+  height: calc(600px * var(--scalar));
+  position: relative;
 }
 .center {
   text-align: center;
@@ -72,11 +71,11 @@ p.lossText {
 
 img.test {
   position: absolute;
-  top:186px;
-  width: 308px;
-  height: 430px;
+  top:calc(186px * var(--scalar));
+  width: calc(308px * var(--scalar));
+  height: calc(420px * var(--scalar));
   z-index: -1;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .test {
@@ -86,7 +85,7 @@ img.test {
 
 img.bg {
   position: absolute;
-  top: 111px;
+  top: 215px;
   height:500px;
   z-index: -2;
 }
@@ -95,23 +94,24 @@ img.bg {
   background-color: #c48e50;
   position: absolute;
   width: 100vw;
-  height: 300px;
+  height: calc(300px * var(--scalar));
+  
   z-index: -5;
 }
 .secondbrownbox {
   background-color: #b17424;
   position: absolute;
   width: 100vw;
-  height: 100px;
-  top:300px;
+  height: calc(100px * var(--scalar));
+  top:calc(300px * var(--scalar));
   z-index: -4;
 }
 .thirdbrownbox {
   background-color: #c9a35a;
   position: absolute;
   width: 100vw;
-  height: 50px;
-  top:350px;
+  height: calc(53px * var(--scalar));
+  top:calc(350px * var(--scalar));
   z-index: -3;
 }
 .fourthbrownbox {
@@ -120,4 +120,16 @@ img.bg {
   width: 100vw;
   height: 100vh;
   z-index: -6;
+}
+.fifthbrownbox {
+  background-color: #dcb58c;
+  position: absolute;
+  width: 100vw;
+  height: calc(5px * var(--scalar));
+  top: calc(360px * var(--scalar));
+  z-index: -2;
+}
+
+:root {
+  --scalar: 1.25;
 }
