@@ -93,16 +93,16 @@ const heightLimitOptions = {
     render: { fillStyle: '#333', visible: false, }
 }
 
-let ground = makeContainer(w/2, 490*scalar, 328*scalar, 20*scalar, wallOptions);
+let ground = makeContainer(w/2, 510*scalar, 328*scalar, 20*scalar, wallOptions);
 var curFruit = makeCherry((w/2)-135, _y);
 var curId = curFruit.id;
 
 var hasFallenEnough = true;
 
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
-let leftWall = Bodies.rectangle((w/2)-155*scalar, 305*scalar, 20*scalar, 389*scalar, wallOptions);
-let rightWall = Bodies.rectangle((w/2)+155*scalar, 305*scalar, 20*scalar, 389*scalar, wallOptions);
-let fruitWait = makeContainer(w/2, 105*scalar, 300*scalar, 1, heightLimitOptions);
+let leftWall = Bodies.rectangle((w/2)-155*scalar, 325*scalar, 20*scalar, 389*scalar, wallOptions);
+let rightWall = Bodies.rectangle((w/2)+155*scalar, 325*scalar, 20*scalar, 389*scalar, wallOptions);
+let fruitWait = makeContainer(w/2, 125*scalar, 300*scalar, 1, heightLimitOptions);
 
 
 /*let b1 = Bodies.circle((w/2)+10, _y+120, 59*scalar, {
@@ -172,7 +172,9 @@ document.addEventListener("click", function(event){
         Body.setStatic(curFruit, false) 
         hasFallenEnough = false;
         curId = curFruit.id
-        var rand = Math.round(4/(Math.random()*4+1))-1
+        //var rand = Math.round(4/(Math.random()*4+1))-1
+        var rand = Math.round((Math.random()*4))
+        //var rand = 4
         if(event.pageX < (w/2)-max){
             curFruit = makeFruit((w/2)-max, _y, rand)
             max = 145*scalar-fruitRadius.get(curFruit.label);
@@ -409,14 +411,16 @@ render.mouse = mouse;
 */
 function gameOver(){
     var ele = document.getElementById("Lcontainer");
-    if(ele.style.visibility == "visible"){
-        ele.style.visibility = "hidden";
-        hasLost = false;
-    } else {
-        ele.style.visibility = "visible";
-        hasLost = true;
-    }
-    reset();
+    ele.style.visibility = "visible";
+    hasLost = true;
+    //if(ele.style.visibility == "visible"){
+    //    ele.style.visibility = "hidden";
+    //    hasLost = false;
+    //} else {
+        
+        
+   // }
+    //reset();
 }
 function reset(){
     Composite.clear(world);
@@ -427,6 +431,14 @@ function reset(){
         curFruit,
         fruitWait,
     ]);
+    var ele = document.getElementById("Lcontainer");
+    if(ele.style.visibility == "visible"){
+        ele.style.visibility = "hidden";
+        hasLost = false;
+    } else {
+        ele.style.visibility = "visible";
+        hasLost = true;
+    }
 }
 function makeContainer(x,y,h,w, opt){
     return Bodies.rectangle(x, y, h, w, opt);

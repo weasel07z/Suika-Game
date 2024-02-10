@@ -1,4 +1,4 @@
-class Box {
+/*class Box {
     constructor(x, y, r) {
         this.x = x;
         this.y = y;
@@ -25,3 +25,4 @@ class Box {
         pop();
     }
 }
+*/

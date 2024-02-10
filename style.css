@@ -71,7 +71,7 @@ p.lossText {
 
 img.test {
   position: absolute;
-  top:calc(186px * var(--scalar));
+  top:calc(206px * var(--scalar));
   width: calc(308px * var(--scalar));
   height: calc(420px * var(--scalar));
   z-index: -1;
@@ -94,7 +94,7 @@ img.bg {
   background-color: #c48e50;
   position: absolute;
   width: 100vw;
-  height: calc(300px * var(--scalar));
+  height: calc(320px * var(--scalar));
   
   z-index: -5;
 }
@@ -103,7 +103,7 @@ img.bg {
   position: absolute;
   width: 100vw;
   height: calc(100px * var(--scalar));
-  top:calc(300px * var(--scalar));
+  top:calc(320px * var(--scalar));
   z-index: -4;
 }
 .thirdbrownbox {
@@ -111,7 +111,7 @@ img.bg {
   position: absolute;
   width: 100vw;
   height: calc(53px * var(--scalar));
-  top:calc(350px * var(--scalar));
+  top:calc(369px * var(--scalar));
   z-index: -3;
 }
 .fourthbrownbox {
@@ -126,7 +126,7 @@ img.bg {
   position: absolute;
   width: 100vw;
   height: calc(5px * var(--scalar));
-  top: calc(360px * var(--scalar));
+  top: calc(380px * var(--scalar));
   z-index: -2;
 }
 

@@ -1,4 +1,4 @@
-class Wall {
+/*class Wall {
     constructor(x, y, w, h) {
         this.x = x;
         this.y = y;
@@ -40,5 +40,5 @@ class Wall {
         rect(0, 0, this.w, this.h);
         pop();
     }
-    */
 }
+    */

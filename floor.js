@@ -1,4 +1,4 @@
-class Floor {
+/*class Floor {
     constructor(x, y, w, h, a) {
         this.x = x;
         this.y = y;
@@ -26,4 +26,4 @@ class Floor {
         rect(0, 0, this.w, this.h);
         pop();
     }
-}
+}*/
