@@ -58,7 +58,7 @@ var render = Render.create({
         width: w,
         height: 600,
         wireframes: false,
-        background:'#ffff0',
+        background:'#60585800',
         pixelRatio: window.devicePixelRatio,
         showCollisions: false,
         showIds: false,
