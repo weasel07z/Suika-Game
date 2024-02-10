@@ -78,7 +78,7 @@ const wallOptions = {
     friction: 0.0,
     isStatic: true, 
     label: "wall",
-    render: { fillStyle: '#333' }
+    render: { fillStyle: '#333', visible: false }
 }
 const heightLimitOptions = {
     friction: 0.0,
@@ -382,8 +382,8 @@ function makeCherry(x, y) {
                 texture: '/img/cherry.png',
                 xScale: 0.46,
                 yScale: 0.46,
-                //xOffset: -0.015,
-                //yOffset: 0.07
+                xOffset: -0.015,
+                yOffset: 0.07
             }
         }
     });
