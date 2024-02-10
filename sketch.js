@@ -92,6 +92,20 @@ const heightLimitOptions = {
     
     render: { fillStyle: '#333', visible: false, }
 }
+const pointerOptions = {
+    friction: 0.0,
+    isStatic: true, 
+    label: "limit",
+    isSensor: false,
+    collisionFilter: {
+        'group': -1,
+        'category': 2,
+        'mask': 0,
+    },
+    render: { fillStyle: '#FFFFFF', visible: true, opacity: 0.8}
+}
+
+let pointer = makeContainer(w/2,335, 3, 580, pointerOptions)
 
 let ground = makeContainer(w/2, 510*scalar, 328*scalar, 20*scalar, wallOptions);
 var curFruit = makeCherry((w/2)-135, _y);
@@ -120,8 +134,10 @@ Composite.add(world, [
     ground,
     leftWall,
     rightWall,
+    pointer,
     curFruit,
     fruitWait,
+    
     //
     //b1,
     // DONE makeFruit((w/2)+100, _y+120, 0),
@@ -146,16 +162,19 @@ Events.on(engine, 'collisionStart', function(event) {
                     console.log("loss")
                 }
                 hasFallenEnough = true;
-                Composite.add(world, curFruit)
+                //Composite.add(world, pointer);
+                pointer.render.visible = true;
+                Composite.add(world, curFruit);
+                
             }
             
             if(pair.bodyA.label == pair.bodyB.label){
                // console.log(fruitList.get(pair.bodyA.label))
-                Composite.remove(world, pair.bodyA)
-                Composite.remove(world, pair.bodyB)
+                Composite.remove(world, pair.bodyA);
+                Composite.remove(world, pair.bodyB);
                 Composite.add(world, makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,
                                                (pair.bodyA.position.y + pair.bodyB.position.y)/2,
-                                                fruitList.get(pair.bodyA.label)+1))
+                                                fruitList.get(pair.bodyA.label)+1));
             }
         }
     });
@@ -163,6 +182,7 @@ Events.on(engine, 'collisionStart', function(event) {
 document.addEventListener("keydown", function(e){
     if(e.key == "s"){
         render.options.showCollisions = !render.options.showCollisions;
+        //pointer.render.visibile = false;
     }
 });
 
@@ -171,24 +191,27 @@ document.addEventListener("click", function(event){
     if(hasFallenEnough && !hasLost && event.target != gameOverButton){
         Body.setStatic(curFruit, false) 
         hasFallenEnough = false;
-        curId = curFruit.id
+        curId = curFruit.id;
+        //Composite.remove(world, pointer);
+        pointer.render.visible = false;
+
         //var rand = Math.round(4/(Math.random()*4+1))-1
-        var rand = Math.round((Math.random()*4))
+        var rand = Math.round((Math.random()*4));
         //var rand = 4
         if(event.pageX < (w/2)-max){
             curFruit = makeFruit((w/2)-max, _y, rand)
             max = 145*scalar-fruitRadius.get(curFruit.label);
-            Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y})
-            //curFruit = makeCherry((w/2)-135, (h*0.8)-420)
+            Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
+            Body.setPosition(pointer, {x:(w/2)-max, y:335});
         } else if(event.pageX > (w/2)+max) {
             curFruit = makeFruit((w/2)+max, _y, rand)
             max = 145*scalar-fruitRadius.get(curFruit.label);
-            Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y})
-            //curFruit = makeCherry((w/2)+135, (h*0.8)-420)
+            Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
+            Body.setPosition(pointer, {x:(w/2)+max, y:335});
         } else {
-            curFruit = makeFruit(event.pageX, _y, rand)
-            //curFruit = makeCherry(event.pageX, (h*0.8)-420)
+            curFruit = makeFruit(event.pageX, _y, rand);
         }
+        
         Body.setStatic(curFruit, true)
     }
 });
@@ -196,12 +219,16 @@ document.addEventListener("click", function(event){
 
 document.addEventListener("mousemove", function(event){
     var max = 145*scalar-fruitRadius.get(curFruit.label);
+    
     if(event.pageX < (w/2)-max){
         Body.setPosition(curFruit, {x:(w/2)-max, y:_y})
+        Body.setPosition(pointer, {x:(w/2)-max, y:335})
     } else if(event.pageX > (w/2)+max) {
         Body.setPosition(curFruit, {x:(w/2)+max, y:_y})
+        Body.setPosition(pointer, {x:(w/2)+max, y:335})
     } else {
         Body.setPosition(curFruit, {x:event.pageX, y:_y})
+        Body.setPosition(pointer, {x:event.pageX, y:335})
     }
     
 });
