@@ -19,6 +19,8 @@ var _y = 43;
 var hasLost = false;
 var scalar = 1.4;
 
+var points = 0;
+
 
 const fruitList = new Map([["cherry", 0],
                         ["strawberry", 1],
@@ -31,6 +33,18 @@ const fruitList = new Map([["cherry", 0],
                         ["pineapple", 8],
                         ["melon", 9],
                         ["watermelon", 10]]);
+
+const pointList = new Map([["cherry", 1],
+                        ["strawberry", 3],
+                        ["grape", 6],
+                        ["dekopon", 10],
+                        ["persimmon", 15],
+                        ["apple", 21],
+                        ["pear", 28],
+                        ["peach", 36],
+                        ["pineapple", 45],
+                        ["melon", 55],
+                        ["watermelon", 66]]);
 
 const fruitRadius = new Map([["cherry", 11*scalar],
                         ["strawberry", 15*scalar],
@@ -103,7 +117,7 @@ const pointerOptions = {
         'category': 2,
         'mask': 0,
     },
-    render: { fillStyle: '#FFFFFF', visible: true, opacity: 1.8}
+    render: { fillStyle: '#FFFFFF', visible: true, opacity: 1}
 }
 
 let pointer = makeContainer(w/2,377, 3, 645, pointerOptions)
@@ -160,7 +174,7 @@ Events.on(engine, 'collisionStart', function(event) {
             if((pair.bodyA.label == "limit" || pair.bodyB.label == "limit")){
                 if(pair.bodyA.id != curId && pair.bodyB.id != curId){
                     gameOver()
-                    console.log("loss")
+                    //console.log("loss")
                 }
                 hasFallenEnough = true;
                 //Composite.add(world, pointer);
@@ -176,6 +190,9 @@ Events.on(engine, 'collisionStart', function(event) {
                 Composite.add(world, makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,
                                                (pair.bodyA.position.y + pair.bodyB.position.y)/2,
                                                 fruitList.get(pair.bodyA.label)+1));
+                points+=pointList.get(pair.bodyA.label)+1;
+                document.getElementById("totalPoints").innerHTML = points;
+                console.log(points);
             }
         }
     });
@@ -487,6 +504,8 @@ function reset(){
         ele.style.visibility = "visible";
         hasLost = true;
     }
+    document.getElementById("totalPoints").innerHTML = 0;
+    points = 0;
 }
 function makeContainer(x,y,h,w, opt){
     return Bodies.rectangle(x, y, h, w, opt);

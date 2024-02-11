@@ -22,8 +22,8 @@ body{
 p.joever{
   position: relative;
   width: 400px;
-  padding: 10px;
   font-size: 40px;
+  top:-12px;
   font-weight:bold;
   font-family: Arial, Helvetica, sans-serif;
   color: #f2e9b2;
@@ -71,7 +71,7 @@ p.lossText {
 
 img.test {
   position: absolute;
-  top:calc(193.5px * var(--scalar));
+  top:calc(179px * var(--scalar));
   width: calc(308px * var(--scalar));
   height: calc(420px * var(--scalar));
   z-index: -1;
@@ -103,7 +103,7 @@ img.bg {
   position: absolute;
   width: 100vw;
   height: calc(100px * var(--scalar));
-  top:calc(303px * var(--scalar));
+  top:calc(289px * var(--scalar));
   z-index: -4;
 }
 .thirdbrownbox {
@@ -111,7 +111,7 @@ img.bg {
   position: absolute;
   width: 100vw;
   height: calc(55px * var(--scalar));
-  top:calc(354px * var(--scalar));
+  top:calc(340px * var(--scalar));
   z-index: -3;
 }
 .fourthbrownbox {
@@ -125,11 +125,22 @@ img.bg {
   background-color: #dcb58c;
   position: absolute;
   width: 100vw;
-  height: calc(5px * var(--scalar));
-  top: calc(368px * var(--scalar));
+  height: calc(4px * var(--scalar));
+  top: calc(354px * var(--scalar));
   z-index: -2;
 }
 
 :root {
   --scalar: 1.4;
+}
+
+.points {
+  position: absolute;
+  top:80px;
+  text-align: center;
+  font-size: 30px;
+  width: 100vw;
+  font-weight:bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #f2e9b2;
 }
