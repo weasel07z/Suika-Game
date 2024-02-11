@@ -103,10 +103,10 @@ const pointerOptions = {
         'category': 2,
         'mask': 0,
     },
-    render: { fillStyle: '#FFFFFF', visible: true, opacity: 0.8}
+    render: { fillStyle: '#FFFFFF', visible: true, opacity: 1.8}
 }
 
-let pointer = makeContainer(w/2,335, 3, 580, pointerOptions)
+let pointer = makeContainer(w/2,377, 3, 645, pointerOptions)
 
 let ground = makeContainer(w/2, 510*scalar, 328*scalar, 20*scalar, wallOptions);
 var curFruit = makeCherry((w/2)-135, _y);
@@ -203,12 +203,12 @@ document.addEventListener("click", function(event){
             curFruit = makeFruit((w/2)-max, _y, rand)
             max = 145*scalar-fruitRadius.get(curFruit.label);
             Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
-            Body.setPosition(pointer, {x:(w/2)-max, y:335});
+            Body.setPosition(pointer, {x:(w/2)-max, y:380});
         } else if(event.pageX > (w/2)+max) {
             curFruit = makeFruit((w/2)+max, _y, rand)
             max = 145*scalar-fruitRadius.get(curFruit.label);
             Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
-            Body.setPosition(pointer, {x:(w/2)+max, y:335});
+            Body.setPosition(pointer, {x:(w/2)+max, y:377});
         } else {
             curFruit = makeFruit(event.pageX, _y, rand);
         }
@@ -223,13 +223,13 @@ document.addEventListener("mousemove", function(event){
     
     if(event.pageX < (w/2)-max){
         Body.setPosition(curFruit, {x:(w/2)-max, y:_y})
-        Body.setPosition(pointer, {x:(w/2)-max, y:335})
+        Body.setPosition(pointer, {x:(w/2)-max, y:377})
     } else if(event.pageX > (w/2)+max) {
         Body.setPosition(curFruit, {x:(w/2)+max, y:_y})
-        Body.setPosition(pointer, {x:(w/2)+max, y:335})
+        Body.setPosition(pointer, {x:(w/2)+max, y:377})
     } else {
         Body.setPosition(curFruit, {x:event.pageX, y:_y})
-        Body.setPosition(pointer, {x:event.pageX, y:335})
+        Body.setPosition(pointer, {x:event.pageX, y:377})
     }
     
 });
