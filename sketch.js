@@ -475,6 +475,7 @@ function reset(){
         ground,
         leftWall,
         rightWall,
+        pointer,
         curFruit,
         fruitWait,
     ]);
