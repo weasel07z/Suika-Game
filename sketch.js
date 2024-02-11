@@ -109,7 +109,7 @@ const pointerOptions = {
 let pointer = makeContainer(w/2,377, 3, 645, pointerOptions)
 
 let ground = makeContainer(w/2, 510*scalar, 328*scalar, 20*scalar, wallOptions);
-var curFruit = makeCherry((w/2)-135, _y);
+var curFruit = makeCherry((w/2), _y);
 var curId = curFruit.id;
 
 var hasFallenEnough = true;
