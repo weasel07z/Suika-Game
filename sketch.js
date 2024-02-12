@@ -17,10 +17,12 @@ var h = window.innerHeight;
 var _y = 43;
 // idk if this is needed but wtv
 var hasLost = false;
-var scalar = 1.4;
+var scalar = 1.3;
 
 var points = 0;
 
+console.log("window width: " + w)
+console.log("window height: " + h)
 
 const fruitList = new Map([["cherry", 0],
                         ["strawberry", 1],
@@ -50,7 +52,7 @@ const fruitRadius = new Map([["cherry", 11*scalar],
                         ["strawberry", 15*scalar],
                         ["grape", 20*scalar],
                         ["dekopon",22*scalar],
-                        ["persimmon", 28*scalar],
+                        ["persimmon", 30*scalar],
                         ["pear", 41*scalar],
                         ["peach", 50*scalar],
                         ["pineapple", 59*scalar],
@@ -75,7 +77,7 @@ var render = Render.create({
     engine: engine,
     options: {
         width: w,
-        height: 600*scalar,
+        height: h,
         wireframes: false,
         background:'#60585800',
         pixelRatio: window.devicePixelRatio,
@@ -97,7 +99,7 @@ const wallOptions = {
     friction: 0.2,
     isStatic: true, 
     label: "wall",
-    render: { fillStyle: '#333', visible: false, opacity: 0.5 }
+    render: { fillStyle: '#333', visible: true, opacity: 0.5 }
 }
 const heightLimitOptions = {
     friction: 0.0,
@@ -510,3 +512,18 @@ function reset(){
 function makeContainer(x,y,h,w, opt){
     return Bodies.rectangle(x, y, h, w, opt);
 }
+
+window.addEventListener('resize', function(event) {
+    //document.getElementById("resized").style.display = "block";
+    w = window.innerWidth;
+    h = window.innerHeight;
+    render.options.width = window.innerWidth;
+    render.options.height = window.innerHeigh;
+    render.canvas.width = window.innerWidth;
+    render.canvas.height = window.innerHeight;
+    Body.setPosition(leftWall, {x:(w/2)-155*scalar, y:325*scalar})
+    Body.setPosition(rightWall, {x:(w/2)+155*scalar, y:325*scalar})
+    Body.setPosition(fruitWait, {x:w/2, y:125*scalar})
+    Body.setPosition(ground, {x:w/2, y:510*scalar})
+    
+});
