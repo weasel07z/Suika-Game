@@ -240,8 +240,8 @@ document.addEventListener("click", function(event){
         pointer.render.visible = false;
 
         //var rand = Math.round(4/(Math.random()*4+1))-1
-        //var rand = Math.round((Math.random()*4));
-        var rand = 4
+        var rand = Math.round((Math.random()*4));
+        //var rand = 4
         if(event.pageX < (w/2)-max){
             curFruit = makeFruit((w/2)-max, _y, rand)
             max = 145*scalar-fruitRadius.get(curFruit.label);
