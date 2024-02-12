@@ -1,3 +1,5 @@
+/* THIS IS PROBABLY THE WORST CODE I'VE EVER SEEN/WRITTEN, DONT LOOK BELOW IM SO SORRY */
+
 var Engine = Matter.Engine,
         Render = Matter.Render,
         Runner = Matter.Runner,
@@ -157,8 +159,8 @@ let fruitWait = makeContainer(w/2, 124*scalar, 300*scalar, 1, heightLimitOptions
 
 let topofbox = makeContainer(w/2, 176,378,12, topOptions)
 
-/* TESTING FRUIT SIZES AND SPRITE SCALING
-let b1 = Bodies.circle((w/2)+10, _y+120, 20*scalar, {
+/* TESTING FRUIT SIZES AND SPRITE SCALING */
+let b1 = Bodies.circle((w/2)+10, _y+120, 70*scalar, {
     friction: 0.3,
     isStatic: true,
     label: "pineapple",
@@ -166,7 +168,7 @@ let b1 = Bodies.circle((w/2)+10, _y+120, 20*scalar, {
         fillStyle: '#000000' 
         
     }
-});*/
+});
 
 // scene code
 Composite.add(world, [
@@ -177,7 +179,7 @@ Composite.add(world, [
     curFruit,
     fruitWait,
     topofbox,
-    //
+    // TESTS BELOW
     //b1,
     // DONE makeFruit((w/2)+100, _y+120, 0),
     // DONE makeFruit((w/2)+10, _y+120, 1),
@@ -437,12 +439,13 @@ function makeFruit(x,y, fruitType){
                 label: "melon",
                 render: {
                     //fillStyle: '#b2f582'
+                    //opacity:0.5,
                     sprite: {
                         texture: 'img/melon.png',
                         xScale: .65*scalar,
                         yScale: .65*scalar,
                         xOffset: 0*scalar,
-                        yOffset: 0.115*scalar
+                        yOffset: 0.088*scalar
                     }, 
                 }
             });
