@@ -13,11 +13,17 @@ var Engine = Matter.Engine,
 var w = window.innerWidth;
 var h = window.innerHeight;
 
+if(h < 800) {
+    h = 800
+}
+
 // WAS 23 WHEN WORKING
-var _y = 43;
+var _y = 39;
 // idk if this is needed but wtv
 var hasLost = false;
 var scalar = 1.3;
+var _yoffset = 20
+
 
 var points = 0;
 
@@ -66,10 +72,10 @@ var engine = Engine.create(),
     world = engine.world;
 
 // GRAVITY CHROMBOOK    
-// engine.gravity.y = 0.9;
+engine.gravity.y = 0.9;
 
 // NORMAL
-engine.gravity.y = 0.3; 
+//engine.gravity.y = 0.3; 
 
 // create renderer
 var render = Render.create({
@@ -99,7 +105,7 @@ const wallOptions = {
     friction: 0.2,
     isStatic: true, 
     label: "wall",
-    render: { fillStyle: '#333', visible: true, opacity: 0.5 }
+    render: { fillStyle: '#333', visible: false, opacity: 0.5 }
 }
 const heightLimitOptions = {
     friction: 0.0,
@@ -109,6 +115,19 @@ const heightLimitOptions = {
     
     render: { fillStyle: '#333', visible: false, }
 }
+const topOptions = {
+    friction: 0.0,
+    isStatic: true, 
+    label: "limit",
+    isSensor: false,
+    collisionFilter: {
+        'group': -1,
+        'category': 2,
+        'mask': 0,
+    },
+    render: { fillStyle: '#f5d582', visible: true, opacity: 1}
+}
+//
 const pointerOptions = {
     friction: 0.0,
     isStatic: true, 
@@ -122,20 +141,23 @@ const pointerOptions = {
     render: { fillStyle: '#FFFFFF', visible: true, opacity: 1}
 }
 
-let pointer = makeContainer(w/2,377, 3, 645, pointerOptions)
+let pointer = makeContainer(w/2,350, 3, 625, pointerOptions)
 
-let ground = makeContainer(w/2, 510*scalar, 328*scalar, 20*scalar, wallOptions);
+let ground = makeContainer(w/2, 520*scalar, 328*scalar, 20*scalar, wallOptions);
 var curFruit = makeCherry((w/2), _y);
 var curId = curFruit.id;
 
 var hasFallenEnough = true;
 
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
-let leftWall = Bodies.rectangle((w/2)-155*scalar, 325*scalar, 20*scalar, 389*scalar, wallOptions);
-let rightWall = Bodies.rectangle((w/2)+155*scalar, 325*scalar, 20*scalar, 389*scalar, wallOptions);
-let fruitWait = makeContainer(w/2, 125*scalar, 300*scalar, 1, heightLimitOptions);
+// leftWall = Bodies.rectangle((w/2)-155*scalar, 265*scalar, 20*scalar, 489*scalar, wallOptions);
+let leftWall = Bodies.rectangle((w/2)-155*scalar, 275*scalar, 20*scalar, 489*scalar, wallOptions);
+let rightWall = Bodies.rectangle((w/2)+155*scalar, 275*scalar, 20*scalar, 489*scalar, wallOptions);
+let fruitWait = makeContainer(w/2, 124*scalar, 300*scalar, 1, heightLimitOptions);
 
+let topofbox = makeContainer(w/2, 176,378,12, topOptions)
 
+/* TESTING FRUIT SIZES AND SPRITE SCALING
 let b1 = Bodies.circle((w/2)+10, _y+120, 20*scalar, {
     friction: 0.3,
     isStatic: true,
@@ -144,7 +166,7 @@ let b1 = Bodies.circle((w/2)+10, _y+120, 20*scalar, {
         fillStyle: '#000000' 
         
     }
-});
+});*/
 
 // scene code
 Composite.add(world, [
@@ -154,7 +176,7 @@ Composite.add(world, [
     pointer,
     curFruit,
     fruitWait,
-    
+    topofbox,
     //
     //b1,
     // DONE makeFruit((w/2)+100, _y+120, 0),
@@ -192,7 +214,7 @@ Events.on(engine, 'collisionStart', function(event) {
                 Composite.add(world, makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,
                                                (pair.bodyA.position.y + pair.bodyB.position.y)/2,
                                                 fruitList.get(pair.bodyA.label)+1));
-                points+=pointList.get(pair.bodyA.label)+1;
+                points+=pointList.get(pair.bodyA.label);
                 document.getElementById("totalPoints").innerHTML = points;
                 console.log(points);
             }
@@ -216,22 +238,22 @@ document.addEventListener("click", function(event){
         pointer.render.visible = false;
 
         //var rand = Math.round(4/(Math.random()*4+1))-1
-        var rand = Math.round((Math.random()*4));
-        //var rand = 4
+        //var rand = Math.round((Math.random()*4));
+        var rand = 4
         if(event.pageX < (w/2)-max){
             curFruit = makeFruit((w/2)-max, _y, rand)
             max = 145*scalar-fruitRadius.get(curFruit.label);
             Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
-            Body.setPosition(pointer, {x:(w/2)-max, y:380});
+            //Body.setPosition(pointer, {x:(w/2)-max, y:380});
         } else if(event.pageX > (w/2)+max) {
             curFruit = makeFruit((w/2)+max, _y, rand)
             max = 145*scalar-fruitRadius.get(curFruit.label);
             Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
-            Body.setPosition(pointer, {x:(w/2)+max, y:377});
+            //Body.setPosition(pointer, {x:(w/2)+max, y:377});
         } else {
             curFruit = makeFruit(event.pageX, _y, rand);
         }
-        
+        Composite.add(world,topofbox)
         Body.setStatic(curFruit, true)
     }
 });
@@ -242,13 +264,13 @@ document.addEventListener("mousemove", function(event){
     
     if(event.pageX < (w/2)-max){
         Body.setPosition(curFruit, {x:(w/2)-max, y:_y})
-        Body.setPosition(pointer, {x:(w/2)-max, y:377})
+        Body.setPosition(pointer, {x:(w/2)-max, y:350})
     } else if(event.pageX > (w/2)+max) {
         Body.setPosition(curFruit, {x:(w/2)+max, y:_y})
-        Body.setPosition(pointer, {x:(w/2)+max, y:377})
+        Body.setPosition(pointer, {x:(w/2)+max, y:350})
     } else {
         Body.setPosition(curFruit, {x:event.pageX, y:_y})
-        Body.setPosition(pointer, {x:event.pageX, y:377})
+        Body.setPosition(pointer, {x:event.pageX, y:350})
     }
     
 });
@@ -517,13 +539,16 @@ window.addEventListener('resize', function(event) {
     //document.getElementById("resized").style.display = "block";
     w = window.innerWidth;
     h = window.innerHeight;
+    if(h < 800) {
+        h = 800
+    }
     render.options.width = window.innerWidth;
     render.options.height = window.innerHeigh;
     render.canvas.width = window.innerWidth;
     render.canvas.height = window.innerHeight;
-    Body.setPosition(leftWall, {x:(w/2)-155*scalar, y:325*scalar})
-    Body.setPosition(rightWall, {x:(w/2)+155*scalar, y:325*scalar})
-    Body.setPosition(fruitWait, {x:w/2, y:125*scalar})
-    Body.setPosition(ground, {x:w/2, y:510*scalar})
-    
+    Body.setPosition(leftWall, {x:(w/2)-155*scalar, y:275*scalar})
+    Body.setPosition(rightWall, {x:(w/2)+155*scalar, y:275*scalar})
+    Body.setPosition(fruitWait, {x:w/2, y:135*scalar})
+    Body.setPosition(ground, {x:w/2, y:520*scalar})
+    Body.setPosition(topofbox, {x:w/2, y:176})
 });

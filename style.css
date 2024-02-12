@@ -70,7 +70,7 @@ p.lossText {
 
 img.test {
   position: absolute;
-  top:calc(179px * var(--scalar));
+  top:calc(189px * var(--scalar));
   width: calc(308px * var(--scalar));
   height: calc(427px*var(--scalar));
   z-index: -1;
