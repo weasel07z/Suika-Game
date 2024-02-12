@@ -246,12 +246,12 @@ document.addEventListener("click", function(event){
             curFruit = makeFruit((w/2)-max, _y, rand)
             max = 145*scalar-fruitRadius.get(curFruit.label);
             Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
-            //Body.setPosition(pointer, {x:(w/2)-max, y:380});
+            Body.setPosition(pointer, {x:(w/2)-max, y:350});
         } else if(event.pageX > (w/2)+max) {
             curFruit = makeFruit((w/2)+max, _y, rand)
             max = 145*scalar-fruitRadius.get(curFruit.label);
             Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
-            //Body.setPosition(pointer, {x:(w/2)+max, y:377});
+            Body.setPosition(pointer, {x:(w/2)+max, y:350});
         } else {
             curFruit = makeFruit(event.pageX, _y, rand);
         }
