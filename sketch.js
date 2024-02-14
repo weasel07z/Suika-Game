@@ -26,7 +26,13 @@ var hasLost = false;
 var scalar = 1.3;
 var _yoffset = 20
 
+// GRAVITY FROM SLIDER + SLIDER NUMBER
+var slider = document.getElementById("gravitySlider");
+var sliderText = document.getElementById("sliderValue")
+sliderText.textContent = slider.value;
+var gravity = slider.value;
 
+// POINTS - SELF EXPLANETORY
 var points = 0;
 
 console.log("window width: " + w)
@@ -74,7 +80,7 @@ var engine = Engine.create(),
     world = engine.world;
 
 // GRAVITY CHROMBOOK    
-engine.gravity.y = 0.9;
+engine.gravity.y = gravity;
 
 // NORMAL
 //engine.gravity.y = 0.3; 
@@ -85,7 +91,7 @@ var render = Render.create({
     engine: engine,
     options: {
         width: w,
-        height: h,
+        height: 700,
         wireframes: false,
         background:'#60585800',
         pixelRatio: window.devicePixelRatio,
@@ -230,34 +236,37 @@ document.addEventListener("keydown", function(e){
     }
 });
 
-document.addEventListener("click", function(event){
-    var max = 145*scalar-fruitRadius.get(curFruit.label);
-    if(hasFallenEnough && !hasLost && event.target != gameOverButton){
-        Body.setStatic(curFruit, false) 
-        hasFallenEnough = false;
-        curId = curFruit.id;
-        //Composite.remove(world, pointer);
-        pointer.render.visible = false;
-
-        //var rand = Math.round(4/(Math.random()*4+1))-1
-        var rand = Math.round((Math.random()*4));
-        //var rand = 4
-        if(event.pageX < (w/2)-max){
-            curFruit = makeFruit((w/2)-max, _y, rand)
-            max = 145*scalar-fruitRadius.get(curFruit.label);
-            Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
-            Body.setPosition(pointer, {x:(w/2)-max, y:350});
-        } else if(event.pageX > (w/2)+max) {
-            curFruit = makeFruit((w/2)+max, _y, rand)
-            max = 145*scalar-fruitRadius.get(curFruit.label);
-            Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
-            Body.setPosition(pointer, {x:(w/2)+max, y:350});
-        } else {
-            curFruit = makeFruit(event.pageX, _y, rand);
+document.addEventListener("mousedown", function(event){
+    // dont drop fruit if using slider (probably another way to do this but im lazy)
+    if(event.target.tagName != "INPUT") {
+        var max = 145*scalar-fruitRadius.get(curFruit.label);
+        if(hasFallenEnough && !hasLost && event.target != gameOverButton){
+            Body.setStatic(curFruit, false) 
+            hasFallenEnough = false;
+            curId = curFruit.id;
+            //Composite.remove(world, pointer);
+            pointer.render.visible = false;
+    
+            //var rand = Math.round(4/(Math.random()*4+1))-1
+            var rand = Math.round((Math.random()*4));
+            //var rand = 4
+            if(event.pageX < (w/2)-max){
+                curFruit = makeFruit((w/2)-max, _y, rand)
+                max = 145*scalar-fruitRadius.get(curFruit.label);
+                Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
+                Body.setPosition(pointer, {x:(w/2)-max, y:350});
+            } else if(event.pageX > (w/2)+max) {
+                curFruit = makeFruit((w/2)+max, _y, rand)
+                max = 145*scalar-fruitRadius.get(curFruit.label);
+                Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
+                Body.setPosition(pointer, {x:(w/2)+max, y:350});
+            } else {
+                curFruit = makeFruit(event.pageX, _y, rand);
+            }
+            Composite.add(world,topofbox)
+            Body.setStatic(curFruit, true)
         }
-        Composite.add(world,topofbox)
-        Body.setStatic(curFruit, true)
-    }
+    }    
 });
 
 
@@ -546,12 +555,19 @@ window.addEventListener('resize', function(event) {
         h = 800
     }
     render.options.width = window.innerWidth;
-    render.options.height = window.innerHeigh;
+    //render.options.height = window.innerHeigh;
     render.canvas.width = window.innerWidth;
-    render.canvas.height = window.innerHeight;
+    //render.canvas.height = window.innerHeight;
     Body.setPosition(leftWall, {x:(w/2)-155*scalar, y:275*scalar})
     Body.setPosition(rightWall, {x:(w/2)+155*scalar, y:275*scalar})
     Body.setPosition(fruitWait, {x:w/2, y:135*scalar})
     Body.setPosition(ground, {x:w/2, y:520*scalar})
     Body.setPosition(topofbox, {x:w/2, y:176})
 });
+
+slider.oninput = function(){
+    gravity = this.value;
+    sliderText.textContent = this.value;
+    engine.gravity.y = gravity;
+    console.log(percent)
+}

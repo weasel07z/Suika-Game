@@ -102,7 +102,7 @@ img.bg {
   position: absolute;
   width: 100vw;
   height: calc(100px * var(--scalar));
-  top:calc(289px * var(--scalar));
+  top:calc(303px * var(--scalar));
   z-index: -4;
 }
 .thirdbrownbox {
@@ -110,7 +110,7 @@ img.bg {
   position: absolute;
   width: 100vw;
   height: calc(55px * var(--scalar));
-  top:calc(340px * var(--scalar));
+  top:calc(354px * var(--scalar));
   z-index: -3;
 }
 .fourthbrownbox {
@@ -125,7 +125,7 @@ img.bg {
   position: absolute;
   width: 100vw;
   height: calc(4px * var(--scalar));
-  top: calc(354px * var(--scalar));
+  top: calc(368px * var(--scalar));
   z-index: -2;
 }
 
@@ -150,4 +150,46 @@ img.bg {
   top:100px;
   display: none;
   font-weight: bold;
+}
+
+.sliderText {
+  width:100%;
+  text-align: center;
+  position: relative;
+  top:-20px;
+  font-weight:bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #c48e50;
+  font-size: 30px;
+}
+.slider {
+  position: relative;
+  width: 50%;
+  -webkit-appearance: none;
+  height:10px;
+  border-radius: 10px;
+  top:-35px;
+}
+.slider:hover {
+  opacity: 0.8;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #eeac57;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#sliderValue {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 20px; 
+  color: #eeac57;
+  font-weight:bold;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100px;
 }
