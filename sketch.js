@@ -15,8 +15,8 @@ var Engine = Matter.Engine,
 var w = window.innerWidth;
 var h = window.innerHeight;
 
-if(h < 800) {
-    h = 800
+if(h < 700) {
+    h = 700
 }
 
 // WAS 23 WHEN WORKING
@@ -162,6 +162,8 @@ var hasFallenEnough = true;
 let leftWall = Bodies.rectangle((w/2)-155*scalar, 275*scalar, 20*scalar, 489*scalar, wallOptions);
 let rightWall = Bodies.rectangle((w/2)+155*scalar, 275*scalar, 20*scalar, 489*scalar, wallOptions);
 let fruitWait = makeContainer(w/2, 124*scalar, 300*scalar, 1, heightLimitOptions);
+fruitWait.label = "wait";
+let fruitLimit = makeContainer(w/2, 106*scalar, 300*scalar, 1, heightLimitOptions);
 
 let topofbox = makeContainer(w/2, 176,378,12, topOptions)
 
@@ -185,6 +187,7 @@ Composite.add(world, [
     curFruit,
     fruitWait,
     topofbox,
+    fruitLimit,
     // TESTS BELOW
     //b1,
     // DONE makeFruit((w/2)+100, _y+120, 0),
@@ -203,25 +206,35 @@ Composite.add(world, [
 Events.on(engine, 'collisionStart', function(event) {
     event.pairs.forEach(pair => {
         if(pair.bodyA.label != "wall" && pair.bodyB.label != "wall"){
+            
             if((pair.bodyA.label == "limit" || pair.bodyB.label == "limit")){
                 if(pair.bodyA.id != curId && pair.bodyB.id != curId){
-                    gameOver()
+                    //console.log("bodyA id: " + pair.bodyA.id);
+                    //console.log("bodyB id: " + pair.bodyB.id);
+                    if(pair.bodyA.id != 0 && pair.bodyB.speed == 0){
+                        gameOver()
+                    }
                     //console.log("loss")
                 }
+                
+                //Composite.add(world, pointer);   
+            }
+            if(((pair.bodyA.label == "wait" || pair.bodyB.label == "wait") && (pair.bodyA.id == curId || pair.bodyB.id == curId))){
+
                 hasFallenEnough = true;
-                //Composite.add(world, pointer);
                 pointer.render.visible = true;
                 Composite.add(world, curFruit);
-                
             }
             
             if(pair.bodyA.label == pair.bodyB.label){
                // console.log(fruitList.get(pair.bodyA.label))
                 Composite.remove(world, pair.bodyA);
                 Composite.remove(world, pair.bodyB);
-                Composite.add(world, makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,
-                                               (pair.bodyA.position.y + pair.bodyB.position.y)/2,
-                                                fruitList.get(pair.bodyA.label)+1));
+                tempFruit = makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
+                Composite.add(world, tempFruit);
+                //tempId = tempFruit.id;
+                //console.log("tempId: " + tempId)
+                //Body.setSpeed(tempFruit, 0.01)
                 points+=pointList.get(pair.bodyA.label);
                 document.getElementById("totalPoints").innerHTML = points;
                 console.log(points);
@@ -513,6 +526,7 @@ function gameOver(){
     var ele = document.getElementById("Lcontainer");
     ele.style.visibility = "visible";
     hasLost = true;
+    
     //if(ele.style.visibility == "visible"){
     //    ele.style.visibility = "hidden";
     //    hasLost = false;
@@ -531,6 +545,7 @@ function reset(){
         pointer,
         curFruit,
         fruitWait,
+        fruitLimit,
     ]);
     var ele = document.getElementById("Lcontainer");
     if(ele.style.visibility == "visible"){
@@ -542,6 +557,7 @@ function reset(){
     }
     document.getElementById("totalPoints").innerHTML = 0;
     points = 0;
+    hasFallenEnough = true;
 }
 function makeContainer(x,y,h,w, opt){
     return Bodies.rectangle(x, y, h, w, opt);
@@ -551,8 +567,8 @@ window.addEventListener('resize', function(event) {
     //document.getElementById("resized").style.display = "block";
     w = window.innerWidth;
     h = window.innerHeight;
-    if(h < 800) {
-        h = 800
+    if(h < 700) {
+        h = 700
     }
     render.options.width = window.innerWidth;
     //render.options.height = window.innerHeigh;
@@ -560,9 +576,10 @@ window.addEventListener('resize', function(event) {
     //render.canvas.height = window.innerHeight;
     Body.setPosition(leftWall, {x:(w/2)-155*scalar, y:275*scalar})
     Body.setPosition(rightWall, {x:(w/2)+155*scalar, y:275*scalar})
-    Body.setPosition(fruitWait, {x:w/2, y:135*scalar})
+    Body.setPosition(fruitWait, {x:w/2, y:124*scalar})
     Body.setPosition(ground, {x:w/2, y:520*scalar})
     Body.setPosition(topofbox, {x:w/2, y:176})
+    Body.setPosition(fruitLimit, {x:w/2,y:109*scalar})
 });
 
 slider.oninput = function(){
