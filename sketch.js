@@ -80,7 +80,7 @@ var engine = Engine.create(),
     world = engine.world;
 
 // GRAVITY CHROMBOOK    
-engine.gravity.y = gravity;
+//engine.gravity.y = gravity;
 
 // NORMAL
 //engine.gravity.y = 0.3; 
