@@ -166,6 +166,7 @@ img.bg {
   position: relative;
   width: 50%;
   -webkit-appearance: none;
+  appearance: none;
   height:10px;
   border-radius: 10px;
   top:-35px;
