@@ -106,8 +106,11 @@ var render = Render.create({
 Render.run(render);
 
 // create runner
-var runner = Runner.create();
-Runner.run(engine);
+var runner = Runner.create({
+    isFixed:true,
+    delta:1000/165,
+});
+Runner.run(runner,engine);
 
 const wallOptions = {
     friction: 0.2,
