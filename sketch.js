@@ -80,7 +80,7 @@ var engine = Engine.create(),
     world = engine.world;
 
 // GRAVITY CHROMBOOK    
-engine.gravity.y = gravity;
+//engine.gravity.y = gravity;
 
 // NORMAL
 //engine.gravity.y = 0.3; 
@@ -106,7 +106,10 @@ var render = Render.create({
 Render.run(render);
 
 // create runner
-var runner = Runner.create();
+var runner = Runner.create({
+    isFixed: true,
+    delta: 1000/165,
+});
 Runner.run(engine);
 
 const wallOptions = {
