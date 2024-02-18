@@ -16,7 +16,7 @@ var w = window.innerWidth;
 var h = window.innerHeight;
 
 if(h < 700) {
-    h = 700
+    h = 700;
 }
 
 // WAS 23 WHEN WORKING
@@ -170,6 +170,29 @@ let fruitLimit = makeContainer(w/2, 106*scalar, 300*scalar, 1, heightLimitOption
 
 let topofbox = makeContainer(w/2, 176,378,12, topOptions)
 
+var nextFruit = makeFruit(w/2+350, 130, Math.round((Math.random()*4)));
+nextFruit.isStatic = true;
+
+let nextFruitBubble = Bodies.circle(w/2+350, 120, 10*scalar, {
+    isStatic: true,
+    label: "bubble",
+    collisionFilter: {
+        'group': -1,
+        'category': 2,
+        'mask': 0,
+    },
+    render: {
+        //fillStyle: '#d60007' 
+        opacity:0.7,    
+        sprite: {
+            texture: 'img/nextFruitBubble.png',
+            xScale: 0.2,
+            yScale: 0.2,
+        }
+    }
+});
+
+
 /* TESTING FRUIT SIZES AND SPRITE SCALING */
 let b1 = Bodies.circle((w/2)+10, _y+120, 70*scalar, {
     friction: 0.3,
@@ -191,6 +214,8 @@ Composite.add(world, [
     fruitWait,
     topofbox,
     fruitLimit,
+    nextFruitBubble,
+    nextFruit,
     // TESTS BELOW
     //b1,
     // DONE makeFruit((w/2)+100, _y+120, 0),
@@ -205,7 +230,6 @@ Composite.add(world, [
     // DONE makeFruit((w/2)+10, _y+120, 9)
 
 ]);
-
 Events.on(engine, 'collisionStart', function(event) {
     event.pairs.forEach(pair => {
         if(pair.bodyA.label != "wall" && pair.bodyB.label != "wall"){
@@ -240,7 +264,7 @@ Events.on(engine, 'collisionStart', function(event) {
                 //Body.setSpeed(tempFruit, 0.01)
                 points+=pointList.get(pair.bodyA.label);
                 document.getElementById("totalPoints").innerHTML = points;
-                console.log(points);
+                console.log("Points: " + points);
             }
         }
     });
@@ -254,6 +278,7 @@ document.addEventListener("keydown", function(e){
 
 document.addEventListener("mousedown", function(event){
     // dont drop fruit if using slider (probably another way to do this but im lazy)
+    console.log(fruitList.get(nextFruit.label))
     if(event.target.tagName != "INPUT") {
         var max = 145*scalar-fruitRadius.get(curFruit.label);
         if(hasFallenEnough && !hasLost && event.target != gameOverButton){
@@ -265,20 +290,25 @@ document.addEventListener("mousedown", function(event){
     
             //var rand = Math.round(4/(Math.random()*4+1))-1
             var rand = Math.round((Math.random()*4));
+            
             //var rand = 4
             if(event.pageX < (w/2)-max){
-                curFruit = makeFruit((w/2)-max, _y, rand)
+                curFruit = makeFruit((w/2)-max, _y, fruitList.get(nextFruit.label))
                 max = 145*scalar-fruitRadius.get(curFruit.label);
                 Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
                 Body.setPosition(pointer, {x:(w/2)-max, y:350});
             } else if(event.pageX > (w/2)+max) {
-                curFruit = makeFruit((w/2)+max, _y, rand)
+                curFruit = makeFruit((w/2)+max, _y, fruitList.get(nextFruit.label))
                 max = 145*scalar-fruitRadius.get(curFruit.label);
                 Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
                 Body.setPosition(pointer, {x:(w/2)+max, y:350});
             } else {
-                curFruit = makeFruit(event.pageX, _y, rand);
+                curFruit = makeFruit(event.pageX, _y, fruitList.get(nextFruit.label));
             }
+            Composite.remove(world, nextFruit)
+            nextFruit = makeFruit(w/2+350, 130, rand);  
+            Composite.add(world, nextFruit)
+            nextFruit.isStatic = true;
             Composite.add(world,topofbox)
             Body.setStatic(curFruit, true)
         }
@@ -573,16 +603,18 @@ window.addEventListener('resize', function(event) {
     if(h < 700) {
         h = 700
     }
-    render.options.width = window.innerWidth;
+    render.options.width = w;
     //render.options.height = window.innerHeigh;
-    render.canvas.width = window.innerWidth;
+    render.canvas.width = w;
     //render.canvas.height = window.innerHeight;
-    Body.setPosition(leftWall, {x:(w/2)-155*scalar, y:275*scalar})
-    Body.setPosition(rightWall, {x:(w/2)+155*scalar, y:275*scalar})
-    Body.setPosition(fruitWait, {x:w/2, y:124*scalar})
-    Body.setPosition(ground, {x:w/2, y:520*scalar})
-    Body.setPosition(topofbox, {x:w/2, y:176})
-    Body.setPosition(fruitLimit, {x:w/2,y:109*scalar})
+    Body.setPosition(leftWall, {x:(w/2)-155*scalar, y:275*scalar});
+    Body.setPosition(rightWall, {x:(w/2)+155*scalar, y:275*scalar});
+    Body.setPosition(fruitWait, {x:w/2, y:124*scalar});
+    Body.setPosition(ground, {x:w/2, y:520*scalar});
+    Body.setPosition(topofbox, {x:w/2, y:176});
+    Body.setPosition(fruitLimit, {x:w/2,y:109*scalar});
+    Body.setPosition(nextFruitBubble, {x:w/2+350, y:120});
+    Body.setPosition(nextFruit, {x:w/2+350, y:130});
 });
 
 slider.oninput = function(){
