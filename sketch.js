@@ -27,10 +27,10 @@ var scalar = 1.3;
 var _yoffset = 20
 
 // GRAVITY FROM SLIDER + SLIDER NUMBER
-var slider = document.getElementById("gravitySlider");
-var sliderText = document.getElementById("sliderValue")
-sliderText.textContent = slider.value;
-var gravity = slider.value;
+// var slider = document.getElementById("gravitySlider");
+// var sliderText = document.getElementById("sliderValue")
+// sliderText.textContent = slider.value;
+var gravity = 1;
 
 // POINTS - SELF EXPLANETORY
 var points = 0;
@@ -105,6 +105,7 @@ var render = Render.create({
 
 Render.run(render);
 
+playBgMusic();
 // create runner
 var runner = Runner.create({
     isFixed:true,
@@ -259,6 +260,7 @@ Events.on(engine, 'collisionStart', function(event) {
                 Composite.remove(world, pair.bodyB);
                 tempFruit = makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
                 Composite.add(world, tempFruit);
+                playMerge();
                 //tempId = tempFruit.id;
                 //console.log("tempId: " + tempId)
                 //Body.setSpeed(tempFruit, 0.01)
@@ -283,6 +285,7 @@ document.addEventListener("mousedown", function(event){
         var max = 145*scalar-fruitRadius.get(curFruit.label);
         if(hasFallenEnough && !hasLost && event.target != gameOverButton){
             Body.setStatic(curFruit, false) 
+            playDrop();
             hasFallenEnough = false;
             curId = curFruit.id;
             //Composite.remove(world, pointer);
@@ -617,9 +620,27 @@ window.addEventListener('resize', function(event) {
     Body.setPosition(nextFruit, {x:w/2+350, y:130});
 });
 
-slider.oninput = function(){
-    gravity = this.value;
-    sliderText.textContent = this.value;
-    engine.gravity.y = gravity;
-    console.log(percent)
+// slider.oninput = function(){
+//     gravity = this.value;
+//     sliderText.textContent = this.value;
+//     engine.gravity.y = gravity;
+//     console.log(percent)
+// }
+function playDrop() {
+    var audio1 = document.getElementById("drop");
+    audio1.play();
 }
+function playMerge() {
+    var audio2 = document.getElementById("merge");
+    audio2.play();
+}
+function playBgMusic() {
+    var audio3 = document.getElementById("bgmusic");
+    audio3.play();
+}
+/* Gravity Slider for html
+<p class="sliderText">Gravity</p>
+      <div class="center">
+        <input type="range" min="0" max="2" value="1" step="0.1" class="slider" id="gravitySlider">
+        <span id="sliderValue">1</span>
+      </div> */

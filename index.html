@@ -7,6 +7,9 @@
   </head>
   <body>
     <main>
+      <audio id="drop" src="img/drop.wav"></audio>
+      <audio id="merge" src="img/merge2.wav"></audio>
+      <audio id="bgmusic" src="img/bgmusic.mp3" controls loop></audio>
       <div class="points">Points: <span id="totalPoints">0</span></div>
       <div class="firstbrownbox"></div>
       <div class="secondbrownbox"></div>
@@ -25,11 +28,6 @@
             <br>
           <button class="playAgain" id="lossButton" onmouseup="reset()">Play Again</button>
         </div>
-      </div>
-      <p class="sliderText">Gravity</p>
-      <div class="center">
-        <input type="range" min="0" max="2" value="1" step="0.1" class="slider" id="gravitySlider">
-        <span id="sliderValue">1</span>
       </div>
     </main>
     <script src="sketch.js"></script>
