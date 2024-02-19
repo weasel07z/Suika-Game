@@ -30,7 +30,7 @@ var _yoffset = 20
 // var slider = document.getElementById("gravitySlider");
 // var sliderText = document.getElementById("sliderValue")
 // sliderText.textContent = slider.value;
-var gravity = 10;
+var gravity = 0.9;
 
 // POINTS - SELF EXPLANETORY
 var points = 0;
