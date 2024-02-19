@@ -109,7 +109,7 @@ playBgMusic();
 // create runner
 var runner = Runner.create({
     isFixed:true,
-    delta:1000/165,
+    delta:1000/60,
 });
 Runner.run(runner,engine);
 
