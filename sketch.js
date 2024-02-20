@@ -76,8 +76,12 @@ const fruitRadius = new Map([["cherry", 11*scalar],
 const mainContainer = document.getElementById("container");
 const gameOverButton = document.getElementById("lossButton");
 // create engine
-var engine = Engine.create(),
-    world = engine.world;
+var engine = Engine.create({
+    timing: {
+        isFixed: true,
+    },
+});
+world = engine.world;
 
 // GRAVITY CHROMBOOK    
 //engine.gravity.y = gravity;
@@ -105,13 +109,13 @@ var render = Render.create({
 
 Render.run(render);
 
-playBgMusic();
+//playBgMusic();
 // create runner
 var runner = Runner.create({
-    isFixed:true,
+    fps:165,
     delta:1000/165,
 });
-Runner.run(runner,engine);
+Runner.start(runner,engine);
 
 const wallOptions = {
     friction: 0.2,
@@ -634,13 +638,16 @@ function playMerge() {
     var audio2 = document.getElementById("merge");
     audio2.play();
 }
-function playBgMusic() {
-    var audio3 = document.getElementById("bgmusic");
-    audio3.play();
-}
+// function playBgMusic() {
+//     var audio3 = document.getElementById("bgmusic");
+//     audio3.play();
+// }
 /* Gravity Slider for html
 <p class="sliderText">Gravity</p>
       <div class="center">
         <input type="range" min="0" max="2" value="1" step="0.1" class="slider" id="gravitySlider">
         <span id="sliderValue">1</span>
-      </div> */
+      </div> 
+      
+      <audio  controls loop id="bgmusic" src="img/bgmusic.mp3"></audio>
+      */
