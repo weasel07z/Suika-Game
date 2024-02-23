@@ -112,8 +112,8 @@ Render.run(render);
 //playBgMusic();
 // create runner
 var runner = Runner.create({
-    fps:165,
-    delta:1000/165,
+    fps:30,
+    delta:1000/30,
 });
 Runner.start(runner,engine);
 
@@ -603,26 +603,26 @@ function makeContainer(x,y,h,w, opt){
     return Bodies.rectangle(x, y, h, w, opt);
 }
 
-window.addEventListener('resize', function(event) {
-    //document.getElementById("resized").style.display = "block";
-    w = window.innerWidth;
-    h = window.innerHeight;
-    if(h < 700) {
-        h = 700
-    }
-    render.options.width = w;
-    //render.options.height = window.innerHeigh;
-    render.canvas.width = w;
-    //render.canvas.height = window.innerHeight;
-    Body.setPosition(leftWall, {x:(w/2)-155*scalar, y:275*scalar});
-    Body.setPosition(rightWall, {x:(w/2)+155*scalar, y:275*scalar});
-    Body.setPosition(fruitWait, {x:w/2, y:124*scalar});
-    Body.setPosition(ground, {x:w/2, y:520*scalar});
-    Body.setPosition(topofbox, {x:w/2, y:176});
-    Body.setPosition(fruitLimit, {x:w/2,y:109*scalar});
-    Body.setPosition(nextFruitBubble, {x:w/2+350, y:120});
-    Body.setPosition(nextFruit, {x:w/2+350, y:130});
-});
+// window.addEventListener('resize', function(event) {
+//     //document.getElementById("resized").style.display = "block";
+//     w = window.innerWidth;
+//     h = window.innerHeight;
+//     if(h < 700) {
+//         h = 700
+//     }
+//     render.options.width = w;
+//     //render.options.height = window.innerHeigh;
+//     render.canvas.width = w;
+//     //render.canvas.height = window.innerHeight;
+//     Body.setPosition(leftWall, {x:(w/2)-155*scalar, y:275*scalar});
+//     Body.setPosition(rightWall, {x:(w/2)+155*scalar, y:275*scalar});
+//     Body.setPosition(fruitWait, {x:w/2, y:124*scalar});
+//     Body.setPosition(ground, {x:w/2, y:520*scalar});
+//     Body.setPosition(topofbox, {x:w/2, y:176});
+//     Body.setPosition(fruitLimit, {x:w/2,y:109*scalar});
+//     Body.setPosition(nextFruitBubble, {x:w/2+350, y:120});
+//     Body.setPosition(nextFruit, {x:w/2+350, y:130});
+// });
 
 // slider.oninput = function(){
 //     gravity = this.value;
