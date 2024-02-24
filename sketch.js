@@ -77,9 +77,9 @@ const mainContainer = document.getElementById("container");
 const gameOverButton = document.getElementById("lossButton");
 // create engine
 var engine = Engine.create({
-    timing: {
-        isFixed: true,
-    },
+    // timing: {
+    //     isFixed: true,
+    // },
 });
 world = engine.world;
 
@@ -112,9 +112,10 @@ Render.run(render);
 //playBgMusic();
 // create runner
 var runner = Runner.create({
-    fps:30,
-    delta:1000/30,
+    fps:60,
+    delta:1000/60,
 });
+engine.gravity.scale = 0.00018;
 Runner.start(runner,engine);
 
 const wallOptions = {
