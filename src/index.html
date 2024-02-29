@@ -28,6 +28,14 @@
           <p class="lossText">YOU LOST</header>
             <br>
           <button class="playAgain" id="lossButton" onmouseup="reset()">Play Again</button>
+          <p id="submitText">Submit Score</p>
+          <form id="submitForm">
+            <label for="name">Name: </label>
+            <input type="text" id="name" name="name" required>
+            <button type="button" id="submitButton">Submit</button>
+          </form>
+          <p id="scoreSubmit">Score Submitted!</p>
+          <p id="lowerThanNeeded">Score is lower than best.</p>
         </div>
       </div>
       <div class="center">

@@ -258,6 +258,7 @@ Events.on(engine, 'collisionStart', function(event) {
                 hasFallenEnough = true;
                 pointer.render.visible = true;
                 Composite.add(world, curFruit);
+                Composite.add(world, nextFruit);
             }
             
             if(pair.bodyA.label == pair.bodyB.label){
@@ -272,7 +273,7 @@ Events.on(engine, 'collisionStart', function(event) {
                 //Body.setSpeed(tempFruit, 0.01)
                 points+=pointList.get(pair.bodyA.label);
                 document.getElementById("totalPoints").innerHTML = points;
-                console.log("Points: " + points);
+               // console.log("Points: " + points);
             }
         }
     });
@@ -316,7 +317,7 @@ document.addEventListener("mousedown", function(event){
             }
             Composite.remove(world, nextFruit)
             nextFruit = makeFruit(w/2+350, 130, rand);  
-            Composite.add(world, nextFruit)
+            //Composite.add(world, nextFruit)
             nextFruit.isStatic = true;
             Composite.add(world,topofbox)
             Body.setStatic(curFruit, true)
@@ -565,19 +566,12 @@ var mouse = Mouse.create(render.canvas),
 render.mouse = mouse;
 */
 function gameOver(){
-    var ele = document.getElementById("Lcontainer");
-    ele.style.visibility = "visible";
+    document.getElementById("Lcontainer").style.visibility = "visible";
+    document.getElementById("submitForm").style.visibility = "visible";
+    document.getElementById("submitText").style.visibility = "visible";
     hasLost = true;
-    
-    //if(ele.style.visibility == "visible"){
-    //    ele.style.visibility = "hidden";
-    //    hasLost = false;
-    //} else {
-        
-        
-   // }
-    //reset();
 }
+
 function reset(){
     Composite.clear(world);
     Composite.add(world, [
@@ -588,13 +582,19 @@ function reset(){
         curFruit,
         fruitWait,
         fruitLimit,
+        nextFruit,
+        nextFruitBubble
     ]);
     var ele = document.getElementById("Lcontainer");
     if(ele.style.visibility == "visible"){
         ele.style.visibility = "hidden";
+        document.getElementById("submitForm").style.visibility = "hidden";
+        document.getElementById("submitText").style.visibility = "hidden";
         hasLost = false;
     } else {
         ele.style.visibility = "visible";
+        document.getElementById("submitForm").style.visibility = "visible";
+        document.getElementById("submitText").style.visibility = "visible";
         hasLost = true;
     }
     document.getElementById("totalPoints").innerHTML = 0;

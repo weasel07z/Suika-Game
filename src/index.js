@@ -40,12 +40,33 @@ const topScores = query(ref(db, 'scores'), orderByChild('points'));
 // }
 // retrieveLeaderboard();
 
+document.getElementById('submitButton').addEventListener("mousedown", function (e) {
+    var data;
+    e.preventDefault();
+    var element = document.getElementById("name")
+    if(element.value !== null && element.value !== "" && element.value !== " "){
+        var scoreRef = ref(db, 'scores/' + element.value + '/points')
+        onValue(scoreRef, (snapshot) => {
+            data = parseInt(snapshot.val());
+            console.log(parseInt(document.getElementById('totalPoints').innerHTML));
+          });
+        if(data > parseInt(document.getElementById('totalPoints').innerHTML)){
+            document.getElementById('lowerThanNeeded').style.visibility = "visible";
+        } else {
+            addScore(element.value, parseInt(document.getElementById('totalPoints').innerHTML))
+            document.getElementById('submitForm').style.visibility = "hidden";
+            document.getElementById('lowerThanNeeded').style.visibility = "hidden";
+            document.getElementById("submitText").style.visibility = "hidden";
+        }
+    }
+    document.getElementById('submitForm').reset();  
 
+});
 export function printLeaderboard(){
     onValue(topScores, function(snapshot) {
         //console.log(snapshot.val());
-        //var leaderboardList = document.getElementById('leaderboardList');
-        //leaderboardList.innerHTML = '';
+        var leaderboardList = document.getElementById('leaderboardList');
+        leaderboardList.innerHTML = '';
 
         snapshot.forEach(function(childSnapshot) {
             console.log(childSnapshot.val());
@@ -62,10 +83,10 @@ export function printLeaderboard(){
 }
 printLeaderboard();
 
-function randomScore(){
-    var name = namesArray[(Math.floor(Math.random() * namesArray.length))];
-    var points = Math.floor(Math.random()*1000+1);
-    set(ref(db, 'scores/' + points), {
+function addScore(_name,_points){
+    var name = _name;
+    var points = _points;
+    set(ref(db, 'scores/' + name), {
         username: name,
         points: points,
     });

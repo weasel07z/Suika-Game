@@ -49,15 +49,15 @@ p.joever{
 }
 .playAgain {
   width: 200px;
-  border-width: 2px;
-  border-color: #605858;
+  border: none;
   border-radius: 10px;
   height: 50px;
   font-size: 30px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  color: #000000;
   cursor: pointer;
+  background-color: #f3ab24;
+  color: #fff;
 }
 
 p.lossText {
@@ -67,7 +67,7 @@ p.lossText {
   font-size: 50px;
   font-weight:bold;
   font-family: Arial, Helvetica, sans-serif;
-  color: #ff5f5f;
+  color: #000000;
 }
 
 img.test {
@@ -228,6 +228,7 @@ audio { display:none;}
 
 .leaderboard h1 {
   text-align: center;
+  font-size: 50px;
 }
 
 #leaderboardList {
@@ -255,4 +256,78 @@ audio { display:none;}
   -ms-word-break: break-all;
   word-break: break-all;
   white-space: collapse balance;
+}
+#submitText {
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 50px;
+  font-weight:bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #8e5b1a;
+  margin-bottom: 0px;
+  visibility: hidden;
+}
+form {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  visibility: visible;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid #f3ab24;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+#submitForm button {
+  padding: 8px 20px;
+  background-color: #f3ab24;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#submitForm button:hover {
+  background-color: #c4891c;
+}
+
+label {
+  font-weight:bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #8e5b1a;
+  padding-right: 6px;
+}
+input[type="text"]:focus {
+  padding: 8px;
+  border: 1px solid #f3ab24;
+  border-radius: 4px;
+  margin-right: 10px;
+  outline: none;
+}
+#scoreSubmit {
+  position: relative;
+  text-align: center;
+  margin-top: -25px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight:bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #8e5b1a;
+  margin-bottom: 0px;
+  visibility: hidden;
+  z-index: -1;
+}
+#lowerThanNeeded {
+  font-size: 20px;
+  font-weight:bold;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #8e5b1a;
+  visibility: hidden;
+}
+#submitForm {
+  visibility: hidden;
 }
