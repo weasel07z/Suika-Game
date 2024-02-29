@@ -1,2 +1,0 @@
-# Suika-Game
-heyooo
