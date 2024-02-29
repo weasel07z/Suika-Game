@@ -74,7 +74,6 @@ const fruitRadius = new Map([["cherry", 11*scalar],
                         ["melon", 70*scalar],
                         ["watermelon", 82*scalar]]);
 
-const mainContainer = document.getElementById("container");
 const gameOverButton = document.getElementById("lossButton");
 // create engine
 var engine = Engine.create({
@@ -92,7 +91,7 @@ world = engine.world;
 
 // create renderer
 var render = Render.create({
-    element: mainContainer,
+    element: document.getElementById("container"),
     engine: engine,
     options: {
         width: w,
