@@ -191,7 +191,7 @@ let nextFruitBubble = Bodies.circle(w/2+350, 120, 10*scalar, {
         //fillStyle: '#d60007' 
         opacity:0.7,    
         sprite: {
-            texture: '../img/nextFruitBubble.png',
+            texture: 'img/nextFruitBubble.png',
             xScale: 0.2,
             yScale: 0.2,
         }
@@ -352,7 +352,7 @@ function makeFruit(x,y, fruitType){
                 render: {
                     //fillStyle: '#d60007' 
                     sprite: {
-                        texture: '../img/cherry.png',
+                        texture: 'img/cherry.png',
                         xScale: 0.46*scalar,
                         yScale: 0.46*scalar,
                         xOffset: -0.015*scalar,
@@ -371,7 +371,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#f04354'
                     //opacity: 0.5,
                     sprite: {
-                        texture: '../img/strawberry.png',
+                        texture: 'img/strawberry.png',
                         xScale: 0.72*scalar,
                         yScale: 0.72*scalar,
                         xOffset: -0.04*scalar,
@@ -389,7 +389,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#8152a3'
                     //opacity: 0.5,
                     sprite: {
-                        texture: '../img/grape.png',
+                        texture: 'img/grape.png',
                         xScale: 0.45*scalar,
                         yScale: 0.45*scalar,
                         xOffset: 0.05*scalar,
@@ -406,7 +406,7 @@ function makeFruit(x,y, fruitType){
                 render: {
                     //fillStyle: '#f5ad5f' 
                     sprite: {
-                        texture: '../img/persimmon.png',
+                        texture: 'img/persimmon.png',
                         xScale: 0.44*scalar,
                         yScale: 0.43*scalar,
                         xOffset: 0.03*scalar,
@@ -422,7 +422,7 @@ function makeFruit(x,y, fruitType){
                     render: {
                         //fillStyle: '#f58916'
                         sprite: {
-                            texture: '../img/orange.png',
+                            texture: 'img/orange.png',
                             xScale: 0.47*scalar,
                             yScale: 0.47*scalar
                         }
@@ -438,7 +438,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#ffed8a' 
                     //opacity: 0.5,
                     sprite: {
-                        texture: '../img/apple.png',
+                        texture: 'img/apple.png',
                         xScale: 0.42*scalar,
                         yScale: 0.42*scalar,
                         xOffset: -0.005*scalar,
@@ -456,7 +456,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#ffed8a' 
                     //opacity: 0.5,
                     sprite: {
-                        texture: '../img/yellow.png',
+                        texture: 'img/yellow.png',
                         xScale: 0.65*scalar,
                         yScale: 0.65*scalar,
                         xOffset: 0.024*scalar,
@@ -473,7 +473,7 @@ function makeFruit(x,y, fruitType){
                 render: {
                     //fillStyle: '#edcad5' 
                     sprite: {
-                        texture: '../img/Peach.png',
+                        texture: 'img/Peach.png',
                         xScale: 1.02*scalar,
                         yScale: 1.02*scalar,
                     },
@@ -488,7 +488,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#f7cd43'
                     //opacity: 0.5, 
                     sprite: {
-                        texture: '../img/pinapple.png',
+                        texture: 'img/pinapple.png',
                         xScale: .68*scalar,
                         yScale: .68*scalar,
                         xOffset: 0*scalar,
@@ -505,7 +505,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#b2f582'
                     //opacity:0.5,
                     sprite: {
-                        texture: '../img/melon.png',
+                        texture: 'img/melon.png',
                         xScale: .65*scalar,
                         yScale: .65*scalar,
                         xOffset: 0*scalar,
@@ -522,7 +522,7 @@ function makeFruit(x,y, fruitType){
                     //fillStyle: '#369121' 
                     //opacity: 0.5,
                     sprite: {
-                        texture: '../img/watermelon.png',
+                        texture: 'img/watermelon.png',
                         xScale: .65*scalar,
                         yScale: .65*scalar,
                         xOffset: 0*scalar,
@@ -541,7 +541,7 @@ function makeCherry(x, y) {
         render: {
             //fillStyle: '#d60007'     
             sprite: {
-                texture: '../img/cherry.png',
+                texture: 'img/cherry.png',
                 xScale: 0.46*scalar,
                 yScale: 0.46*scalar,
                 xOffset: -0.015*scalar,
