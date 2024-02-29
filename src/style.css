@@ -213,4 +213,46 @@ img.bg {
  right: 10px;
  scale:0.1;
 }
+
 audio { display:none;}
+
+.leaderboard {
+  /* max-width: 1000px; */
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  color:#573303;
+  /* -ms-word-break: break-all;
+  word-break: break-all; */
+}
+
+.leaderboard h1 {
+  text-align: center;
+}
+
+#leaderboardList {
+  list-style: none;
+  padding: 0;
+}
+
+#leaderboardList li {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 2px solid #f3ab24;
+  color:#8e5b1a;
+  font-size: 20px;
+}
+
+#leaderboardList li:last-child {
+  border-bottom: none;
+}
+
+#leaderboardList li span {
+  font-weight: bold;
+}
+#words {
+  -ms-word-break: break-all;
+  word-break: break-all;
+  white-space: collapse balance;
+}

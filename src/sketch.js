@@ -35,8 +35,9 @@ var gravity = 1;
 // POINTS - SELF EXPLANETORY
 var points = 0;
 
-console.log("window width: " + w)
-console.log("window height: " + h)
+// window height and width
+// console.log("window width: " + w)
+// console.log("window height: " + h)
 
 const fruitList = new Map([["cherry", 0],
                         ["strawberry", 1],
@@ -285,7 +286,7 @@ document.addEventListener("keydown", function(e){
 
 document.addEventListener("mousedown", function(event){
     // dont drop fruit if using slider (probably another way to do this but im lazy)
-    console.log(fruitList.get(nextFruit.label))
+    //console.log(fruitList.get(nextFruit.label))
     if(event.target.tagName != "INPUT") {
         var max = 145*scalar-fruitRadius.get(curFruit.label);
         if(hasFallenEnough && !hasLost && event.target != gameOverButton){
