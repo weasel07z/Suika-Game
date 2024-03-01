@@ -655,9 +655,13 @@ function playMerge() {
       <audio  controls loop id="bgmusic" src="img/bgmusic.mp3"></audio>
       */
 
-slider.oninput = function(){
-    gravity = this.value;
-    sliderText.textContent = this.value;
-    engine.gravity.y = gravity;
-    //console.log(percent);
-}
+// slider.oninput = function(){
+//     gravity = this.value;
+//     sliderText.textContent = this.value;
+//     engine.gravity.y = gravity;
+//     //console.log(percent);
+// }
+document.getElementById('gravitySlider').addEventListener('mouseup', function(e) {
+    sliderText.textContent = document.getElementById('gravitySlider').value;
+    engine.gravity.y = document.getElementById('gravitySlider').value;
+})
