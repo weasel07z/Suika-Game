@@ -27,10 +27,10 @@ var scalar = 1.3;
 var _yoffset = 20
 
 // GRAVITY FROM SLIDER + SLIDER NUMBER
-var slider = document.getElementById("gravitySlider");
-var sliderText = document.getElementById("sliderValue");
-sliderText.textContent = slider.value;
-var gravity = 1;
+// var slider = document.getElementById("gravitySlider");
+// var sliderText = document.getElementById("sliderValue");
+// sliderText.innerHTML = slider.value;
+var gravity = 2;
 
 // POINTS - SELF EXPLANETORY
 var points = 0;
@@ -114,7 +114,7 @@ Render.run(render);
 var runner = Runner.create({
     fps:30,
     delta:1000/30,
-    isFixed: true,
+    //isFixed: true,
 });
 engine.gravity.scale = 0.00018;
 Runner.start(runner,engine);
@@ -661,8 +661,8 @@ function playMerge() {
 //     engine.gravity.y = gravity;
 //     //console.log(percent);
 // }
-document.getElementById('gravitySlider').addEventListener('mouseup', function(e) {
-    console.log(document.getElementById('gravitySlider').value)
-    sliderText.innerHTML = document.getElementById('gravitySlider').value;
-    engine.gravity.y = document.getElementById('gravitySlider').value;
-})
+// document.getElementById('gravitySlider').addEventListener('mouseup', function(e) {
+//     console.log(document.getElementById('gravitySlider').value)
+//     sliderText.innerHTML = document.getElementById('gravitySlider').value;
+//     engine.gravity.y = document.getElementById('gravitySlider').value;
+// })
