@@ -160,12 +160,12 @@ img.bg {
   width:100%;
   text-align: center;
   position: relative;
-  top:-20px;
+  top:-40px;
   font-weight:bold;
   font-family: Arial, Helvetica, sans-serif;
   color: #c48e50;
   font-size: 30px;
-  opacity: 0;
+  opacity: 1;
 }
 .slider {
   position: relative;
@@ -174,7 +174,7 @@ img.bg {
   appearance: none;
   height:10px;
   border-radius: 10px;
-  top:10px;
+  top:-60px;
   max-width: 350px;
   opacity: 1;
 }
@@ -199,7 +199,8 @@ img.bg {
   color: #eeac57;
   font-weight:bold;
   font-family: Arial, Helvetica, sans-serif;
-  height: 100px;
+  margin-top: -30px;
+
 }
 .slider::-moz-range-thumb {
   width: 25px;
@@ -222,6 +223,7 @@ audio { display:none;}
   margin: 0 auto;
   padding: 20px;
   color:#573303;
+  margin-top:-60px
   /* -ms-word-break: break-all;
   word-break: break-all; */
 }

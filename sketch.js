@@ -27,9 +27,9 @@ var scalar = 1.3;
 var _yoffset = 20
 
 // GRAVITY FROM SLIDER + SLIDER NUMBER
-// var slider = document.getElementById("gravitySlider");
-// var sliderText = document.getElementById("sliderValue")
-// sliderText.textContent = slider.value;
+var slider = document.getElementById("gravitySlider");
+var sliderText = document.getElementById("sliderValue");
+sliderText.textContent = slider.value;
 var gravity = 1;
 
 // POINTS - SELF EXPLANETORY
@@ -113,7 +113,8 @@ Render.run(render);
 // create runner
 var runner = Runner.create({
     fps:30,
-    delta:1000/165,
+    delta:1000/30,
+    isFixed: true,
 });
 engine.gravity.scale = 0.00018;
 Runner.start(runner,engine);
@@ -652,3 +653,10 @@ function playMerge() {
       
       <audio  controls loop id="bgmusic" src="img/bgmusic.mp3"></audio>
       */
+
+slider.oninput = function(){
+    gravity = this.value;
+    sliderText.textContent = this.value;
+    engine.gravity.y = gravity;
+    //console.log(percent);
+}
