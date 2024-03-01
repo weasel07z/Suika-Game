@@ -57,6 +57,7 @@ document.getElementById('submitButton').addEventListener("mousedown", function (
             document.getElementById('submitForm').style.visibility = "hidden";
             document.getElementById('lowerThanNeeded').style.visibility = "hidden";
             document.getElementById("submitText").style.visibility = "hidden";
+            document.getElementById("scoreSubmit").style.visibility = "visible";
         }
     }
     document.getElementById('submitForm').reset();  

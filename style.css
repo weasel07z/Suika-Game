@@ -321,7 +321,7 @@ input[type="text"]:focus {
   color: #8e5b1a;
   margin-bottom: 0px;
   visibility: hidden;
-  z-index: -1;
+  /* z-index: 0; */
 }
 #lowerThanNeeded {
   font-size: 20px;

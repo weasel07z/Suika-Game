@@ -583,13 +583,14 @@ function reset(){
         fruitWait,
         fruitLimit,
         nextFruit,
-        nextFruitBubble
+        nextFruitBubble,
     ]);
     var ele = document.getElementById("Lcontainer");
     if(ele.style.visibility == "visible"){
         ele.style.visibility = "hidden";
         document.getElementById("submitForm").style.visibility = "hidden";
         document.getElementById("submitText").style.visibility = "hidden";
+        document.getElementById("scoreSubmit").style.visibility = "hidden";
         hasLost = false;
     } else {
         ele.style.visibility = "visible";
