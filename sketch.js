@@ -662,6 +662,7 @@ function playMerge() {
 //     //console.log(percent);
 // }
 document.getElementById('gravitySlider').addEventListener('mouseup', function(e) {
-    sliderText.textContent = document.getElementById('gravitySlider').value;
+    console.log(document.getElementById('gravitySlider').value)
+    sliderText.innerHTML = document.getElementById('gravitySlider').value;
     engine.gravity.y = document.getElementById('gravitySlider').value;
 })
