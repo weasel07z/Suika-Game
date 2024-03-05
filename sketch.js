@@ -15,8 +15,8 @@ var Engine = Matter.Engine,
 var w = window.innerWidth;
 var h = window.innerHeight;
 
-if(h < 700) {
-    h = 700;
+if(h < 750) {
+    h = 750;
 }
 
 // WAS 23 WHEN WORKING
@@ -30,8 +30,7 @@ var _yoffset = 20
 // var slider = document.getElementById("gravitySlider");
 // var sliderText = document.getElementById("sliderValue");
 // sliderText.innerHTML = slider.value;
-var gravity = 2;
-
+var gravity = 1;
 // POINTS - SELF EXPLANETORY
 var points = 0;
 
@@ -84,7 +83,7 @@ var engine = Engine.create({
 world = engine.world;
 
 // GRAVITY CHROMBOOK    
-//engine.gravity.y = gravity;
+engine.gravity.y = gravity;
 
 // NORMAL
 //engine.gravity.y = 0.3; 
@@ -95,7 +94,7 @@ var render = Render.create({
     engine: engine,
     options: {
         width: w,
-        height: 700,
+        height: 750,
         wireframes: false,
         background:'#60585800',
         pixelRatio: window.devicePixelRatio,
@@ -103,7 +102,6 @@ var render = Render.create({
         showIds: false,
         showStats: false,
         showDebug: false,
-        showCollisions: false
     }
 });
 
@@ -161,7 +159,7 @@ const pointerOptions = {
 
 let pointer = makeContainer(w/2,350, 3, 625, pointerOptions)
 
-let ground = makeContainer(w/2, 520*scalar, 328*scalar, 20*scalar, wallOptions);
+let ground = makeContainer(w/2, 530*scalar, 328*scalar, 20*scalar, wallOptions);
 var curFruit = makeCherry((w/2), _y);
 var curId = curFruit.id;
 
@@ -169,13 +167,13 @@ var hasFallenEnough = true;
 
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
 // leftWall = Bodies.rectangle((w/2)-155*scalar, 265*scalar, 20*scalar, 489*scalar, wallOptions);
-let leftWall = Bodies.rectangle((w/2)-155*scalar, 275*scalar, 20*scalar, 489*scalar, wallOptions);
-let rightWall = Bodies.rectangle((w/2)+155*scalar, 275*scalar, 20*scalar, 489*scalar, wallOptions);
-let fruitWait = makeContainer(w/2, 124*scalar, 300*scalar, 1, heightLimitOptions);
+let leftWall = Bodies.rectangle((w/2)-155*scalar, 275*scalar, 20*scalar, 499*scalar, wallOptions);
+let rightWall = Bodies.rectangle((w/2)+155*scalar, 275*scalar, 20*scalar, 499*scalar, wallOptions);
+let fruitWait = makeContainer(w/2, 134*scalar, 300*scalar, 1, heightLimitOptions);
 fruitWait.label = "wait";
-let fruitLimit = makeContainer(w/2, 106*scalar, 300*scalar, 1, heightLimitOptions);
+let fruitLimit = makeContainer(w/2, 126*scalar, 300*scalar, 1, heightLimitOptions);
 
-let topofbox = makeContainer(w/2, 176,378,12, topOptions)
+let topofbox = makeContainer(w/2, 188,378,12, topOptions)
 
 var nextFruit = makeFruit(w/2+350, 130, Math.round((Math.random()*4)));
 nextFruit.isStatic = true;
@@ -261,7 +259,7 @@ Events.on(engine, 'collisionStart', function(event) {
                 Composite.add(world, nextFruit);
             }
             
-            if(pair.bodyA.label == pair.bodyB.label){
+            if(pair.bodyA.label == pair.bodyB.label && (pair.bodyA.isStatic != true && pair.bodyB.isStatic != true)){
                // console.log(fruitList.get(pair.bodyA.label))
                 Composite.remove(world, pair.bodyA);
                 Composite.remove(world, pair.bodyB);
@@ -301,7 +299,7 @@ document.addEventListener("mousedown", function(event){
             //var rand = Math.round(4/(Math.random()*4+1))-1
             var rand = Math.round((Math.random()*4));
             
-            //var rand = 4
+            //var rand = 4;
             if(event.pageX < (w/2)-max){
                 curFruit = makeFruit((w/2)-max, _y, fruitList.get(nextFruit.label))
                 max = 145*scalar-fruitRadius.get(curFruit.label);

@@ -10,7 +10,9 @@ body{
   
 }
 .container{
+  /* background-color: #00000000; */
   background-color: #00000000;
+  /* margin-top: 40px; */
   /*height: calc(600px * var(--scalar));*/
 }
 .center {
@@ -72,7 +74,7 @@ p.lossText {
 
 img.test {
   position: absolute;
-  top:calc(189px * var(--scalar));
+  top:calc(199px * var(--scalar));
   width: calc(308px * var(--scalar));
   height: calc(427px*var(--scalar));
   z-index: -1;

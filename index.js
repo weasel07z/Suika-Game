@@ -18,7 +18,7 @@ const db = getDatabase(app);
 // Reference to the leaderboard data in Firebase
 var leaderboardRef = ref(db, 'scores/');
 const topScores = query(ref(db, 'scores'), orderByChild('points'));
-
+// console.log("POINTS: " + points);
 // function retrieveLeaderboard() {
 //     console.log("dsfsdf");
 //     topScores = query(ref(db, 'scores/'), orderByChild('points'));
@@ -48,12 +48,12 @@ document.getElementById('submitButton').addEventListener("mousedown", function (
         var scoreRef = ref(db, 'scores/' + element.value + '/points')
         onValue(scoreRef, (snapshot) => {
             data = parseInt(snapshot.val());
-            console.log(parseInt(document.getElementById('totalPoints').innerHTML));
+            //console.log(parseInt(document.getElementById('totalPoints').innerHTML));
           });
-        if(data > parseInt(document.getElementById('totalPoints').innerHTML)){
+        if(data > points){
             document.getElementById('lowerThanNeeded').style.visibility = "visible";
         } else {
-            addScore(element.value, parseInt(document.getElementById('totalPoints').innerHTML))
+            addScore(element.value, points)
             document.getElementById('submitForm').style.visibility = "hidden";
             document.getElementById('lowerThanNeeded').style.visibility = "hidden";
             document.getElementById("submitText").style.visibility = "hidden";
@@ -80,7 +80,6 @@ export function printLeaderboard(){
             leaderboardList.prepend(li);
         });
     });
-    console.log("\n");
 }
 printLeaderboard();
 
