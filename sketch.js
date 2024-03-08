@@ -157,9 +157,9 @@ const pointerOptions = {
     render: { fillStyle: '#FFFFFF', visible: true, opacity: 1}
 }
 
-let pointer = makeContainer(w/2,350, 3, 625, pointerOptions)
+let pointer = makeContainer(w/2,358, 3, 635, pointerOptions)
 
-let ground = makeContainer(w/2, 530*scalar, 328*scalar, 20*scalar, wallOptions);
+let ground = makeContainer(w/2, 545*scalar, 392*scalar, 50*scalar, wallOptions);
 var curFruit = makeCherry((w/2), _y);
 var curId = curFruit.id;
 
@@ -167,9 +167,9 @@ var hasFallenEnough = true;
 
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
 // leftWall = Bodies.rectangle((w/2)-155*scalar, 265*scalar, 20*scalar, 489*scalar, wallOptions);
-let leftWall = Bodies.rectangle((w/2)-155*scalar, 275*scalar, 20*scalar, 499*scalar, wallOptions);
-let rightWall = Bodies.rectangle((w/2)+155*scalar, 275*scalar, 20*scalar, 499*scalar, wallOptions);
-let fruitWait = makeContainer(w/2, 134*scalar, 300*scalar, 1, heightLimitOptions);
+let leftWall = Bodies.rectangle((w/2)-171*scalar, 275*scalar, 50*scalar, 499*scalar, wallOptions);
+let rightWall = Bodies.rectangle((w/2)+171*scalar, 275*scalar, 50*scalar, 499*scalar, wallOptions);
+let fruitWait = makeContainer(w/2, 126*scalar, 300*scalar, 1, heightLimitOptions);
 fruitWait.label = "wait";
 let fruitLimit = makeContainer(w/2, 126*scalar, 300*scalar, 1, heightLimitOptions);
 
@@ -244,22 +244,23 @@ Events.on(engine, 'collisionStart', function(event) {
                     //console.log("bodyA id: " + pair.bodyA.id);
                     //console.log("bodyB id: " + pair.bodyB.id);
                     if(pair.bodyA.id != 0 && pair.bodyB.speed == 0){
-                        gameOver()
+                        gameOver();
                     }
                     //console.log("loss")
                 }
                 
                 //Composite.add(world, pointer);   
             }
+            //
             if(((pair.bodyA.label == "wait" || pair.bodyB.label == "wait") && (pair.bodyA.id == curId || pair.bodyB.id == curId))){
 
                 hasFallenEnough = true;
                 pointer.render.visible = true;
                 Composite.add(world, curFruit);
                 Composite.add(world, nextFruit);
-            }
             
-            if(pair.bodyA.label == pair.bodyB.label && (pair.bodyA.isStatic != true && pair.bodyB.isStatic != true)){
+            
+            } else if(pair.bodyA.label == pair.bodyB.label && (pair.bodyA.isStatic != true && pair.bodyB.isStatic != true)){
                // console.log(fruitList.get(pair.bodyA.label))
                 Composite.remove(world, pair.bodyA);
                 Composite.remove(world, pair.bodyB);
@@ -304,12 +305,12 @@ document.addEventListener("mousedown", function(event){
                 curFruit = makeFruit((w/2)-max, _y, fruitList.get(nextFruit.label))
                 max = 145*scalar-fruitRadius.get(curFruit.label);
                 Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
-                Body.setPosition(pointer, {x:(w/2)-max, y:350});
+                Body.setPosition(pointer, {x:(w/2)-max, y:358});
             } else if(event.pageX > (w/2)+max) {
                 curFruit = makeFruit((w/2)+max, _y, fruitList.get(nextFruit.label))
                 max = 145*scalar-fruitRadius.get(curFruit.label);
                 Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
-                Body.setPosition(pointer, {x:(w/2)+max, y:350});
+                Body.setPosition(pointer, {x:(w/2)+max, y:358});
             } else {
                 curFruit = makeFruit(event.pageX, _y, fruitList.get(nextFruit.label));
             }
@@ -329,13 +330,13 @@ document.addEventListener("mousemove", function(event){
     
     if(event.pageX < (w/2)-max){
         Body.setPosition(curFruit, {x:(w/2)-max, y:_y})
-        Body.setPosition(pointer, {x:(w/2)-max, y:350})
+        Body.setPosition(pointer, {x:(w/2)-max, y:358})
     } else if(event.pageX > (w/2)+max) {
         Body.setPosition(curFruit, {x:(w/2)+max, y:_y})
-        Body.setPosition(pointer, {x:(w/2)+max, y:350})
+        Body.setPosition(pointer, {x:(w/2)+max, y:358})
     } else {
         Body.setPosition(curFruit, {x:event.pageX, y:_y})
-        Body.setPosition(pointer, {x:event.pageX, y:350})
+        Body.setPosition(pointer, {x:event.pageX, y:358})
     }
     
 });
