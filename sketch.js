@@ -24,8 +24,9 @@ var _y = 39;
 // idk if this is needed but wtv
 var hasLost = false;
 var scalar = 1.3;
-var _yoffset = 20
+var _yoffset = 20;
 
+var kayalMode = false;
 // GRAVITY FROM SLIDER + SLIDER NUMBER
 // var slider = document.getElementById("gravitySlider");
 // var sliderText = document.getElementById("sliderValue");
@@ -199,7 +200,7 @@ let nextFruitBubble = Bodies.circle(w/2+350, 120, 10*scalar, {
 
 
 /* TESTING FRUIT SIZES AND SPRITE SCALING */
-let b1 = Bodies.circle((w/2)+10, _y+120, 70*scalar, {
+let b1 = Bodies.circle((w/2)+10, _y+120, 22*scalar, {
     friction: 0.3,
     isStatic: true,
     label: "pineapple",
@@ -223,9 +224,9 @@ Composite.add(world, [
     nextFruit,
     // TESTS BELOW
     //b1,
-    // DONE makeFruit((w/2)+100, _y+120, 0),
-    // DONE makeFruit((w/2)+10, _y+120, 1),
-    //makeFruit((w/2)+10, _y+120, 2),
+    // DONE makeKayal((w/2)+10, _y+120, 0),
+    //makeKayal((w/2)+10, _y+120, 1),
+    //makeKayal((w/2)+10, _y+120, 3),
     // DONE makeFruit((w/2)+100, _y+120, 3),
     // DONE makeFruit((w/2)+100, _y+120, 4),
     // DONE makeFruit((w/2)+10, _y+120, 5),
@@ -264,7 +265,11 @@ Events.on(engine, 'collisionStart', function(event) {
                // console.log(fruitList.get(pair.bodyA.label))
                 Composite.remove(world, pair.bodyA);
                 Composite.remove(world, pair.bodyB);
-                tempFruit = makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
+                if(kayalMode){
+                    tempFruit = makeKayal((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
+                } else {
+                    tempFruit = makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
+                }     
                 Composite.add(world, tempFruit);
                 playMerge();
                 //tempId = tempFruit.id;
@@ -281,6 +286,8 @@ document.addEventListener("keydown", function(e){
     if(e.key == "s"){
         render.options.showCollisions = !render.options.showCollisions;
         //pointer.render.visibile = false;
+    } else if(e.key == "k"){
+        kayalMode = !kayalMode;
     }
 });
 
@@ -302,20 +309,28 @@ document.addEventListener("mousedown", function(event){
             
             //var rand = 4;
             if(event.pageX < (w/2)-max){
-                curFruit = makeFruit((w/2)-max, _y, fruitList.get(nextFruit.label))
+                if(kayalMode){curFruit = makeKayal((w/2)-max, _y, fruitList.get(nextFruit.label))}
+                else{curFruit = makeFruit((w/2)-max, _y, fruitList.get(nextFruit.label));}
+                
                 max = 145*scalar-fruitRadius.get(curFruit.label);
                 Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
                 Body.setPosition(pointer, {x:(w/2)-max, y:358});
             } else if(event.pageX > (w/2)+max) {
-                curFruit = makeFruit((w/2)+max, _y, fruitList.get(nextFruit.label))
+                if(kayalMode){curFruit = makeKayal((w/2)+max, _y, fruitList.get(nextFruit.label))}
+                else{curFruit = makeFruit((w/2)+max, _y, fruitList.get(nextFruit.label))}
+                
                 max = 145*scalar-fruitRadius.get(curFruit.label);
                 Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
                 Body.setPosition(pointer, {x:(w/2)+max, y:358});
             } else {
-                curFruit = makeFruit(event.pageX, _y, fruitList.get(nextFruit.label));
+                if(kayalMode){curFruit = makeKayal(event.pageX, _y, fruitList.get(nextFruit.label));}
+                else{curFruit = makeFruit(event.pageX, _y, fruitList.get(nextFruit.label));}
+                
             }
             Composite.remove(world, nextFruit)
-            nextFruit = makeFruit(w/2+350, 130, rand);  
+            if(kayalMode){nextFruit = makeKayal(w/2+350, 130, rand);}
+            else{nextFruit = makeFruit(w/2+350, 130, rand);}
+              
             //Composite.add(world, nextFruit)
             nextFruit.isStatic = true;
             Composite.add(world,topofbox)
@@ -665,3 +680,199 @@ function playMerge() {
 //     sliderText.innerHTML = document.getElementById('gravitySlider').value;
 //     engine.gravity.y = document.getElementById('gravitySlider').value;
 // })
+function makeKayal(x,y, fruitType){
+    switch(fruitType){
+        case 0:
+            return Bodies.circle(x, y, 11*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                mass: 1.1,
+                label: "cherry",
+                
+                render: {
+                    //fillStyle: '#d60007' 
+                    //opacity:0.5,
+                    sprite: {
+                        texture: 'img/cherryK.png',
+                        xScale: 0.045*scalar,
+                        yScale: 0.045*scalar,
+                        xOffset: 0.0*scalar,
+                        yOffset: 0.0*scalar
+                    }
+                }
+                
+            });
+        case 1:
+            return Bodies.circle(x, y, 15*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                label: "strawberry",
+             
+                render: {
+                    //fillStyle: '#f04354'
+                    //opacity: 0.5,
+                    sprite: {
+                        texture: 'img/strawberryK.png',
+                        xScale: 0.06*scalar,
+                        yScale: 0.06*scalar,
+                        xOffset: 0.0*scalar,
+                        yOffset: 0.0*scalar
+                    }
+                }
+            });
+        case 2:
+            return Bodies.circle(x, y, 20*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                label: "grape",
+                
+                render: {
+                    //fillStyle: '#8152a3'
+                    //opacity: 0.5,
+                    sprite: {
+                        texture: 'img/grapeK.png',
+                        xScale: 0.082*scalar,
+                        yScale: 0.08*scalar,
+                        xOffset: 0.0*scalar,
+                        yOffset: 0.0*scalar
+                    }
+                }
+            });
+        case 3:
+            return Bodies.circle(x, y, 22*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                label: "dekopon",
+                
+                render: {
+                    //fillStyle: '#f5ad5f'
+                    //opacity:0.5, 
+                    sprite: {
+                        texture: 'img/persimmonK.png',
+                        xScale: 0.095*scalar,
+                        yScale: 0.078*scalar,
+                        xOffset: 0.0*scalar,
+                        yOffset: -0.0*scalar
+                    }
+                }
+            });
+        case 4:
+                return Bodies.circle(x, y, 30*scalar, {
+                    friction: 0.3,
+                    isStatic: false,
+                    label: "persimmon",
+                    render: {
+                        //fillStyle: '#f58916'
+                        //opacity:0.5,
+                        sprite: {
+                            texture: 'img/orangeK.png',
+                            xScale: 0.13*scalar,
+                            yScale: 0.1*scalar
+                        }
+                    }
+            });
+        case 5:
+            return Bodies.circle(x, y, 35*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                label: "apple",
+                
+                render: {
+                    //fillStyle: '#ffed8a' 
+                    //opacity: 0.5,
+                    sprite: {
+                        texture: 'img/appleK.png',
+                        xScale: 0.15*scalar,
+                        yScale: 0.12*scalar,
+                        xOffset: 0.00*scalar,
+                        yOffset: 0.0*scalar
+                    }
+                }
+            });
+        case 6:
+            return Bodies.circle(x, y, 41*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                label: "pear",
+                
+                render: {
+                    //fillStyle: '#ffed8a' 
+                    //opacity: 0.5,
+                    sprite: {
+                        texture: 'img/yellowK.png',
+                        xScale: 0.18*scalar,
+                        yScale: 0.16*scalar,
+                        xOffset: 0.0*scalar,
+                        yOffset: 0.0*scalar
+                    }
+                }
+            });
+        case 7:
+            return Bodies.circle(x, y, 50*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                label: "peach",
+               
+                render: {
+                    //fillStyle: '#edcad5' 
+                    //opacity:0.5,
+                    sprite: {
+                        texture: 'img/PeachK.png',
+                        xScale: .19*scalar,
+                        yScale: .19*scalar,
+                    },
+                }
+            });
+        case 8:
+            return Bodies.circle(x, y, 59*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                label: "pineapple",
+                render: {
+                    //fillStyle: '#f7cd43'
+                    //opacity: 0.5, 
+                    sprite: {
+                        texture: 'img/pinappleK.png',
+                        xScale: .21*scalar,
+                        yScale: .21*scalar,
+                        xOffset: -.05*scalar,
+                        yOffset: 0*scalar
+                    },
+                }
+            });
+        case 9:
+            return Bodies.circle(x, y, 70*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                label: "melon",
+                render: {
+                    //fillStyle: '#b2f582'
+                    //opacity:0.5,
+                    sprite: {
+                        texture: 'img/melonK.png',
+                        xScale: .27*scalar,
+                        yScale: .27*scalar,
+                        xOffset: 0*scalar,
+                        yOffset: -0.02*scalar
+                    }, 
+                }
+            });
+        case 10:
+            return Bodies.circle(x, y, 82*scalar, {
+                friction: 0.3,
+                isStatic: false,
+                label: "watermelon",
+                render: {
+                    //fillStyle: '#369121' 
+                    //opacity: 0.5,
+                    sprite: {
+                        texture: 'img/watermelonK.png',
+                        xScale: .34*scalar,
+                        yScale: .3*scalar,
+                        xOffset: 0*scalar,
+                        yOffset: 0*scalar
+                    },
+                }
+            });
+    }
+}
