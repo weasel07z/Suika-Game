@@ -284,12 +284,18 @@ Events.on(engine, 'collisionStart', function(event) {
     });
 });
 document.addEventListener("keydown", function(e){
-    if(e.key == "s"){
-        render.options.showCollisions = !render.options.showCollisions;
-        //pointer.render.visibile = false;
-    } else if(e.key == "k"){
-        kayalMode = !kayalMode;
+    if(e.target.tagName != "INPUT"){
+        if(e.key == "s"){
+            render.options.showCollisions = !render.options.showCollisions;
+            //pointer.render.visibile = false;
+        } else if(e.key == "k"){
+            if(!hasLost){
+                kayalMode = !kayalMode;
+                console.log("switched kayal mode, its now: " + kayalMode);
+            } 
+        }
     }
+    
 });
 
 document.addEventListener("mousedown", function(event){
@@ -589,6 +595,10 @@ function reset(){
 function makeContainer(x,y,h,w, opt){
     return Bodies.rectangle(x, y, h, w, opt);
 }
+
+document.addEventListener("submit", function(e){
+    e.preventDefault();
+}, false);
 
 // window.addEventListener('resize', function(event) {
 //     //document.getElementById("resized").style.display = "block";

@@ -13,6 +13,7 @@ const app = initializeApp({
 });
 
 var namesArray = ["Jack", "Jo", "Bob", "Ben", "Logu", "nerd", "Jill", "LOSER", "LOSER2", "KILLYOURSLEF"];
+var newKayalMode = false;
 
 const db = getDatabase(app);
 // Reference to the leaderboard data in Firebase
@@ -70,7 +71,7 @@ export function printLeaderboard(){
         leaderboardList.innerHTML = '';
 
         snapshot.forEach(function(childSnapshot) {
-            console.log(childSnapshot.val());
+            //console.log(childSnapshot.val());
             var data = childSnapshot.val();
             var playerName = data.username;
             var playerPoints = data.points;
@@ -86,9 +87,10 @@ printLeaderboard();
 function addScore(_name,_points){
     var name = _name;
     var points = _points;
-    if(kayalMode){
+    console.log("is Kayal mode enabled: " + kayalMode)
+    if(kayalMode == true){
         set(ref(db, 'scores/' + name), {
-            username: name + "🇮🇳",
+            username: name + " 🇮🇳",
             points: points,
         });
     } else {
@@ -125,4 +127,13 @@ function addScore(_name,_points){
 // function makeRandom(){
     
 // }
-document.getElementById('b1').onclick = function() { printLeaderboard() };
+// document.addEventListener("keydown", function(e){
+//     if(e.target.tagName != "INPUT"){
+//         if(e.key == "k"){
+//             newKayalMode = !newKayalMode;
+//             console.log("switched NEWkayal mode, its now: " + newKayalMode);
+//         }
+//     }
+// });
+
+//document.getElementById('b1').onclick = function() { printLeaderboard() };
