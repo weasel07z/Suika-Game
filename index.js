@@ -86,10 +86,18 @@ printLeaderboard();
 function addScore(_name,_points){
     var name = _name;
     var points = _points;
-    set(ref(db, 'scores/' + name), {
-        username: name,
-        points: points,
-    });
+    if(kayalMode){
+        set(ref(db, 'scores/' + name), {
+            username: name + "🇮🇳",
+            points: points,
+        });
+    } else {
+        set(ref(db, 'scores/' + name), {
+            username: name,
+            points: points,
+        });
+    }
+    
 }
 
 
