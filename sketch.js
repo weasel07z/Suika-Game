@@ -23,7 +23,7 @@ if(h < 750) {
 var _y = 39;
 // idk if this is needed but wtv
 var hasLost = false;
-var scalar = 1.3;
+var scalar = 1;
 var _yoffset = 20;
 
 var kayalMode = false;
@@ -158,9 +158,9 @@ const pointerOptions = {
     render: { fillStyle: '#FFFFFF', visible: true, opacity: 1}
 }
 
-let pointer = makeContainer(w/2,358, 3, 635, pointerOptions)
+let pointer = makeContainer(w/2,305, 3, 520, pointerOptions)
 
-let ground = makeContainer(w/2, 545*scalar, 392*scalar, 50*scalar, wallOptions);
+let ground = makeContainer(w/2, 591*scalar, 331*scalar, 50*scalar, wallOptions);
 var curFruit = makeFruit((w/2), _y, 0);
 var curId = curFruit.id;
 
@@ -168,18 +168,18 @@ var hasFallenEnough = true;
 
 //let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
 // leftWall = Bodies.rectangle((w/2)-155*scalar, 265*scalar, 20*scalar, 489*scalar, wallOptions);
-let leftWall = Bodies.rectangle((w/2)-171*scalar, 275*scalar, 50*scalar, 499*scalar, wallOptions);
-let rightWall = Bodies.rectangle((w/2)+171*scalar, 275*scalar, 50*scalar, 499*scalar, wallOptions);
-let fruitWait = makeContainer(w/2, 126*scalar, 300*scalar, 1, heightLimitOptions);
+let leftWall = Bodies.rectangle((w/2)-181*scalar, 320*scalar, 50*scalar, 499*scalar, wallOptions);
+let rightWall = Bodies.rectangle((w/2)+181*scalar, 320*scalar, 50*scalar, 499*scalar, wallOptions);
+let fruitWait = makeContainer(w/2, 148*scalar, 320*scalar, 1, heightLimitOptions);
 fruitWait.label = "wait";
-let fruitLimit = makeContainer(w/2, 126*scalar, 300*scalar, 1, heightLimitOptions);
+let fruitLimit = makeContainer(w/2, 148*scalar, 320*scalar, 1, heightLimitOptions);
 
-let topofbox = makeContainer(w/2, 188,378,12, topOptions)
+let topofbox = makeContainer(w/2, 163,310,8, topOptions)
 
-var nextFruit = makeFruit(w/2+350, 130, Math.round((Math.random()*4)));
+var nextFruit = makeFruit(w/2+300, 130, Math.round((Math.random()*4)));
 nextFruit.isStatic = true;
 
-let nextFruitBubble = Bodies.circle(w/2+350, 120, 10*scalar, {
+let nextFruitBubble = Bodies.circle(w/2+300, 120, 10*scalar, {
     isStatic: true,
     label: "bubble",
     collisionFilter: {
@@ -192,8 +192,8 @@ let nextFruitBubble = Bodies.circle(w/2+350, 120, 10*scalar, {
         opacity:0.7,    
         sprite: {
             texture: 'img/nextFruitBubble.png',
-            xScale: 0.2,
-            yScale: 0.2,
+            xScale: 0.17,
+            yScale: 0.17,
         }
     }
 });
@@ -224,44 +224,33 @@ Composite.add(world, [
     nextFruit,
     // TESTS BELOW
     //b1,
-    // DONE makeKayal((w/2)+10, _y+120, 0),
     //makeKayal((w/2)+10, _y+120, 10),
     //makeFruit((w/2)+10, _y+120, 10),
-    // DONE makeFruit((w/2)+100, _y+120, 3),
-    // DONE makeFruit((w/2)+100, _y+120, 4),
-    // DONE makeFruit((w/2)+10, _y+120, 5),
-    // DONE makeFruit((w/2)+10, _y+120, 6),
-    // DONE makeFruit((w/2)+10, _y+120, 7),
-    // DONE makeFruit((w/2)+10, _y+120, 8)
-    // DONE makeFruit((w/2)+10, _y+120, 9)
 
 ]);
 Events.on(engine, 'collisionStart', function(event) {
     event.pairs.forEach(pair => {
         if(pair.bodyA.label != "wall" && pair.bodyB.label != "wall"){
             
-            if((pair.bodyA.label == "limit" || pair.bodyB.label == "limit")){
-                if(pair.bodyA.id != curId && pair.bodyB.id != curId){
-                    //console.log("bodyA id: " + pair.bodyA.id);
-                    //console.log("bodyB id: " + pair.bodyB.id);
-                    if(pair.bodyA.id != 0 && pair.bodyB.speed == 0){
-                        gameOver();
-                    }
-                    //console.log("loss")
-                }
+            // if((pair.bodyA.label == "limit" || pair.bodyB.label == "limit")){
+            //     if(pair.bodyA.id != curId && pair.bodyB.id != curId){
+            //         //console.log("bodyA id: " + pair.bodyA.id);
+            //         //console.log("bodyB id: " + pair.bodyB.id);
+            //         if(pair.bodyA.id != 0 && pair.bodyB.speed == 0){
+            //             gameOver();
+            //         }
+            //         //console.log("loss")
+            //     }
                 
-                //Composite.add(world, pointer);   
-            }
+            //     //Composite.add(world, pointer);   
+            // }
             //
             if(((pair.bodyA.label == "wait" || pair.bodyB.label == "wait") && (pair.bodyA.id == curId || pair.bodyB.id == curId))){
-
                 hasFallenEnough = true;
                 pointer.render.visible = true;
                 Composite.add(world, curFruit);
-                Composite.add(world, nextFruit);
-            
-            
-            } else if(pair.bodyA.label == pair.bodyB.label && (pair.bodyA.isStatic != true && pair.bodyB.isStatic != true)){
+                Composite.add(world, nextFruit);            
+            } else if(pair.bodyA.label == pair.bodyB.label && (pair.bodyA.isStatic != true && pair.bodyB.isStatic != true) && (hasLost === false)){
                // console.log(fruitList.get(pair.bodyA.label))
                 Composite.remove(world, pair.bodyA);
                 Composite.remove(world, pair.bodyB);
@@ -269,16 +258,16 @@ Events.on(engine, 'collisionStart', function(event) {
                     tempFruit = makeKayal((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
                 } else {
                     tempFruit = makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
-                }     
-                Composite.add(world, tempFruit);
-                Body.setStatic(tempFruit, false)
-                playMerge();
-                //tempId = tempFruit.id;
-                //console.log("tempId: " + tempId)
-                //Body.setSpeed(tempFruit, 0.01)
-                points+=pointList.get(pair.bodyA.label);
-                document.getElementById("totalPoints").innerHTML = points;
-               // console.log("Points: " + points);
+                }
+                // console.log("new position: " + (pair.bodyA.position.y + pair.bodyB.position.y)/2);
+                // console.log("fruitLimit positon: " + fruitWait.position.y);
+                if((pair.bodyA.position.y + pair.bodyB.position.y)/2 > fruitWait.position.y){
+                    Composite.add(world, tempFruit);
+                    Body.setStatic(tempFruit, false)
+                    playMerge();
+                    points+=pointList.get(pair.bodyA.label);
+                    document.getElementById("totalPoints").innerHTML = points;
+                } else { gameOver(); }
             }
         }
     });
@@ -290,8 +279,13 @@ document.addEventListener("keydown", function(e){
             //pointer.render.visibile = false;
         } else if(e.key == "k"){
             if(!hasLost){
+                element = document.getElementById("titleName");
                 kayalMode = !kayalMode;
-                console.log("switched kayal mode, its now: " + kayalMode);
+                if(kayalMode){
+                    element.innerHTML = "(real) Kayal Mode";
+                } else {
+                    element.innerHTML = "(real) Suika Game";
+                }
             } 
         }
     }
@@ -321,14 +315,14 @@ document.addEventListener("mousedown", function(event){
                 
                 max = 145*scalar-fruitRadius.get(curFruit.label);
                 Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
-                Body.setPosition(pointer, {x:(w/2)-max, y:358});
+                Body.setPosition(pointer, {x:(w/2)-max, y:305});
             } else if(event.pageX > (w/2)+max) {
                 if(kayalMode){curFruit = makeKayal((w/2)+max, _y, fruitList.get(nextFruit.label))}
                 else{curFruit = makeFruit((w/2)+max, _y, fruitList.get(nextFruit.label))}
                 
                 max = 145*scalar-fruitRadius.get(curFruit.label);
                 Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
-                Body.setPosition(pointer, {x:(w/2)+max, y:358});
+                Body.setPosition(pointer, {x:(w/2)+max, y:305});
             } else {
                 if(kayalMode){curFruit = makeKayal(event.pageX, _y, fruitList.get(nextFruit.label));}
                 else{curFruit = makeFruit(event.pageX, _y, fruitList.get(nextFruit.label));}
@@ -336,7 +330,7 @@ document.addEventListener("mousedown", function(event){
             }
             Composite.remove(world, nextFruit)
             if(kayalMode){nextFruit = makeKayal(w/2+350, 130, rand);}
-            else{nextFruit = makeFruit(w/2+350, 130, rand);}
+            else{nextFruit = makeFruit(w/2+300, 130, rand);}
               
             //Composite.add(world, nextFruit)
             nextFruit.isStatic = true;
@@ -352,15 +346,14 @@ document.addEventListener("mousemove", function(event){
     
     if(event.pageX < (w/2)-max){
         Body.setPosition(curFruit, {x:(w/2)-max, y:_y})
-        Body.setPosition(pointer, {x:(w/2)-max, y:358})
+        Body.setPosition(pointer, {x:(w/2)-max, y:305})
     } else if(event.pageX > (w/2)+max) {
         Body.setPosition(curFruit, {x:(w/2)+max, y:_y})
-        Body.setPosition(pointer, {x:(w/2)+max, y:358})
+        Body.setPosition(pointer, {x:(w/2)+max, y:305})
     } else {
         Body.setPosition(curFruit, {x:event.pageX, y:_y})
-        Body.setPosition(pointer, {x:event.pageX, y:358})
+        Body.setPosition(pointer, {x:event.pageX, y:305})
     }
-    
 });
 function makeFruit(x,y, fruitType){
     switch(fruitType){
@@ -600,26 +593,26 @@ document.addEventListener("submit", function(e){
     e.preventDefault();
 }, false);
 
-// window.addEventListener('resize', function(event) {
-//     //document.getElementById("resized").style.display = "block";
-//     w = window.innerWidth;
-//     h = window.innerHeight;
-//     if(h < 700) {
-//         h = 700
-//     }
-//     render.options.width = w;
-//     //render.options.height = window.innerHeigh;
-//     render.canvas.width = w;
-//     //render.canvas.height = window.innerHeight;
-//     Body.setPosition(leftWall, {x:(w/2)-155*scalar, y:275*scalar});
-//     Body.setPosition(rightWall, {x:(w/2)+155*scalar, y:275*scalar});
-//     Body.setPosition(fruitWait, {x:w/2, y:124*scalar});
-//     Body.setPosition(ground, {x:w/2, y:520*scalar});
-//     Body.setPosition(topofbox, {x:w/2, y:176});
-//     Body.setPosition(fruitLimit, {x:w/2,y:109*scalar});
-//     Body.setPosition(nextFruitBubble, {x:w/2+350, y:120});
-//     Body.setPosition(nextFruit, {x:w/2+350, y:130});
-// });
+window.addEventListener('resize', function(event) {
+    //document.getElementById("resized").style.display = "block";
+    w = window.innerWidth;
+    h = window.innerHeight;
+    if(h < 700) {
+        h = 700
+    }
+    render.options.width = w;
+    //render.options.height = window.innerHeigh;
+    render.canvas.width = w;
+    //render.canvas.height = window.innerHeight;
+    Body.setPosition(leftWall, {x:(w/2)-181*scalar, y:leftWall.position.y});
+    Body.setPosition(rightWall, {x:(w/2)+181*scalar, y:rightWall.position.y});
+    Body.setPosition(fruitWait, {x:w/2, y:fruitWait.position.y});
+    Body.setPosition(ground, {x:w/2, y:ground.position.y});
+    Body.setPosition(topofbox, {x:w/2, y:topofbox.position.y});
+    Body.setPosition(fruitLimit, {x:w/2,y:fruitLimit.position.y});
+    Body.setPosition(nextFruitBubble, {x:w/2+300, y:nextFruitBubble.position.y});
+    Body.setPosition(nextFruit, {x:w/2+300, y:nextFruit.position.y});
+});
 
 // slider.oninput = function(){
 //     gravity = this.value;

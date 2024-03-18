@@ -74,9 +74,9 @@ p.lossText {
 
 img.test {
   position: absolute;
-  top:calc(199px * var(--scalar));
-  width: calc(308px * var(--scalar));
-  height: calc(427px*var(--scalar));
+  top:calc(244px * var(--scalar));
+  width: calc(331px * var(--scalar));
+  height: calc(459px*var(--scalar));
   z-index: -1;
   opacity: 1;
 }
@@ -134,7 +134,7 @@ img.bg {
 }
 
 :root {
-  --scalar: 1.3;
+  --scalar: 1;
 }
 
 .points {
