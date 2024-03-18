@@ -267,7 +267,13 @@ Events.on(engine, 'collisionStart', function(event) {
                     playMerge();
                     points+=pointList.get(pair.bodyA.label);
                     document.getElementById("totalPoints").innerHTML = points;
-                } else { gameOver(); }
+                } else { 
+                    Composite.add(world, tempFruit);
+                    Body.setStatic(tempFruit, false)
+                    playMerge();
+                    points+=pointList.get(pair.bodyA.label);
+                    document.getElementById("totalPoints").innerHTML = points;
+                    gameOver(); }
             }
         }
     });
@@ -329,7 +335,7 @@ document.addEventListener("mousedown", function(event){
                 
             }
             Composite.remove(world, nextFruit)
-            if(kayalMode){nextFruit = makeKayal(w/2+350, 130, rand);}
+            if(kayalMode){nextFruit = makeKayal(w/2+300, 130, rand);}
             else{nextFruit = makeFruit(w/2+300, 130, rand);}
               
             //Composite.add(world, nextFruit)
