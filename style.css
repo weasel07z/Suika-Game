@@ -97,7 +97,7 @@ img.bg {
   background-color: #c48e50;
   position: absolute;
   width: 100vw;
-  height: calc(320px * var(--scalar));
+  height: calc(420px * var(--scalar));
   
   z-index: -5;
 }
@@ -105,16 +105,16 @@ img.bg {
   background-color: #b17424;
   position: absolute;
   width: 100vw;
-  height: calc(100px * var(--scalar));
-  top:calc(303px * var(--scalar));
+  height: calc(70px * var(--scalar));
+  top:calc(365px * var(--scalar));
   z-index: -4;
 }
 .thirdbrownbox {
   background-color: #c9a35a;
   position: absolute;
   width: 100vw;
-  height: calc(55px * var(--scalar));
-  top:calc(354px * var(--scalar));
+  height: calc(62px * var(--scalar));
+  top:calc(419px * var(--scalar));
   z-index: -3;
 }
 .fourthbrownbox {
@@ -129,7 +129,7 @@ img.bg {
   position: absolute;
   width: 100vw;
   height: calc(4px * var(--scalar));
-  top: calc(368px * var(--scalar));
+  top: calc(434px * var(--scalar));
   z-index: -2;
 }
 
