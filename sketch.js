@@ -225,7 +225,7 @@ Composite.add(world, [
     // TESTS BELOW
     //b1,
     // DONE makeKayal((w/2)+10, _y+120, 0),
-    //makeKayal((w/2)+10, _y+120, 1),
+    //makeKayal((w/2)+10, _y+120, 10),
     //makeFruit((w/2)+10, _y+120, 10),
     // DONE makeFruit((w/2)+100, _y+120, 3),
     // DONE makeFruit((w/2)+100, _y+120, 4),
@@ -837,8 +837,8 @@ function makeKayal(x,y, fruitType){
                     //opacity: 0.5,
                     sprite: {
                         texture: 'img/watermelonK.png',
-                        xScale: .37*scalar,
-                        yScale: .27*scalar,
+                        xScale: .48*scalar,
+                        yScale: .35*scalar,
                         xOffset: 0*scalar,
                         yOffset: 0*scalar
                     },
