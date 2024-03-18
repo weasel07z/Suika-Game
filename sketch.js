@@ -15,8 +15,8 @@ var Engine = Matter.Engine,
 var w = window.innerWidth;
 var h = window.innerHeight;
 
-if(h < 750) {
-    h = 750;
+if(h < 640) {
+    h = 640;
 }
 
 // WAS 23 WHEN WORKING
@@ -95,7 +95,7 @@ var render = Render.create({
     engine: engine,
     options: {
         width: w,
-        height: 750,
+        height: 640,
         wireframes: false,
         background:'#60585800',
         pixelRatio: window.devicePixelRatio,
