@@ -31,7 +31,7 @@ var kayalMode = false;
 // var slider = document.getElementById("gravitySlider");
 // var sliderText = document.getElementById("sliderValue");
 // sliderText.innerHTML = slider.value;
-var gravity = 1;
+var gravity = 1.5;
 // POINTS - SELF EXPLANETORY
 var points = 0;
 
@@ -72,7 +72,7 @@ const fruitRadius = new Map([["cherry", 11*scalar],
                         ["peach", 50*scalar],
                         ["pineapple", 59*scalar],
                         ["melon", 70*scalar],
-                        ["watermelon", 82*scalar]]);
+                        ["watermelon", 80*scalar]]);
 
 const gameOverButton = document.getElementById("lossButton");
 // create engine
@@ -112,7 +112,7 @@ Render.run(render);
 // create runner
 var runner = Runner.create({
     fps:30,
-    delta:1000/30,
+    delta:1000/120,
     //isFixed: true,
 });
 engine.gravity.scale = 0.00018;
@@ -161,7 +161,7 @@ const pointerOptions = {
 let pointer = makeContainer(w/2,358, 3, 635, pointerOptions)
 
 let ground = makeContainer(w/2, 545*scalar, 392*scalar, 50*scalar, wallOptions);
-var curFruit = makeCherry((w/2), _y);
+var curFruit = makeFruit((w/2), _y, 0);
 var curId = curFruit.id;
 
 var hasFallenEnough = true;
@@ -200,7 +200,7 @@ let nextFruitBubble = Bodies.circle(w/2+350, 120, 10*scalar, {
 
 
 /* TESTING FRUIT SIZES AND SPRITE SCALING */
-let b1 = Bodies.circle((w/2)+10, _y+120, 22*scalar, {
+let b1 = Bodies.circle((w/2)+10, _y+120, 80*scalar, {
     friction: 0.3,
     isStatic: true,
     label: "pineapple",
@@ -226,7 +226,7 @@ Composite.add(world, [
     //b1,
     // DONE makeKayal((w/2)+10, _y+120, 0),
     //makeKayal((w/2)+10, _y+120, 1),
-    //makeKayal((w/2)+10, _y+120, 3),
+    //makeFruit((w/2)+10, _y+120, 10),
     // DONE makeFruit((w/2)+100, _y+120, 3),
     // DONE makeFruit((w/2)+100, _y+120, 4),
     // DONE makeFruit((w/2)+10, _y+120, 5),
@@ -271,6 +271,7 @@ Events.on(engine, 'collisionStart', function(event) {
                     tempFruit = makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
                 }     
                 Composite.add(world, tempFruit);
+                Body.setStatic(tempFruit, false)
                 playMerge();
                 //tempId = tempFruit.id;
                 //console.log("tempId: " + tempId)
@@ -334,7 +335,7 @@ document.addEventListener("mousedown", function(event){
             //Composite.add(world, nextFruit)
             nextFruit.isStatic = true;
             Composite.add(world,topofbox)
-            Body.setStatic(curFruit, true)
+            //Body.setStatic(curFruit, true)
         }
     }    
 });
@@ -360,7 +361,7 @@ function makeFruit(x,y, fruitType){
         case 0:
             return Bodies.circle(x, y, 11*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 mass: 1.1,
                 label: "cherry",
                 
@@ -379,7 +380,7 @@ function makeFruit(x,y, fruitType){
         case 1:
             return Bodies.circle(x, y, 15*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "strawberry",
              
                 render: {
@@ -397,7 +398,7 @@ function makeFruit(x,y, fruitType){
         case 2:
             return Bodies.circle(x, y, 20*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "grape",
                 
                 render: {
@@ -415,7 +416,7 @@ function makeFruit(x,y, fruitType){
         case 3:
             return Bodies.circle(x, y, 22*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "dekopon",
                 
                 render: {
@@ -432,7 +433,7 @@ function makeFruit(x,y, fruitType){
         case 4:
                 return Bodies.circle(x, y, 30*scalar, {
                     friction: 0.3,
-                    isStatic: false,
+                    isStatic: true,
                     label: "persimmon",
                     render: {
                         //fillStyle: '#f58916'
@@ -446,7 +447,7 @@ function makeFruit(x,y, fruitType){
         case 5:
             return Bodies.circle(x, y, 35*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "apple",
                 
                 render: {
@@ -464,7 +465,7 @@ function makeFruit(x,y, fruitType){
         case 6:
             return Bodies.circle(x, y, 41*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "pear",
                 
                 render: {
@@ -482,7 +483,7 @@ function makeFruit(x,y, fruitType){
         case 7:
             return Bodies.circle(x, y, 50*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "peach",
                
                 render: {
@@ -497,7 +498,7 @@ function makeFruit(x,y, fruitType){
         case 8:
             return Bodies.circle(x, y, 59*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "pineapple",
                 render: {
                     //fillStyle: '#f7cd43'
@@ -514,7 +515,7 @@ function makeFruit(x,y, fruitType){
         case 9:
             return Bodies.circle(x, y, 70*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "melon",
                 render: {
                     //fillStyle: '#b2f582'
@@ -529,56 +530,25 @@ function makeFruit(x,y, fruitType){
                 }
             });
         case 10:
-            return Bodies.circle(x, y, 82*scalar, {
+            return Bodies.circle(x, y, 80*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "watermelon",
                 render: {
                     //fillStyle: '#369121' 
                     //opacity: 0.5,
                     sprite: {
                         texture: 'img/watermelon.png',
-                        xScale: .65*scalar,
-                        yScale: .65*scalar,
-                        xOffset: 0*scalar,
-                        yOffset: 0*scalar
+                        xScale: .625*scalar,
+                        yScale: .625*scalar,
+                        xOffset: .005*scalar,
+                        yOffset: .004*scalar
                     },
                 }
             });
     }
 }
 
-function makeCherry(x, y) {
-    return Bodies.circle(x, y, 10*scalar, {
-        friction: 0.9,
-        isStatic: true,
-        label: "cherry",
-        render: {
-            //fillStyle: '#d60007'     
-            sprite: {
-                texture: 'img/cherry.png',
-                xScale: 0.46*scalar,
-                yScale: 0.46*scalar,
-                xOffset: -0.015*scalar,
-                yOffset: 0.07*scalar
-            }
-        }
-    });
-}
-
- /* 
-var mouse = Mouse.create(render.canvas),
-        mouseConstraint = MouseConstraint.create(engine, {
-            mouse: mouse,
-            constraint: {
-                stiffness: 0.2,
-                render: {
-                    visible: false
-                }
-            }
-});
-render.mouse = mouse;
-*/
 function gameOver(){
     document.getElementById("Lcontainer").style.visibility = "visible";
     document.getElementById("submitForm").style.visibility = "visible";
@@ -685,7 +655,7 @@ function makeKayal(x,y, fruitType){
         case 0:
             return Bodies.circle(x, y, 11*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 mass: 1.1,
                 label: "cherry",
                 
@@ -705,7 +675,7 @@ function makeKayal(x,y, fruitType){
         case 1:
             return Bodies.circle(x, y, 15*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "strawberry",
              
                 render: {
@@ -723,7 +693,7 @@ function makeKayal(x,y, fruitType){
         case 2:
             return Bodies.circle(x, y, 20*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "grape",
                 
                 render: {
@@ -741,7 +711,7 @@ function makeKayal(x,y, fruitType){
         case 3:
             return Bodies.circle(x, y, 22*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "dekopon",
                 
                 render: {
@@ -759,7 +729,7 @@ function makeKayal(x,y, fruitType){
         case 4:
                 return Bodies.circle(x, y, 30*scalar, {
                     friction: 0.3,
-                    isStatic: false,
+                    isStatic: true,
                     label: "persimmon",
                     render: {
                         //fillStyle: '#f58916'
@@ -774,7 +744,7 @@ function makeKayal(x,y, fruitType){
         case 5:
             return Bodies.circle(x, y, 35*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "apple",
                 
                 render: {
@@ -792,7 +762,7 @@ function makeKayal(x,y, fruitType){
         case 6:
             return Bodies.circle(x, y, 41*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "pear",
                 
                 render: {
@@ -810,7 +780,7 @@ function makeKayal(x,y, fruitType){
         case 7:
             return Bodies.circle(x, y, 50*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "peach",
                
                 render: {
@@ -826,7 +796,7 @@ function makeKayal(x,y, fruitType){
         case 8:
             return Bodies.circle(x, y, 59*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "pineapple",
                 render: {
                     //fillStyle: '#f7cd43'
@@ -843,7 +813,7 @@ function makeKayal(x,y, fruitType){
         case 9:
             return Bodies.circle(x, y, 70*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "melon",
                 render: {
                     //fillStyle: '#b2f582'
@@ -858,17 +828,17 @@ function makeKayal(x,y, fruitType){
                 }
             });
         case 10:
-            return Bodies.circle(x, y, 82*scalar, {
+            return Bodies.circle(x, y, 80*scalar, {
                 friction: 0.3,
-                isStatic: false,
+                isStatic: true,
                 label: "watermelon",
                 render: {
                     //fillStyle: '#369121' 
                     //opacity: 0.5,
                     sprite: {
                         texture: 'img/watermelonK.png',
-                        xScale: .34*scalar,
-                        yScale: .3*scalar,
+                        xScale: .37*scalar,
+                        yScale: .27*scalar,
                         xOffset: 0*scalar,
                         yOffset: 0*scalar
                     },
