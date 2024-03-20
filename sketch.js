@@ -129,7 +129,6 @@ const heightLimitOptions = {
     isStatic: true, 
     label: "limit",
     isSensor: true,
-    
     render: { fillStyle: '#333', visible: false, }
 }
 const topOptions = {
@@ -166,13 +165,14 @@ var curId = curFruit.id;
 
 var hasFallenEnough = true;
 
-//let ground = Bodies.rectangle(w/2, h*0.8, 330, 20, wallOptions);
-// leftWall = Bodies.rectangle((w/2)-155*scalar, 265*scalar, 20*scalar, 489*scalar, wallOptions);
 let leftWall = Bodies.rectangle((w/2)-181*scalar, 320*scalar, 50*scalar, 499*scalar, wallOptions);
 let rightWall = Bodies.rectangle((w/2)+181*scalar, 320*scalar, 50*scalar, 499*scalar, wallOptions);
 let fruitWait = makeContainer(w/2, 148*scalar, 320*scalar, 1, heightLimitOptions);
 fruitWait.label = "wait";
 let fruitLimit = makeContainer(w/2, 148*scalar, 320*scalar, 1, heightLimitOptions);
+let fruitCheatDetector = makeContainer(w/2,620*scalar, w*2*scalar, 1, heightLimitOptions);
+fruitCheatDetector.label = "cheat";
+
 
 let topofbox = makeContainer(w/2, 163,310,8, topOptions)
 
@@ -222,6 +222,7 @@ Composite.add(world, [
     fruitLimit,
     nextFruitBubble,
     nextFruit,
+    fruitCheatDetector,
     // TESTS BELOW
     //b1,
     //makeKayal((w/2)+10, _y+120, 10),
@@ -232,6 +233,14 @@ Events.on(engine, 'collisionStart', function(event) {
     event.pairs.forEach(pair => {
         if(pair.bodyA.label != "wall" && pair.bodyB.label != "wall"){
             
+            if((pair.bodyA.label == "cheat" || pair.bodyB.label == "cheat")) {
+                if((pair.bodyA.label != "cheat")){
+                    Composite.remove(world, pair.bodyA);
+                } else {
+                    Composite.remove(world, pair.bodyB);
+                }
+                gameOver();
+            }
             // if((pair.bodyA.label == "limit" || pair.bodyB.label == "limit")){
             //     if(pair.bodyA.id != curId && pair.bodyB.id != curId){
             //         //console.log("bodyA id: " + pair.bodyA.id);
@@ -300,8 +309,8 @@ document.addEventListener("keydown", function(e){
 
 document.addEventListener("mousedown", function(event){
     // dont drop fruit if using slider (probably another way to do this but im lazy)
-    //console.log(fruitList.get(nextFruit.label))
     if(event.target.tagName != "INPUT") {
+        //max is the furthest the fruit can travel towards the edges of the box so it can drop in without clipping an edge
         var max = 156*scalar-fruitRadius.get(curFruit.label);
         if(hasFallenEnough && !hasLost && event.target != gameOverButton){
             Body.setStatic(curFruit, false) 
@@ -573,6 +582,7 @@ function reset(){
         fruitLimit,
         nextFruit,
         nextFruitBubble,
+        fruitCheatDetector,
     ]);
     var ele = document.getElementById("Lcontainer");
     if(ele.style.visibility == "visible"){
@@ -618,6 +628,7 @@ window.addEventListener('resize', function(event) {
     Body.setPosition(fruitLimit, {x:w/2,y:fruitLimit.position.y});
     Body.setPosition(nextFruitBubble, {x:w/2+300, y:nextFruitBubble.position.y});
     Body.setPosition(nextFruit, {x:w/2+300, y:nextFruit.position.y});
+    Body.setPosition(fruitCheatDetector, {x:w/2, y:fruitCheatDetector.position.y});
 });
 
 // slider.oninput = function(){
