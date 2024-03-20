@@ -302,7 +302,7 @@ document.addEventListener("mousedown", function(event){
     // dont drop fruit if using slider (probably another way to do this but im lazy)
     //console.log(fruitList.get(nextFruit.label))
     if(event.target.tagName != "INPUT") {
-        var max = 145*scalar-fruitRadius.get(curFruit.label);
+        var max = 156*scalar-fruitRadius.get(curFruit.label);
         if(hasFallenEnough && !hasLost && event.target != gameOverButton){
             Body.setStatic(curFruit, false) 
             playDrop();
@@ -319,14 +319,14 @@ document.addEventListener("mousedown", function(event){
                 if(kayalMode){curFruit = makeKayal((w/2)-max, _y, fruitList.get(nextFruit.label))}
                 else{curFruit = makeFruit((w/2)-max, _y, fruitList.get(nextFruit.label));}
                 
-                max = 145*scalar-fruitRadius.get(curFruit.label);
+                max = 156*scalar-fruitRadius.get(curFruit.label);
                 Body.setPosition(curFruit, {x:(w/2)-max, y:curFruit.position.y});
                 Body.setPosition(pointer, {x:(w/2)-max, y:305});
             } else if(event.pageX > (w/2)+max) {
                 if(kayalMode){curFruit = makeKayal((w/2)+max, _y, fruitList.get(nextFruit.label))}
                 else{curFruit = makeFruit((w/2)+max, _y, fruitList.get(nextFruit.label))}
                 
-                max = 145*scalar-fruitRadius.get(curFruit.label);
+                max = 156*scalar-fruitRadius.get(curFruit.label);
                 Body.setPosition(curFruit, {x:(w/2)+max, y:curFruit.position.y});
                 Body.setPosition(pointer, {x:(w/2)+max, y:305});
             } else {
@@ -348,7 +348,7 @@ document.addEventListener("mousedown", function(event){
 
 
 document.addEventListener("mousemove", function(event){
-    var max = 145*scalar-fruitRadius.get(curFruit.label);
+    var max = 156*scalar-fruitRadius.get(curFruit.label);
     
     if(event.pageX < (w/2)-max){
         Body.setPosition(curFruit, {x:(w/2)-max, y:_y})
