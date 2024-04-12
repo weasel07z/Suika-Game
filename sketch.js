@@ -260,29 +260,62 @@ Events.on(engine, 'collisionStart', function(event) {
                 Composite.add(world, curFruit);
                 Composite.add(world, nextFruit);            
             } else if(pair.bodyA.label == pair.bodyB.label && (pair.bodyA.isStatic != true && pair.bodyB.isStatic != true) && (hasLost === false)){
-               // console.log(fruitList.get(pair.bodyA.label))
-                Composite.remove(world, pair.bodyA);
-                Composite.remove(world, pair.bodyB);
-                if(kayalMode){
-                    tempFruit = makeKayal((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
-                } else {
-                    tempFruit = makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
+                const BodiesList = getAllFruits(world);
+                var t1, t2 = false;
+                for(let i = 0; i < BodiesList.length; i++){
+                    if(BodiesList[i].id == pair.bodyA.id){
+                        t1 = true;
+                    } else if (BodiesList[i].id == pair.bodyB.id){
+                        t2=true;
+                    }
                 }
-                // console.log("new position: " + (pair.bodyA.position.y + pair.bodyB.position.y)/2);
-                // console.log("fruitLimit positon: " + fruitWait.position.y);
-                if((pair.bodyA.position.y + pair.bodyB.position.y)/2 > fruitWait.position.y){
-                    Composite.add(world, tempFruit);
-                    Body.setStatic(tempFruit, false)
-                    playMerge();
-                    points+=pointList.get(pair.bodyA.label);
-                    document.getElementById("totalPoints").innerHTML = points;
-                } else { 
-                    Composite.add(world, tempFruit);
-                    Body.setStatic(tempFruit, false)
-                    playMerge();
-                    points+=pointList.get(pair.bodyA.label);
-                    document.getElementById("totalPoints").innerHTML = points;
-                    gameOver(); }
+                if(t1 && t2){
+                    Composite.remove(world, pair.bodyA);
+                    Composite.remove(world, pair.bodyB);
+                    if(kayalMode){
+                        tempFruit = makeKayal((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
+                    } else {
+                        tempFruit = makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
+                    }
+                    // console.log("new position: " + (pair.bodyA.position.y + pair.bodyB.position.y)/2);
+                    // console.log("fruitLimit positon: " + fruitWait.position.y);
+                    if((pair.bodyA.position.y + pair.bodyB.position.y)/2 > fruitWait.position.y){
+                        Composite.add(world, tempFruit);
+                        Body.setStatic(tempFruit, false)
+                        playMerge();
+                        points+=pointList.get(pair.bodyA.label);
+                        document.getElementById("totalPoints").innerHTML = points;
+                    } else { 
+                        Composite.add(world, tempFruit);
+                        Body.setStatic(tempFruit, false)
+                        playMerge();
+                        points+=pointList.get(pair.bodyA.label);
+                        document.getElementById("totalPoints").innerHTML = points;
+                        gameOver(); }
+                }
+               // console.log(fruitList.get(pair.bodyA.label))
+                // Composite.remove(world, pair.bodyA);
+                // Composite.remove(world, pair.bodyB);
+                // if(kayalMode){
+                //     tempFruit = makeKayal((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
+                // } else {
+                //     tempFruit = makeFruit((pair.bodyA.position.x + pair.bodyB.position.x)/2,(pair.bodyA.position.y + pair.bodyB.position.y)/2,fruitList.get(pair.bodyA.label)+1); 
+                // }
+                // // console.log("new position: " + (pair.bodyA.position.y + pair.bodyB.position.y)/2);
+                // // console.log("fruitLimit positon: " + fruitWait.position.y);
+                // if((pair.bodyA.position.y + pair.bodyB.position.y)/2 > fruitWait.position.y){
+                //     Composite.add(world, tempFruit);
+                //     Body.setStatic(tempFruit, false)
+                //     playMerge();
+                //     points+=pointList.get(pair.bodyA.label);
+                //     document.getElementById("totalPoints").innerHTML = points;
+                // } else { 
+                //     Composite.add(world, tempFruit);
+                //     Body.setStatic(tempFruit, false)
+                //     playMerge();
+                //     points+=pointList.get(pair.bodyA.label);
+                //     document.getElementById("totalPoints").innerHTML = points;
+                //     gameOver(); }
             }
         }
     });
