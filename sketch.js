@@ -611,14 +611,22 @@ document.addEventListener("submit", function(e){
 
 window.addEventListener('resize', function(event) {
     //document.getElementById("resized").style.display = "block";
+    //console.log(document.querySelector(".container").getBoundingClientRect());
     w = window.innerWidth;
     h = window.innerHeight;
+    
     if(h < 700) {
         h = 700
     }
+    var widthOffset = (w/2)-181*scalar - leftWall.position.x;
+    //console.log("width Offset " + widthOffset);
     render.options.width = w;
     //render.options.height = window.innerHeigh;
     render.canvas.width = w;
+    //const BodiesList = getBodiesWithoutLabel("limit", world);
+    const BodiesList = getAllFruits(world);
+    //BodiesList.forEach(body => console.log(body));
+    BodiesList.forEach(body => Body.setPosition(body, {x: body.position.x+widthOffset, y: body.position.y}));
     //render.canvas.height = window.innerHeight;
     Body.setPosition(leftWall, {x:(w/2)-181*scalar, y:leftWall.position.y});
     Body.setPosition(rightWall, {x:(w/2)+181*scalar, y:rightWall.position.y});
@@ -629,8 +637,20 @@ window.addEventListener('resize', function(event) {
     Body.setPosition(nextFruitBubble, {x:w/2+300, y:nextFruitBubble.position.y});
     Body.setPosition(nextFruit, {x:w/2+300, y:nextFruit.position.y});
     Body.setPosition(fruitCheatDetector, {x:w/2, y:fruitCheatDetector.position.y});
+    Body.setPosition(pointer, {x:pointer.position.x+widthOffset, y:pointer.position.y});
+    
 });
 
+function getBodiesByLabel(label, world) {
+    return Composite.allBodies(world).filter(body => body.label === label);
+}
+function getBodiesWithoutLabel(label, world) {
+    return Composite.allBodies(world).filter(body => body.label !== label);
+}
+function getAllFruits(world) {
+    return Composite.allBodies(world).filter(body => body.label !== "limit" && body.label !== "wall" && body.label !== "wait" && body.label !== "cheat" 
+                                                     && body.label !== "bubble" && body.position.y >= _y);
+}
 // slider.oninput = function(){
 //     gravity = this.value;
 //     sliderText.textContent = this.value;

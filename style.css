@@ -17,6 +17,9 @@ body{
 .container{
   /* background-color: #00000000; */
   background-color: #00000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   /* margin-top: 40px; */
   /*height: calc(600px * var(--scalar));*/
 }
