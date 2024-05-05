@@ -229,6 +229,7 @@ Composite.add(world, [
     //makeFruit((w/2)+10, _y+120, 10),
 
 ]);
+
 Events.on(engine, 'collisionStart', function(event) {
     event.pairs.forEach(pair => {
         if(pair.bodyA.label != "wall" && pair.bodyB.label != "wall"){
@@ -324,6 +325,7 @@ document.addEventListener("keydown", function(e){
     if(e.target.tagName != "INPUT"){
         if(e.key == "s"){
             render.options.showCollisions = !render.options.showCollisions;
+            render.options.showIds = !render.options.showIds;
             //pointer.render.visibile = false;
         } else if(e.key == "k"){
             if(!hasLost){
@@ -391,7 +393,8 @@ document.addEventListener("mousedown", function(event){
 
 document.addEventListener("mousemove", function(event){
     var max = 156*scalar-fruitRadius.get(curFruit.label);
-    
+    //console.log(event.pageX, event.pageY);
+    //console.log(curFruit.position.x)
     if(event.pageX < (w/2)-max){
         Body.setPosition(curFruit, {x:(w/2)-max, y:_y})
         Body.setPosition(pointer, {x:(w/2)-max, y:305})
@@ -642,37 +645,35 @@ document.addEventListener("submit", function(e){
     e.preventDefault();
 }, false);
 
-window.addEventListener('resize', function(event) {
-    //document.getElementById("resized").style.display = "block";
-    //console.log(document.querySelector(".container").getBoundingClientRect());
-    w = window.innerWidth;
-    h = window.innerHeight;
+// window.addEventListener('resize', function(event) {
+//     //document.getElementById("resized").style.display = "block";
+//     //console.log(document.querySelector(".container").getBoundingClientRect());
+//     //w = window.innerWidth;
+//     //h = window.innerHeight;
+//     newWidth = document.querySelector("canvas").width;
+//     console.log(w, newWidth);
+//     widthOffset = (w/2)-181*scalar - leftWall.position.x;
+//     //console.log("width Offset " + widthOffset);
+//     //render.options.width = w;
+//     //render.options.height = window.innerHeigh;
+//     //render.canvas.width = w;
+//     //const BodiesList = getBodiesWithoutLabel("limit", world);
+//     // const BodiesList = getAllFruits(world);
+//     // //BodiesList.forEach(body => console.log(body));
+//     // BodiesList.forEach(body => Body.setPosition(body, {x: body.position.x+widthOffset, y: body.position.y}));
+//     //render.canvas.height = window.innerHeight;
+//     // Body.setPosition(leftWall, {x:(w/2)-181*scalar, y:leftWall.position.y});
+//     // Body.setPosition(rightWall, {x:(w/2)+181*scalar, y:rightWall.position.y});
+//     // Body.setPosition(fruitWait, {x:w/2, y:fruitWait.position.y});
+//     // Body.setPosition(ground, {x:w/2, y:ground.position.y});
+//     // Body.setPosition(topofbox, {x:w/2, y:topofbox.position.y});
+//     // Body.setPosition(fruitLimit, {x:w/2,y:fruitLimit.position.y});
+//     // Body.setPosition(nextFruitBubble, {x:w/2+300, y:nextFruitBubble.position.y});
+//     // Body.setPosition(nextFruit, {x:w/2+300, y:nextFruit.position.y});
+//     // Body.setPosition(fruitCheatDetector, {x:w/2, y:fruitCheatDetector.position.y});
+//     // Body.setPosition(pointer, {x:pointer.position.x+widthOffset, y:pointer.position.y});
     
-    if(h < 700) {
-        h = 700
-    }
-    var widthOffset = (w/2)-181*scalar - leftWall.position.x;
-    //console.log("width Offset " + widthOffset);
-    render.options.width = w;
-    //render.options.height = window.innerHeigh;
-    render.canvas.width = w;
-    //const BodiesList = getBodiesWithoutLabel("limit", world);
-    const BodiesList = getAllFruits(world);
-    //BodiesList.forEach(body => console.log(body));
-    BodiesList.forEach(body => Body.setPosition(body, {x: body.position.x+widthOffset, y: body.position.y}));
-    //render.canvas.height = window.innerHeight;
-    Body.setPosition(leftWall, {x:(w/2)-181*scalar, y:leftWall.position.y});
-    Body.setPosition(rightWall, {x:(w/2)+181*scalar, y:rightWall.position.y});
-    Body.setPosition(fruitWait, {x:w/2, y:fruitWait.position.y});
-    Body.setPosition(ground, {x:w/2, y:ground.position.y});
-    Body.setPosition(topofbox, {x:w/2, y:topofbox.position.y});
-    Body.setPosition(fruitLimit, {x:w/2,y:fruitLimit.position.y});
-    Body.setPosition(nextFruitBubble, {x:w/2+300, y:nextFruitBubble.position.y});
-    Body.setPosition(nextFruit, {x:w/2+300, y:nextFruit.position.y});
-    Body.setPosition(fruitCheatDetector, {x:w/2, y:fruitCheatDetector.position.y});
-    Body.setPosition(pointer, {x:pointer.position.x+widthOffset, y:pointer.position.y});
-    
-});
+// });
 
 function getBodiesByLabel(label, world) {
     return Composite.allBodies(world).filter(body => body.label === label);
@@ -683,6 +684,9 @@ function getBodiesWithoutLabel(label, world) {
 function getAllFruits(world) {
     return Composite.allBodies(world).filter(body => body.label !== "limit" && body.label !== "wall" && body.label !== "wait" && body.label !== "cheat" 
                                                      && body.label !== "bubble" && body.position.y >= _y);
+}
+function getFruitById(id) {
+    return Composite.get(world,id,"body");
 }
 // slider.oninput = function(){
 //     gravity = this.value;
