@@ -11,7 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "firebase": "^10.8.1"
+    "@firebase/firestore": "^4.13.0",
+    "@firebase/firestore-compat": "^0.4.7",
+    "@firebase/functions": "^0.13.3",
+    "@firebase/functions-compat": "^0.4.3",
+    "@firebase/storage": "^0.14.2",
+    "@firebase/storage-compat": "^0.4.2",
+    "dotenv": "^17.3.1",
+    "firebase": "^12.11.0",
+    "undici": "^7.24.4"
   }
 }
